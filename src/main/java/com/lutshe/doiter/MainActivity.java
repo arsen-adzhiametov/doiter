@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 
     public void addFragment(Fragment newFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, newFragment);
+        transaction.replace(R.id.fragment_container, newFragment);
         transaction.commit();
     }
 }
