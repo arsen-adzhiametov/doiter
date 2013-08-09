@@ -1,15 +1,16 @@
-package com.lutshe.doiter;
+package com.lutshe.doiter.views.goals.details;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.FragmentArg;
 import com.googlecode.androidannotations.annotations.ViewById;
+import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
@@ -19,9 +20,10 @@ import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
-
 @EFragment(R.layout.goal_detail_fragment)
 public class GoalDetailFragment extends Fragment {
+
+    public static final String GOAL_ID = "goalId";
 
     @ViewById(R.id.goalNameDetail)
     TextView goalName;
@@ -35,20 +37,15 @@ public class GoalDetailFragment extends Fragment {
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;
 
-    private Long goalId;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = this.getArguments();
-        goalId = bundle.getLong("goalId");
-    }
+    @FragmentArg
+    Long goalId;
 
     @AfterViews
-    public void bindData(){
+    public void bindData() {
         Goal goal = goalsProvider.getGoalById(goalId);
-        Bitmap bitmap = imagesProvider.getImage(goalId);
         goalName.setText(goal.getName());
+
+        Bitmap bitmap = imagesProvider.getImage(goalId);
         goalCover.setImageBitmap(bitmap);
     }
 }

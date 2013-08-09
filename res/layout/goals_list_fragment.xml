@@ -2,13 +2,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <GridView android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/goalsList"
-              android:numColumns="2"
-              android:layout_margin="0dp"
-              android:layout_marginBottom="1dp"
-              android:stretchMode="columnWidth"
+    <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/goalsList"
+            android:numColumns="2"
+            android:layout_margin="0dp"
+            android:layout_marginBottom="1dp"
+            android:stretchMode="columnWidth"
             />
 
 </RelativeLayout>

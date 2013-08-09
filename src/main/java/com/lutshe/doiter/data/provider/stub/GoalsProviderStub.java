@@ -11,7 +11,7 @@ import com.lutshe.doiter.data.provider.GoalsProvider;
 public class GoalsProviderStub implements GoalsProvider {
     @Override
     public Goal[] getAllGoals() {
-        return new Goal[] {
+        return new Goal[]{
                 new Goal("Learn to ride a donkey", 0L),
                 new Goal("Rate this app", 1L),
                 new Goal("Go on a date", 2L),

@@ -1,4 +1,4 @@
-package com.lutshe.doiter.views.goals;
+package com.lutshe.doiter.views.goals.list;
 
 import android.content.Context;
 import android.graphics.Bitmap;

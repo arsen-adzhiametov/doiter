@@ -1,4 +1,4 @@
-package com.lutshe.doiter;
+package com.lutshe.doiter.views.goals.list;
 
 
 import android.app.Fragment;
@@ -9,13 +9,11 @@ import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.ViewById;
-import com.lutshe.doiter.views.goals.GoalSelectedListener;
-import com.lutshe.doiter.views.goals.GoalsListAdapter;
+import com.lutshe.doiter.R;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
-
 @EFragment(R.layout.goals_list_fragment)
 public class GoalsListFragment extends Fragment {
 
@@ -24,6 +22,7 @@ public class GoalsListFragment extends Fragment {
 
     @Bean
     GoalsListAdapter goalsListAdapter;
+
     @Bean(GoalSelectedListener.class)
     AdapterView.OnItemClickListener goalClickListener;
 
