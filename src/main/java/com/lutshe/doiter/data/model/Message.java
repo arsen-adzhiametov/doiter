@@ -1,17 +1,20 @@
 package com.lutshe.doiter.data.model;
 
-
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
-
 public class Message {
 
     private Long id;
 
-    private String text;
+    private final String text;
 
-    private Long userGoalId;
+    private final Long userGoalId;
+
+    public Message(String text, Long userGoalId) {
+        this.text = text;
+        this.userGoalId = userGoalId;
+    }
 
     public Long getId() {
         return id;
@@ -25,15 +28,8 @@ public class Message {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public Long getUserGoalId() {
         return userGoalId;
     }
 
-    public void setUserGoalId(Long userGoalId) {
-        this.userGoalId = userGoalId;
-    }
 }

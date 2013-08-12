@@ -6,13 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.data.model.UserGoal;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
-
-@EBean
+@EBean(scope = Scope.Singleton)
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     static final String DB_NAME = "doiterDB";
@@ -27,17 +27,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String USER_GOAL_ID = "user_goal_id";
 
     static final String SELECT_ALL = "SELECT  * FROM " + USER_GOAL_TABLE;
+    static final String SELECT_COUNT = "SELECT  count(*) FROM " + USER_GOAL_TABLE;
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
     }
 
+    @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL("CREATE TABLE " + USER_GOAL_TABLE + " (" +
                 GOAL_ID + " INTEGER PRIMARY KEY , " +
                 END_TIME + " INTEGER NOT NULL);");
-
         db.execSQL("CREATE TABLE " + MESSAGE_TABLE + " (" +
                 MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TEXT + " TEXT, " +
@@ -45,9 +45,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_GOAL_ID + ") REFERENCES " +
                 USER_GOAL_TABLE + " (" +
                 GOAL_ID + "));");
-
     }
 
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + USER_GOAL_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + MESSAGE_TABLE);
@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public synchronized UserGoal[] getAllUserGoals() {
+    public  UserGoal[] getAllUserGoals() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(SELECT_ALL, null);
         UserGoal[] userGoals = null;
@@ -97,8 +97,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int getUserGoalsCount() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(SELECT_ALL, null);
-        int count = cursor.getCount();
+        Cursor cursor = db.rawQuery(SELECT_COUNT, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
         cursor.close();
         return count;
     }

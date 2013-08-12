@@ -17,6 +17,7 @@ public class FragmentsSwitcher {
     public void show(int id, Fragment fragment) {
         activity.getFragmentManager()
                 .beginTransaction()
+                .addToBackStack(null)
                 .replace(id, fragment)
                 .commit();
     }
