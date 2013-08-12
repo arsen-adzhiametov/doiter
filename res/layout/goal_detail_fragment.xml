@@ -16,7 +16,18 @@
             android:layout_below="@id/goalCoverDetail"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Finish this app"
+            android:text="goal text"
+            android:layout_margin="4dp"
+            android:layout_marginTop="4dp"
+            android:textSize="16dp"
+            />
+
+    <TextView
+            android:id="@+id/goalEndTime"
+            android:layout_below="@id/goalNameDetail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="end time"
             android:layout_margin="4dp"
             android:layout_marginTop="4dp"
             android:textSize="16dp"
