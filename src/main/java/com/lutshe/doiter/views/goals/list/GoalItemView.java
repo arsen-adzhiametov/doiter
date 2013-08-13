@@ -17,10 +17,10 @@ import com.lutshe.doiter.data.model.Goal;
 @EViewGroup(R.layout.goal_list_item)
 public class GoalItemView extends LinearLayout {
 
-    @ViewById
+    @ViewById(R.id.goalName)
     TextView goalName;
 
-    @ViewById
+    @ViewById(R.id.goalCover)
     ImageView goalCover;
 
     public GoalItemView(Context context) {

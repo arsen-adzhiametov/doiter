@@ -22,15 +22,22 @@
             android:textSize="16dp"
             />
 
-    <TextView
-            android:id="@+id/goalEndTime"
-            android:layout_below="@id/goalNameDetail"
-            android:layout_height="wrap_content"
+    <EditText
             android:layout_width="wrap_content"
-            android:text="end time"
-            android:layout_margin="4dp"
-            android:layout_marginTop="4dp"
-            android:textSize="16dp"
+            android:layout_height="wrap_content"
+            android:text="000000"
+            android:id="@+id/editEndTime"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:inputType="time"
+            android:textColor="#FFFFFF"
             />
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Goal"
+            android:id="@+id/addGoalButton"
+            android:layout_alignLeft="@+id/editEndTime"
+            android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

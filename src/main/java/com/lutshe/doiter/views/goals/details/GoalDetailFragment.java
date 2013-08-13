@@ -2,17 +2,19 @@ package com.lutshe.doiter.views.goals.details;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.DatabaseHelper;
 import com.lutshe.doiter.data.model.Goal;
-import com.lutshe.doiter.data.model.UserGoal;
 import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.views.usergoals.UserGoalsListFragment_;
+import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -28,8 +30,8 @@ public class GoalDetailFragment extends Fragment {
     @ViewById(R.id.goalNameDetail)
     TextView goalName;
 
-    @ViewById(R.id.goalEndTime)
-    TextView goalEndTime;
+    @ViewById(R.id.editEndTime)
+    EditText editEndTime;
 
     @Bean(GoalsProviderStub.class)
     GoalsProvider goalsProvider;
@@ -39,6 +41,9 @@ public class GoalDetailFragment extends Fragment {
 
     @Bean
     DatabaseHelper databaseHelper;
+
+    @Bean
+    FragmentsSwitcher fragmentsSwitcher;
 
     @FragmentArg
     Long goalId;
@@ -50,8 +55,12 @@ public class GoalDetailFragment extends Fragment {
 
         Bitmap bitmap = imagesProvider.getImage(goalId);
         goalCover.setImageBitmap(bitmap);
+    }
 
-        UserGoal userGoal = databaseHelper.getUserGoal(goalId);
-        goalEndTime.setText(userGoal.getEndTime().toString());
+    @Click(R.id.addGoalButton)
+    void addGoal(){
+        Long endTime = Long.valueOf(editEndTime.getText().toString());
+        databaseHelper.addGoal(goalId, endTime);
+        fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
     }
 }
