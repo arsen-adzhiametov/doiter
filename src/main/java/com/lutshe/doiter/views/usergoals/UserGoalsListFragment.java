@@ -1,6 +1,7 @@
 package com.lutshe.doiter.views.usergoals;
 
 import android.app.Fragment;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
@@ -22,9 +23,13 @@ public class UserGoalsListFragment extends Fragment {
     @Bean
     UserGoalsListAdapter userGoalsListAdapter;
 
+    @Bean(UserGoalSelectedListener.class)
+    AdapterView.OnItemClickListener userGoalClickListener;
+
     @AfterViews
     void bindList() {
         userGoalsList.setAdapter(userGoalsListAdapter);
+        userGoalsList.setOnItemClickListener(userGoalClickListener);
     }
 
     @Click(R.id.showAllGoalsButton)

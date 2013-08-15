@@ -2,9 +2,9 @@ package com.lutshe.doiter.views.util;
 
 import android.app.Activity;
 import android.app.Fragment;
-
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.api.Scope;
+import com.lutshe.doiter.R;
 
 /**
  * Created by Artur
@@ -17,8 +17,9 @@ public class FragmentsSwitcher {
     public void show(int id, Fragment fragment) {
         activity.getFragmentManager()
                 .beginTransaction()
-                .addToBackStack(null)
+                .setCustomAnimations(R.anim.fadein, R.anim.fadeout, R.anim.fadein, R.anim.fadeout)
                 .replace(id, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 
