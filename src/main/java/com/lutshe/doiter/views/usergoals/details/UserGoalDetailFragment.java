@@ -10,11 +10,9 @@ import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.MessagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
-import com.lutshe.doiter.data.provider.stub.MessagesProviderStub;
-import com.lutshe.doiter.views.messages.MessagesListAdapter;
+import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -39,9 +37,6 @@ public class UserGoalDetailFragment extends Fragment {
 
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;
-
-    @Bean(MessagesProviderStub.class)
-    MessagesProvider messagesProvider;
 
     @FragmentArg
     Long goalId;

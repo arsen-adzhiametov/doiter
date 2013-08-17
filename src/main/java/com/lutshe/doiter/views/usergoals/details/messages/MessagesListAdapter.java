@@ -1,15 +1,14 @@
-package com.lutshe.doiter.views.messages;
+package com.lutshe.doiter.views.usergoals.details.messages;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.googlecode.androidannotations.annotations.*;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.annotations.RootContext;
+import com.lutshe.doiter.data.database.DatabaseHelper;
 import com.lutshe.doiter.data.model.Message;
-import com.lutshe.doiter.data.provider.MessagesProvider;
-import com.lutshe.doiter.data.provider.stub.MessagesProviderStub;
-
-import java.util.List;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -18,26 +17,26 @@ import java.util.List;
 @EBean
 public class MessagesListAdapter extends BaseAdapter {
 
-    private List<Message> messages;
+    private Message[] messages;
 
-    @Bean(MessagesProviderStub.class)
-    MessagesProvider messagesProvider;
+    @Bean
+    DatabaseHelper databaseHelper;
 
     @RootContext
     Context context;
 
     public void initAdapter(Long goalId){
-        messages = messagesProvider.getMessages(goalId);
+        messages = databaseHelper.getAllMessages(goalId);
     }
 
     @Override
     public int getCount() {
-        return messages.size();
+        return messages.length;
     }
 
     @Override
     public Message getItem(int position) {
-        return messages.get(position);
+        return messages[position];
     }
 
     @Override

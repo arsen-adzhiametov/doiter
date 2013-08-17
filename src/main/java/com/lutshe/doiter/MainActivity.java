@@ -4,7 +4,7 @@ import android.app.Activity;
 import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.data.database.DatabaseHelper;
 import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
-import com.lutshe.doiter.views.usergoals.UserGoalsListFragment_;
+import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 @NoTitle

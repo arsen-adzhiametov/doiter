@@ -13,4 +13,6 @@ public interface MessagesProvider {
     List<Message> getMessages(Long goalId);
 
     List<Message> getMessages(Long goalId, Long lastMessageId);
+
+    Message getRandomMessage(Long goalId);
 }

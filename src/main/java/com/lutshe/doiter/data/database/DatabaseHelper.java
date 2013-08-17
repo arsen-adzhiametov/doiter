@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.api.Scope;
+import com.lutshe.doiter.data.model.Message;
 import com.lutshe.doiter.data.model.UserGoal;
 
 /**
@@ -26,8 +27,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String TEXT = "text";
     static final String USER_GOAL_ID = "user_goal_id";
 
-    static final String SELECT_ALL = "SELECT  * FROM " + USER_GOAL_TABLE;
-    static final String SELECT_COUNT = "SELECT  count(*) FROM " + USER_GOAL_TABLE;
+    static final String SELECT_ALL_GOALS = "SELECT  * FROM " + USER_GOAL_TABLE;
+    static final String SELECT_GOAL_COUNT = "SELECT  count(*) FROM " + USER_GOAL_TABLE;
+    static final String SELECT_ALL_MESSAGES = "SELECT  * FROM " + MESSAGE_TABLE + " WHERE "+USER_GOAL_ID;
+    static final String SELECT_MESSAGES_COUNT = "SELECT  count(*) FROM " + MESSAGE_TABLE;
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
@@ -79,9 +82,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public  UserGoal[] getAllUserGoals() {
+    public UserGoal[] getAllUserGoals() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(SELECT_ALL, null);
+        Cursor cursor = db.rawQuery(SELECT_ALL_GOALS, null);
         UserGoal[] userGoals = null;
         if (cursor != null && cursor.moveToFirst()) {
             userGoals = new UserGoal[cursor.getCount()];
@@ -97,7 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int getUserGoalsCount() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(SELECT_COUNT, null);
+        Cursor cursor = db.rawQuery(SELECT_GOAL_COUNT, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
         cursor.close();
@@ -109,6 +112,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Long endTime = Long.valueOf(cursor.getString(cursor.getColumnIndex(END_TIME)));
         UserGoal userGoal = new UserGoal(goalId, endTime);
         return userGoal;
+    }
+
+    public void addMessage(Message message) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(USER_GOAL_ID, message.getUserGoalId());
+        values.put(TEXT, message.getText());
+        db.insert(MESSAGE_TABLE, null, values);
+    }
+
+    public Message[] getAllMessages(Long goalId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_ALL_MESSAGES + " = "+ goalId, null);
+        Message[] messages = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            messages = new Message[cursor.getCount()];
+            int i = 0;
+            do {
+                Message message = mapMessage(cursor);
+                messages[i++] = message;
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return messages;
+    }
+
+    public int getMessagesCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_MESSAGES_COUNT, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count;
+    }
+
+    private Message mapMessage(Cursor cursor) {
+        Long id = Long.valueOf(cursor.getString(cursor.getColumnIndex(MESSAGE_ID)));
+        Long goalId = Long.valueOf(cursor.getString(cursor.getColumnIndex(USER_GOAL_ID)));
+        String text = cursor.getString(cursor.getColumnIndex(TEXT));
+        Message message = new Message(text, goalId);
+        message.setId(id);
+        return message;
     }
 
 }

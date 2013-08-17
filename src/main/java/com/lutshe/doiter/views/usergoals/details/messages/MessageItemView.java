@@ -1,4 +1,4 @@
-package com.lutshe.doiter.views.messages;
+package com.lutshe.doiter.views.usergoals.details.messages;
 
 import android.content.Context;
 import android.widget.LinearLayout;

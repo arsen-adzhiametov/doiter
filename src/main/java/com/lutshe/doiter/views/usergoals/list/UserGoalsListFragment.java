@@ -1,4 +1,4 @@
-package com.lutshe.doiter.views.usergoals;
+package com.lutshe.doiter.views.usergoals.list;
 
 import android.app.Fragment;
 import android.widget.AdapterView;

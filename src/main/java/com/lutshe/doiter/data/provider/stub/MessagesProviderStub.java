@@ -43,7 +43,6 @@ public class MessagesProviderStub implements MessagesProvider {
     private List<Message> getRandomMessagesList(Long goalId){
         List<Message> result = new ArrayList<Message>();
         int count = random.nextInt(10)+2;
-        System.out.println(count);
         for (int i = 0; i < count; i++){
             result.add(new Message(getRandomString(), goalId));
         }
@@ -63,5 +62,10 @@ public class MessagesProviderStub implements MessagesProvider {
     @Override
     public List<Message> getMessages(Long goalId, Long lastMessageId) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Message getRandomMessage(Long goalId) {
+        return new Message(getRandomString(), goalId);
     }
 }

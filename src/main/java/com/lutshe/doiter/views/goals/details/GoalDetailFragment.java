@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.googlecode.androidannotations.annotations.*;
+import com.lutshe.doiter.notifications.NotificationScheduler;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.DatabaseHelper;
 import com.lutshe.doiter.data.model.Goal;
@@ -13,7 +14,7 @@ import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
-import com.lutshe.doiter.views.usergoals.UserGoalsListFragment_;
+import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
@@ -45,6 +46,9 @@ public class GoalDetailFragment extends Fragment {
     @Bean
     FragmentsSwitcher fragmentsSwitcher;
 
+    @Bean
+    NotificationScheduler notificationScheduler;
+
     @FragmentArg
     Long goalId;
 
@@ -61,6 +65,7 @@ public class GoalDetailFragment extends Fragment {
     void addGoal(){
         Long endTime = Long.valueOf(editEndTime.getText().toString());
         databaseHelper.addGoal(goalId, endTime);
+        notificationScheduler.scheduleNotification(goalId);
         fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
     }
 }
