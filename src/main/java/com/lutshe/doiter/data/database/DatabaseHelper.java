@@ -42,8 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 GOAL_ID + " INTEGER PRIMARY KEY , " +
                 END_TIME + " INTEGER NOT NULL);");
         db.execSQL("CREATE TABLE " + MESSAGE_TABLE + " (" +
-                MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                TEXT + " TEXT, " +
+                MESSAGE_ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                TEXT + " TEXT NOT NULL, " +
                 USER_GOAL_ID + " INTEGER NOT NULL , FOREIGN KEY (" +
                 USER_GOAL_ID + ") REFERENCES " +
                 USER_GOAL_TABLE + " (" +
@@ -117,6 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addMessage(Message message) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(MESSAGE_ID, message.getId());
         values.put(USER_GOAL_ID, message.getUserGoalId());
         values.put(TEXT, message.getText());
         db.insert(MESSAGE_TABLE, null, values);
@@ -151,8 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Long id = Long.valueOf(cursor.getString(cursor.getColumnIndex(MESSAGE_ID)));
         Long goalId = Long.valueOf(cursor.getString(cursor.getColumnIndex(USER_GOAL_ID)));
         String text = cursor.getString(cursor.getColumnIndex(TEXT));
-        Message message = new Message(text, goalId);
-        message.setId(id);
+        Message message = new Message(id, text, goalId);
         return message;
     }
 

@@ -5,30 +5,27 @@ package com.lutshe.doiter.data.model;
  */
 public class Message {
 
-    private Long id;
+    private long id;
 
     private final String text;
 
-    private final Long userGoalId;
+    private final long userGoalId;
 
-    public Message(String text, Long userGoalId) {
+    public Message(long id, String text, long userGoalId) {
+        this.id = id;
         this.text = text;
         this.userGoalId = userGoalId;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getText() {
         return text;
     }
 
-    public Long getUserGoalId() {
+    public long getUserGoalId() {
         return userGoalId;
     }
 

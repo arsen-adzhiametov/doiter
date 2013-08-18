@@ -7,7 +7,6 @@ import android.content.Intent;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.SystemService;
-import com.lutshe.doiter.AlarmListener_;
 
 import java.util.Calendar;
 
@@ -23,15 +22,27 @@ public class NotificationScheduler {
     @SystemService
     AlarmManager alarmManager;
 
-    public void scheduleNotification(Long goalId){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.MINUTE, 1);
+    public void scheduleNotification(Long goalId) {
+        long time = getNextNotificationTime();
+        PendingIntent pendingIntent = getPendingIntent(goalId);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+    }
+
+    private PendingIntent getPendingIntent(long goalId) {
         int id = (int) System.currentTimeMillis();
         Intent intent = new Intent(context, AlarmListener_.class);
         intent.putExtra("goalId", goalId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        return PendingIntent.getBroadcast(
+                context,
+                id,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private long getNextNotificationTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, 10);
+        return calendar.getTimeInMillis();
     }
 
 }

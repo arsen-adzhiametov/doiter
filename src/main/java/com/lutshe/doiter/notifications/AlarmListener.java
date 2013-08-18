@@ -40,7 +40,8 @@ public class AlarmListener extends BroadcastReceiver {
         Message message = messagesProvider.getRandomMessage(goalId);
         databaseHelper.addMessage(message);
         Notification notification = notificationFactory.createNotification(message);
-        notificationManager.notify(1, notification);
+        int notificationId = (int)message.getId();
+        notificationManager.notify(notificationId, notification);
         notificationScheduler.scheduleNotification(goalId);
     }
 }

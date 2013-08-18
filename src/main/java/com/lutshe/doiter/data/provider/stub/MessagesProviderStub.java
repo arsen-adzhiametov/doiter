@@ -44,14 +44,14 @@ public class MessagesProviderStub implements MessagesProvider {
         List<Message> result = new ArrayList<Message>();
         int count = random.nextInt(10)+2;
         for (int i = 0; i < count; i++){
-            result.add(new Message(getRandomString(), goalId));
+            long index = getRandomIndex();
+            result.add(new Message(index, strings[(int)index], goalId));
         }
         return result;
     }
 
-    private String getRandomString(){
-        int index = random.nextInt(21);
-        return strings[index];
+    private int getRandomIndex(){
+        return random.nextInt(21);
     }
 
     @Override
@@ -66,6 +66,7 @@ public class MessagesProviderStub implements MessagesProvider {
 
     @Override
     public Message getRandomMessage(Long goalId) {
-        return new Message(getRandomString(), goalId);
+        long index = getRandomIndex();
+        return new Message(index, strings[(int)index], goalId);
     }
 }

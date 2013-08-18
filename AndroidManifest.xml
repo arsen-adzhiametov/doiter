@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmListener_"/>
+        <receiver android:name=".notifications.AlarmListener_"/>
 
     </application>
 
