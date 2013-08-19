@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EReceiver;
 import com.googlecode.androidannotations.annotations.SystemService;
@@ -37,13 +36,16 @@ public class AlarmListener extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("doiter_on_boot", "message coming");
         Long goalId = (Long)intent.getExtras().get("goalId");
         Message message = messagesProvider.getRandomMessage(goalId);
         databaseHelper.addMessage(message);
+        sendNotification(message);
+        notificationScheduler.scheduleNextNotification(goalId);
+    }
+
+    private void sendNotification(Message message) {
         Notification notification = notificationFactory.createNotification(message);
         int notificationId = (int)message.getUserGoalId();
         notificationManager.notify(notificationId, notification);
-        notificationScheduler.scheduleNextNotification(goalId);
     }
 }
