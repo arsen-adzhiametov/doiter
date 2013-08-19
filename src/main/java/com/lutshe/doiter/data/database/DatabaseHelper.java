@@ -25,12 +25,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String MESSAGE_TABLE = "message";
     static final String MESSAGE_ID = "id";
     static final String TEXT = "text";
+    static final String DELIVERY_TIME = "delivery_time";
     static final String USER_GOAL_ID = "user_goal_id";
 
     static final String SELECT_ALL_GOALS = "SELECT  * FROM " + USER_GOAL_TABLE;
     static final String SELECT_GOAL_COUNT = "SELECT  count(*) FROM " + USER_GOAL_TABLE;
-    static final String SELECT_ALL_MESSAGES = "SELECT  * FROM " + MESSAGE_TABLE + " WHERE "+USER_GOAL_ID;
-    static final String SELECT_MESSAGES_COUNT = "SELECT  count(*) FROM " + MESSAGE_TABLE;
+    static final String SELECT_ALL_MESSAGES = "SELECT  * FROM " + MESSAGE_TABLE + " WHERE " + USER_GOAL_ID;
+    static final String SELECT_MESSAGES_COUNT = "SELECT  count(*) FROM " + MESSAGE_TABLE + " WHERE " + USER_GOAL_ID;
+    static final String SELECT_LAST_NOTIFICATION_TIME = "SELECT max(" + DELIVERY_TIME + ") FROM " + MESSAGE_TABLE + " WHERE " + USER_GOAL_ID;
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
@@ -44,6 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + MESSAGE_TABLE + " (" +
                 MESSAGE_ID + " INTEGER PRIMARY KEY NOT NULL, " +
                 TEXT + " TEXT NOT NULL, " +
+                DELIVERY_TIME + " LONG , " +
                 USER_GOAL_ID + " INTEGER NOT NULL , FOREIGN KEY (" +
                 USER_GOAL_ID + ") REFERENCES " +
                 USER_GOAL_TABLE + " (" +
@@ -120,12 +123,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(MESSAGE_ID, message.getId());
         values.put(USER_GOAL_ID, message.getUserGoalId());
         values.put(TEXT, message.getText());
+        values.put(DELIVERY_TIME, System.currentTimeMillis());
         db.insert(MESSAGE_TABLE, null, values);
     }
 
     public Message[] getAllMessages(Long goalId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(SELECT_ALL_MESSAGES + " = "+ goalId, null);
+        Cursor cursor = db.rawQuery(SELECT_ALL_MESSAGES + " = " + goalId, null);
         Message[] messages = null;
         if (cursor != null && cursor.moveToFirst()) {
             messages = new Message[cursor.getCount()];
@@ -139,20 +143,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return messages;
     }
 
-    public int getMessagesCount() {
+    public int getMessagesCount(long goalId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(SELECT_MESSAGES_COUNT, null);
+        Cursor cursor = db.rawQuery(SELECT_MESSAGES_COUNT + " = " + goalId, null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
         cursor.close();
         return count;
     }
 
+    public Long getLastNotificationTime(long goalId) {
+        Long result = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_LAST_NOTIFICATION_TIME + " = " + goalId, null);
+        try {
+            result = cursor.getLong(0);
+        } finally {
+            cursor.close();
+            return result;
+        }
+    }
+
     private Message mapMessage(Cursor cursor) {
         Long id = Long.valueOf(cursor.getString(cursor.getColumnIndex(MESSAGE_ID)));
         Long goalId = Long.valueOf(cursor.getString(cursor.getColumnIndex(USER_GOAL_ID)));
         String text = cursor.getString(cursor.getColumnIndex(TEXT));
+        Long deliveryTime = Long.valueOf(cursor.getString(cursor.getColumnIndex(DELIVERY_TIME)));
         Message message = new Message(id, text, goalId);
+        message.setDeliveryTime(deliveryTime);
         return message;
     }
 

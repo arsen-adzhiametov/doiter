@@ -65,7 +65,7 @@ public class GoalDetailFragment extends Fragment {
     void addGoal(){
         Long endTime = Long.valueOf(editEndTime.getText().toString());
         databaseHelper.addGoal(goalId, endTime);
-        notificationScheduler.scheduleNotification(goalId);
+        notificationScheduler.scheduleNextNotification(goalId);
         fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
     }
 }

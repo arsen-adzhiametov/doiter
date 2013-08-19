@@ -9,6 +9,8 @@ public class Message {
 
     private final String text;
 
+    private Long deliveryTime;
+
     private final long userGoalId;
 
     public Message(long id, String text, long userGoalId) {
@@ -29,4 +31,11 @@ public class Message {
         return userGoalId;
     }
 
+    public Long getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(Long deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
 }
