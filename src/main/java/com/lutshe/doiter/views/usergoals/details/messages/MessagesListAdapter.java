@@ -4,10 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
-import com.lutshe.doiter.data.database.DatabaseHelper;
+import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.model.Message;
 
 /**
@@ -20,13 +21,13 @@ public class MessagesListAdapter extends BaseAdapter {
     private Message[] messages;
 
     @Bean
-    DatabaseHelper databaseHelper;
+    MessagesDao messagesDao;
 
     @RootContext
     Context context;
 
     public void initAdapter(Long goalId){
-        messages = databaseHelper.getAllMessages(goalId);
+        messages = messagesDao.getAllMessages(goalId);
     }
 
     @Override

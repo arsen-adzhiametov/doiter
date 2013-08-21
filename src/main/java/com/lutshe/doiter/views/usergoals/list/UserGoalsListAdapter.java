@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
-import com.googlecode.androidannotations.annotations.*;
-import com.lutshe.doiter.data.database.DatabaseHelper;
+
+import com.googlecode.androidannotations.annotations.AfterInject;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.annotations.ItemClick;
+import com.googlecode.androidannotations.annotations.RootContext;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
-import com.lutshe.doiter.data.model.UserGoal;
 import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
@@ -23,7 +27,7 @@ import com.lutshe.doiter.views.goals.list.GoalItemView_;
 @EBean
 public class UserGoalsListAdapter extends BaseAdapter{
 
-    private UserGoal[] userGoals;
+    private Goal[] userGoals;
 
     @Bean(GoalsProviderStub.class)
     GoalsProvider goalsProvider;
@@ -32,14 +36,14 @@ public class UserGoalsListAdapter extends BaseAdapter{
     ImagesProvider imagesProvider;
 
     @Bean
-    DatabaseHelper databaseHelper;
+    GoalsDao goalsDao;
 
     @RootContext
     Context context;
 
     @AfterInject
     void initAdapter() {
-        userGoals = databaseHelper.getAllUserGoals();
+        userGoals = goalsDao.getAllUserGoals();
     }
 
     @Override
@@ -48,7 +52,7 @@ public class UserGoalsListAdapter extends BaseAdapter{
     }
 
     @Override
-    public UserGoal getItem(int position) {
+    public Goal getItem(int position) {
         return userGoals[position];
     }
 
@@ -71,7 +75,7 @@ public class UserGoalsListAdapter extends BaseAdapter{
         if (goalView == null) {
             goalView = GoalItemView_.build(context);
         }
-        long goalId = getItem(position).getGoalId();
+        long goalId = getItem(position).getId();
         Goal goal = goalsProvider.getGoalById(goalId);
         Bitmap bitmap = imagesProvider.getImage(goal.getId());
         return goalView.bind(goal, bitmap);

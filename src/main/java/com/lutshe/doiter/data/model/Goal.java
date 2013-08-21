@@ -7,6 +7,7 @@ public class Goal {
 
     private final String name;
     private Long id;
+    private Long endTime;
 
     public Goal(String name, Long id) {
         this.name = name;
@@ -21,7 +22,10 @@ public class Goal {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
+    }
+    public Long getEndTime() {
+        return endTime;
     }
 }

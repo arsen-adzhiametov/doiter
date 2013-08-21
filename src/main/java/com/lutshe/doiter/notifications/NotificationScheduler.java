@@ -4,11 +4,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.SystemService;
-import com.lutshe.doiter.data.database.DatabaseHelper;
+import com.lutshe.doiter.data.database.dao.MessagesDao;
+
 import org.joda.time.DateTime;
 
 /**
@@ -26,7 +28,7 @@ public class NotificationScheduler {
     AlarmManager alarmManager;
 
     @Bean
-    DatabaseHelper databaseHelper;
+    MessagesDao messagesDao;
 
     public void scheduleNextNotification(Long goalId) {
         long time = getNextNotificationTime(goalId);
@@ -54,7 +56,7 @@ public class NotificationScheduler {
     }
 
     private long getLastNotificationTime(long goalId){
-        Long lastNotificationTime = databaseHelper.getLastNotificationTime(goalId);
+        Long lastNotificationTime = messagesDao.getLastNotificationTime(goalId);
         return lastNotificationTime != null ? lastNotificationTime : DateTime.now().getMillis();
     }
 }

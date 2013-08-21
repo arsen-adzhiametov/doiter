@@ -8,10 +8,15 @@ public class Message {
     private long id;
 
     private final String text;
-
-    private Long deliveryTime;
-
     private final long userGoalId;
+    private Long deliveryTime;
+    private Type type = Type.OTHER;
+
+    public enum Type {
+        FIRST,
+        LAST,
+        OTHER
+    }
 
     public Message(long id, String text, long userGoalId) {
         this.id = id;
@@ -34,8 +39,14 @@ public class Message {
     public Long getDeliveryTime() {
         return deliveryTime;
     }
-
     public void setDeliveryTime(Long deliveryTime) {
         this.deliveryTime = deliveryTime;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+    public Type getType() {
+        return type;
     }
 }

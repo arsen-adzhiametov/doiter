@@ -2,10 +2,11 @@ package com.lutshe.doiter.views.usergoals.list;
 
 import android.view.View;
 import android.widget.AdapterView;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.data.model.UserGoal;
+import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
@@ -23,9 +24,9 @@ public class UserGoalSelectedListener implements AdapterView.OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long rowId) {
-        UserGoal userGoal = userGoalsListAdapter.getItem(position);
+        Goal userGoal = userGoalsListAdapter.getItem(position);
 
-        UserGoalDetailFragment detailFragment = UserGoalDetailFragment_.builder().goalId(userGoal.getGoalId()).build();
+        UserGoalDetailFragment detailFragment = UserGoalDetailFragment_.builder().goalId(userGoal.getId()).build();
         fragmentsSwitcher.show(R.id.fragment_container, detailFragment);
     }
 }

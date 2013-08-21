@@ -5,25 +5,29 @@ import android.graphics.Bitmap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.googlecode.androidannotations.annotations.*;
-import com.lutshe.doiter.notifications.NotificationScheduler;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.FragmentArg;
+import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.data.database.DatabaseHelper;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.notifications.NotificationScheduler;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
-@EFragment(R.layout.goal_detail_fragment)
-public class GoalDetailFragment extends Fragment {
-
-    public static final String GOAL_ID = "goalId";
+@EFragment(R.layout.goal_preview_fragment)
+public class GoalPreviewFragment extends Fragment {
 
     @ViewById(R.id.goalCoverDetail)
     ImageView goalCover;
@@ -41,7 +45,7 @@ public class GoalDetailFragment extends Fragment {
     ImagesProvider imagesProvider;
 
     @Bean
-    DatabaseHelper databaseHelper;
+    GoalsDao goalsDao;
 
     @Bean
     FragmentsSwitcher fragmentsSwitcher;
@@ -62,9 +66,9 @@ public class GoalDetailFragment extends Fragment {
     }
 
     @Click(R.id.addGoalButton)
-    void addGoal(){
+    void addToUserGoals() {
         Long endTime = Long.valueOf(editEndTime.getText().toString());
-        databaseHelper.addGoal(goalId, endTime);
+        goalsDao.updateGoalEndTime(goalId, endTime);
         notificationScheduler.scheduleNextNotification(goalId);
         fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
     }
