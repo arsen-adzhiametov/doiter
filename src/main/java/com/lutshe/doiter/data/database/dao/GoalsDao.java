@@ -88,4 +88,14 @@ public class GoalsDao {
         goal.setEndTime(endTime);
         return goal;
     }
+
+    public Goal getGoal(Long goalId) {
+        Cursor cursor = db.getReadableDatabase().rawQuery("select * from " + GOALS_TABLE + " where " + GOAL_ID + " = " + goalId, null);
+        try {
+            cursor.moveToFirst();
+            return mapGoal(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
 }

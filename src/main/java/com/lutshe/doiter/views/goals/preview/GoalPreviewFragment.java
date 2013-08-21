@@ -1,4 +1,4 @@
-package com.lutshe.doiter.views.goals.details;
+package com.lutshe.doiter.views.goals.preview;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
@@ -14,7 +14,9 @@ import com.googlecode.androidannotations.annotations.FragmentArg;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
+import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.model.Goal;
+import com.lutshe.doiter.data.model.Message;
 import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
@@ -44,8 +46,8 @@ public class GoalPreviewFragment extends Fragment {
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;
 
-    @Bean
-    GoalsDao goalsDao;
+    @Bean GoalsDao goalsDao;
+    @Bean MessagesDao messagesDao;
 
     @Bean
     FragmentsSwitcher fragmentsSwitcher;
@@ -67,9 +69,27 @@ public class GoalPreviewFragment extends Fragment {
 
     @Click(R.id.addGoalButton)
     void addToUserGoals() {
+        setGoalEndTime();
+        addFirstMessage();
+        scheduleNextMessage();
+        showGoal();
+    }
+
+    private void showGoal() {
+        fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
+    }
+
+    private void scheduleNextMessage() {
+        notificationScheduler.scheduleNextNotification(goalId);
+    }
+
+    private void setGoalEndTime() {
         Long endTime = Long.valueOf(editEndTime.getText().toString());
         goalsDao.updateGoalEndTime(goalId, endTime);
-        notificationScheduler.scheduleNextNotification(goalId);
-        fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
+    }
+
+    private void addFirstMessage() {
+        Message message = messagesDao.getMessage(goalId, Message.Type.FIRST);
+        messagesDao.addMessage(message);
     }
 }

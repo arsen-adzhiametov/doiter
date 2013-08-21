@@ -7,6 +7,8 @@ import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.lutshe.doiter.data.model.Message;
 
+import org.joda.time.DateTime;
+
 /**
  * Created by Arturro on 21.08.13.
  */
@@ -61,6 +63,16 @@ public class MessagesDao {
         }
     }
 
+    public Message getMessage(Long goalId, Message.Type type) {
+        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " and " + TYPE + " = '" + type.name() + "'", null);
+        try {
+            cursor.moveToFirst();
+            return mapMessage(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+
     private Message mapMessage(Cursor cursor) {
         Long id = Long.valueOf(cursor.getString(cursor.getColumnIndex(MESSAGE_ID)));
         Long goalId = Long.valueOf(cursor.getString(cursor.getColumnIndex(USER_GOAL_ID)));
@@ -72,5 +84,11 @@ public class MessagesDao {
         message.setDeliveryTime(deliveryTime);
         message.setType(type);
         return message;
+    }
+
+    public void updateMessageDeliveryTime(Long messageId) {
+        ContentValues values = new ContentValues();
+        values.put(DELIVERY_TIME, DateTime.now().getMillis());
+        db.getWritableDatabase().update(MESSAGES_TABLE, values, MESSAGE_ID + "=" + messageId, null);
     }
 }

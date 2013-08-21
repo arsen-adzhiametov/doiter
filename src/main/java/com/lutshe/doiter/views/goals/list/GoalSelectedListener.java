@@ -7,8 +7,8 @@ import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.model.Goal;
-import com.lutshe.doiter.views.goals.details.GoalPreviewFragment;
-import com.lutshe.doiter.views.goals.details.GoalPreviewFragment_;
+import com.lutshe.doiter.views.goals.preview.GoalPreviewFragment;
+import com.lutshe.doiter.views.goals.preview.GoalPreviewFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**

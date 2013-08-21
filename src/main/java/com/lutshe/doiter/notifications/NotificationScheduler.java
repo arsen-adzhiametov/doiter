@@ -9,7 +9,12 @@ import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.SystemService;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
+import com.lutshe.doiter.data.model.Goal;
+import com.lutshe.doiter.data.model.Message;
+import com.lutshe.doiter.data.provider.MessagesProvider;
+import com.lutshe.doiter.data.provider.stub.MessagesProviderStub;
 
 import org.joda.time.DateTime;
 
@@ -30,16 +35,39 @@ public class NotificationScheduler {
     @Bean
     MessagesDao messagesDao;
 
+    @Bean
+    GoalsDao goalsDao;
+
+    @Bean(MessagesProviderStub.class)
+    MessagesProvider messagesProvider;
+
     public void scheduleNextNotification(Long goalId) {
-        long time = getNextNotificationTime(goalId);
-        PendingIntent pendingIntent = getPendingIntent(goalId);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        Goal goal = goalsDao.getGoal(goalId);
+        DateTime goalEndTime = new DateTime(goal.getEndTime());
+        DateTime nextNotificationTime = getNextNotificationTime(goalId);
+
+        long messageId = messagesProvider.getRandomMessage(goalId).getId();
+
+        if (schedulingLastMessage(goalEndTime, nextNotificationTime)) {
+            nextNotificationTime = goalEndTime;
+            messageId = messagesDao.getMessage(goalId, Message.Type.LAST).getId();
+        }
+
+        PendingIntent pendingIntent = getPendingIntent(goalId, messageId);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, nextNotificationTime.getMillis(), pendingIntent);
     }
 
-    private PendingIntent getPendingIntent(long goalId) {
+    private boolean schedulingLastMessage(DateTime goalEndTime, DateTime nextNotificationTime) {
+        return goalEndTime.getDayOfYear() == nextNotificationTime.getDayOfYear();
+    }
+
+    private PendingIntent getPendingIntent(long goalId, long messageId) {
         int id = (int) System.currentTimeMillis();
         Intent intent = new Intent(context, AlarmListener_.class);
+
         intent.putExtra("goalId", goalId);
+        intent.putExtra("messageId", messageId);
+
         return PendingIntent.getBroadcast(
                 context,
                 id,
@@ -47,12 +75,12 @@ public class NotificationScheduler {
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private long getNextNotificationTime(long goalId) {
+    private DateTime getNextNotificationTime(long goalId) {
         long lastNotificationTime = getLastNotificationTime(goalId);
         DateTime now = DateTime.now();
         DateTime last = now.withMillis(lastNotificationTime);
         DateTime next = last.plus(TIME_GAP);
-        return next.getMillis();
+        return next;
     }
 
     private long getLastNotificationTime(long goalId){

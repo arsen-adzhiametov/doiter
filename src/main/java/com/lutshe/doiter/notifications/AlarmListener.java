@@ -37,9 +37,12 @@ public class AlarmListener extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Long goalId = (Long)intent.getExtras().get("goalId");
+        Long goalId = (Long) intent.getExtras().get("goalId");
+        Long messageId = (Long) intent.getExtras().get("messageId");
+
         Message message = messagesProvider.getRandomMessage(goalId);
-        messagesDao.addMessage(message);
+        messagesDao.updateMessageDeliveryTime(messageId);
+
         sendNotification(message);
         notificationScheduler.scheduleNextNotification(goalId);
     }
