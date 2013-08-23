@@ -8,6 +8,13 @@ public class Goal {
     private final String name;
     private Long id;
     private Long endTime;
+    private Status type = Status.OTHER;
+
+    public enum Status {
+        ACTIVE,
+        INACTIVE,
+        OTHER
+    }
 
     public Goal(String name, Long id) {
         this.name = name;
@@ -27,5 +34,13 @@ public class Goal {
     }
     public Long getEndTime() {
         return endTime;
+    }
+
+    public Status getType() {
+        return type;
+    }
+
+    public void setType(Status type) {
+        this.type = type;
     }
 }

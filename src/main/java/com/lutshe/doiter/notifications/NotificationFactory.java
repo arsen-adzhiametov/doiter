@@ -11,7 +11,6 @@ import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.MainActivity_;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.data.model.Message;
 import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
@@ -32,11 +31,11 @@ public class NotificationFactory {
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;
 
-    public Notification createNotification(Message message) {
-        Long goalId = message.getUserGoalId();
+    public Notification createNotification(int quantity) {
+        Long goalId = 1L; //TODO
         Bitmap icon = imagesProvider.getImage(goalId);
-        String text = message.getText();
-        String title = goalsProvider.getGoalById(goalId).getName();
+        String text = "Blah - Blah - Blah - Blah";  //TODO
+        String title = "You have a " + quantity + " new messages";   //TODO
 
         Intent notificationIntent = new Intent(context, MainActivity_.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(

@@ -16,11 +16,14 @@ public class GoalsDao {
     static final String GOAL_ID = "goal_id";
     static final String END_TIME = "end_time";
     static final String GOAL_NAME = "name";
+    static final String GOAL_STATUS = "status";
 
     static final String BUT_ONLY_USER_GOALS = " WHERE " + END_TIME + " is not null";
+    static final String BUT_ONLY_ACTIVE_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE'";
 
     static final String SELECT_ALL_GOALS = "SELECT * FROM " + GOALS_TABLE;
     static final String SELECT_USER_GOALS = SELECT_ALL_GOALS + BUT_ONLY_USER_GOALS;
+    static final String SELECT_ACTIVE_GOALS = SELECT_ALL_GOALS + BUT_ONLY_ACTIVE_GOALS;
 
     static final String SELECT_ALL_GOALS_COUNT = "SELECT count(*) FROM " + GOALS_TABLE;
     static final String SELECT_USER_GOALS_COUNT = SELECT_ALL_GOALS_COUNT + BUT_ONLY_USER_GOALS;
@@ -31,6 +34,12 @@ public class GoalsDao {
     public void updateGoalEndTime(Long goalId, Long endTime) {
         ContentValues values = new ContentValues();
         values.put(END_TIME, endTime);
+        db.getWritableDatabase().update(GOALS_TABLE, values, GOAL_ID + "=" + goalId, null);
+    }
+
+    public void updateGoalStatus(Long goalId, Goal.Status status) {
+        ContentValues values = new ContentValues();
+        values.put(GOAL_STATUS, status.name());
         db.getWritableDatabase().update(GOALS_TABLE, values, GOAL_ID + "=" + goalId, null);
     }
 
@@ -46,6 +55,9 @@ public class GoalsDao {
     }
     public Goal[] getAllUserGoals() {
         return getGoals(SELECT_USER_GOALS);
+    }
+    public Goal[] getActiveUserGoals() {
+        return getGoals(SELECT_ACTIVE_GOALS);
     }
 
     private Goal[] getGoals(String query) {
@@ -80,12 +92,13 @@ public class GoalsDao {
     }
 
     private Goal mapGoal(Cursor cursor) {
-        Long goalId = Long.valueOf(cursor.getString(cursor.getColumnIndex(GOAL_ID)));
-        Long endTime = Long.valueOf(cursor.getString(cursor.getColumnIndex(END_TIME)));
+        Long goalId = cursor.getLong(cursor.getColumnIndex(GOAL_ID));
         String name = cursor.getString(cursor.getColumnIndex(GOAL_NAME));
-
+        Long endTime = cursor.getLong(cursor.getColumnIndex(END_TIME));
+        Goal.Status status = Goal.Status.valueOf(cursor.getString(cursor.getColumnIndex(GOAL_STATUS)));
         Goal goal = new Goal(name, goalId);
         goal.setEndTime(endTime);
+        goal.setType(status);
         return goal;
     }
 

@@ -5,13 +5,7 @@ import android.graphics.Bitmap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.Click;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.FragmentArg;
-import com.googlecode.androidannotations.annotations.ViewById;
+import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
@@ -21,7 +15,7 @@ import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
-import com.lutshe.doiter.notifications.NotificationScheduler;
+import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
@@ -53,7 +47,7 @@ public class GoalPreviewFragment extends Fragment {
     FragmentsSwitcher fragmentsSwitcher;
 
     @Bean
-    NotificationScheduler notificationScheduler;
+    MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
 
     @FragmentArg
     Long goalId;
@@ -69,9 +63,9 @@ public class GoalPreviewFragment extends Fragment {
 
     @Click(R.id.addGoalButton)
     void addToUserGoals() {
-        setGoalEndTime();
+        activateGoal();
         addFirstMessage();
-        scheduleNextMessage();
+        scheduleNextAlarm();
         showGoal();
     }
 
@@ -79,17 +73,18 @@ public class GoalPreviewFragment extends Fragment {
         fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
     }
 
-    private void scheduleNextMessage() {
-        notificationScheduler.scheduleNextNotification(goalId);
+    private void scheduleNextAlarm() {
+        messagesUpdateAlarmScheduler.scheduleNextAlarm();
     }
 
-    private void setGoalEndTime() {
+    private void activateGoal() {
         Long endTime = Long.valueOf(editEndTime.getText().toString());
         goalsDao.updateGoalEndTime(goalId, endTime);
+        goalsDao.updateGoalStatus(goalId, Goal.Status.ACTIVE);
     }
 
     private void addFirstMessage() {
         Message message = messagesDao.getMessage(goalId, Message.Type.FIRST);
-        messagesDao.addMessage(message);
+        messagesDao.updateMessageDeliveryTime(message.getId());
     }
 }

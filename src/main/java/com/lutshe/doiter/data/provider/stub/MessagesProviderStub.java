@@ -67,6 +67,6 @@ public class MessagesProviderStub implements MessagesProvider {
     @Override
     public Message getRandomMessage(Long goalId) {
         long index = getRandomIndex();
-        return new Message(index, strings[(int)index], goalId);
+        return new Message(goalId*100 + index, strings[(int)index], goalId);
     }
 }

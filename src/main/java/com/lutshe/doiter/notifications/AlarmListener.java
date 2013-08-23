@@ -5,14 +5,14 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EReceiver;
 import com.googlecode.androidannotations.annotations.SystemService;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
+import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.model.Message;
-import com.lutshe.doiter.data.provider.MessagesProvider;
-import com.lutshe.doiter.data.provider.stub.MessagesProviderStub;
+import org.joda.time.DateTime;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -27,29 +27,51 @@ public class AlarmListener extends BroadcastReceiver {
     NotificationFactory notificationFactory;
 
     @Bean
-    NotificationScheduler notificationScheduler;
+    MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
 
     @Bean
     MessagesDao messagesDao;
 
-    @Bean(MessagesProviderStub.class)
-    MessagesProvider messagesProvider;
+    @Bean
+    GoalsDao goalsDao;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Long goalId = (Long) intent.getExtras().get("goalId");
-        Long messageId = (Long) intent.getExtras().get("messageId");
-
-        Message message = messagesProvider.getRandomMessage(goalId);
-        messagesDao.updateMessageDeliveryTime(messageId);
-
-        sendNotification(message);
-        notificationScheduler.scheduleNextNotification(goalId);
+        int quantity = deliverMessages();
+        sendNotification(quantity);
+        scheduleNext();
     }
 
-    private void sendNotification(Message message) {
-        Notification notification = notificationFactory.createNotification(message);
-        int notificationId = (int)message.getUserGoalId();
+    private int deliverMessages() {
+        Goal[] userGoals = goalsDao.getActiveUserGoals();
+        for (Goal goal : userGoals) {
+            DateTime goalEndTime = new DateTime(goal.getEndTime());
+            if (isGoalGoesToEnd(goalEndTime)) {
+                updateData(goal, Message.Type.LAST);
+            } else {
+                updateData(goal, Message.Type.OTHER);
+            }
+        }
+        return userGoals.length;
+    }
+
+    private void updateData(Goal goal, Message.Type type) {
+        Message message = messagesDao.getMessage(goal.getId(), type);
+        messagesDao.updateMessageDeliveryTime(message.getId());
+        if (type== Message.Type.LAST) goalsDao.updateGoalStatus(goal.getId(), Goal.Status.INACTIVE);
+    }
+
+    private boolean isGoalGoesToEnd(DateTime goalEndTime) {
+        return goalEndTime.getDayOfYear() == DateTime.now().getDayOfYear();
+    }
+
+    private void sendNotification(int quantity) {
+        Notification notification = notificationFactory.createNotification(quantity);
+        int notificationId = 0;
         notificationManager.notify(notificationId, notification);
+    }
+
+    private void scheduleNext() {
+        messagesUpdateAlarmScheduler.scheduleNextAlarm();
     }
 }

@@ -7,10 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.api.Scope;
 
-import static com.lutshe.doiter.data.database.dao.GoalsDao.END_TIME;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.GOALS_TABLE;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_ID;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_NAME;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.*;
 import static com.lutshe.doiter.data.database.dao.MessagesDao.DELIVERY_TIME;
 import static com.lutshe.doiter.data.database.dao.MessagesDao.MESSAGES_TABLE;
 import static com.lutshe.doiter.data.database.dao.MessagesDao.MESSAGE_ID;
@@ -34,8 +31,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + GOALS_TABLE + " (" +
                     GOAL_ID + " INTEGER PRIMARY KEY, " +
-                    END_TIME + " INTEGER," +
-                    GOAL_NAME + " TEXT NOT NULL" +
+                    END_TIME + " INTEGER, " +
+                    GOAL_NAME + " TEXT NOT NULL , " +
+                    GOAL_STATUS + " TEXT NOT NULL DEFAULT 'OTHER'" +
                 ");");
 
         db.execSQL("CREATE TABLE " + MESSAGES_TABLE + " (" +
