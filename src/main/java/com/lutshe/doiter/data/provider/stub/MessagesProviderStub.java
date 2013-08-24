@@ -4,69 +4,41 @@ import com.googlecode.androidannotations.annotations.EBean;
 import com.lutshe.doiter.data.model.Message;
 import com.lutshe.doiter.data.provider.MessagesProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
 @EBean
 public class MessagesProviderStub implements MessagesProvider {
 
-    private Random random = new Random();
+    private Message [] messages = {
+            new Message(0L, "Life is not a bed of roses.", 0L, 0L),
+            new Message(1L, "Life is not all cakes and ale (beer and skittles).", 0L, 1L),
+            new Message(2L, "Like a cat on hot bricks.", 1L, 0L),
+            new Message(3L, "Like a needle in a haystack.", 1L, 1L),
+            new Message(4L, "Like begets like.", 2L, 0L),
+            new Message(5L, "Like cures like.", 2L, 1L),
+            new Message(6L, "Like father, like son.", 3L, 0L),
+            new Message(7L, "Little things amuse little minds.", 3L, 1L),
+            new Message(8L, "Little thieves are hanged, but great ones escape.", 4L, 0L),
+            new Message(9L, "A new broom sweeps clean.", 4L, 1L),
+            new Message(10L, "A quiet conscience sleeps in thunder.", 5L, 0L),
+            new Message(11L, "A silent fool is counted wise.", 5L, 1L),
+            new Message(12L, "A stitch in time saves nine.", 6L, 0L),
+            new Message(13L, "A storm in a teacup.", 6L, 1L),
+            new Message(14L, "A threatened blow is seldom given.", 7L, 0L),
+            new Message(15L, "As drunk as a lord.", 7L, 1L),
+            new Message(16L, "As like as two peas.", 8L, 0L),
+            new Message(17L, "Keep your mouth shut and your eyes open.", 8L, 0L),
+            new Message(18L, "Lies have short legs.", 9L, 0L),
+            new Message(19L, "Marriages are made in heaven.", 9L, 1L),
+            new Message(20L, "Marriages are made in heaven.", 0L, 2L),
+            new Message(21L, "Misfortunes never come alone (singly).", 0L, 3L),
+            new Message(22L, "Life is not a bed of roses.", 0L, 4L)
 
-    private String [] strings = {
-            "Life is not a bed of roses.",
-            "Life is not all cakes and ale (beer and skittles).",
-            "Like a cat on hot bricks.",
-            "Like a needle in a haystack.",
-            "Like begets like.",
-            "Like cures like.",
-            "Like father, like son.",
-            "Little things amuse little minds.",
-            "Little thieves are hanged, but great ones escape.",
-            "A new broom sweeps clean.",
-            "A quiet conscience sleeps in thunder.",
-            "A silent fool is counted wise.",
-            "A stitch in time saves nine.",
-            "A storm in a teacup.",
-            "A threatened blow is seldom given.",
-            "As drunk as a lord.",
-            "As like as two peas.",
-            "Keep your mouth shut and your eyes open.",
-            "Lies have short legs.",
-            "Marriages are made in heaven.",
-            "Misfortunes never come alone (singly)."
     };
 
-    private List<Message> getRandomMessagesList(Long goalId){
-        List<Message> result = new ArrayList<Message>();
-        int count = random.nextInt(10)+2;
-        for (int i = 0; i < count; i++){
-            long index = getRandomIndex();
-            result.add(new Message(index, strings[(int)index], goalId));
-        }
-        return result;
-    }
-
-    private int getRandomIndex(){
-        return random.nextInt(21);
-    }
-
     @Override
-    public List<Message> getMessages(Long goalId) {
-        return getRandomMessagesList(goalId);
-    }
-
-    @Override
-    public List<Message> getMessages(Long goalId, Long lastMessageId) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Message getRandomMessage(Long goalId) {
-        long index = getRandomIndex();
-        return new Message(goalId*100 + index, strings[(int)index], goalId);
+    public Message[] getAllMessages() {
+        return messages;
     }
 }

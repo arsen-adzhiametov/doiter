@@ -33,19 +33,25 @@ public class TestDataSetup {
         for (Goal goal : goalsProvider.getAllGoals()) {
             setupGoal(goal);
         }
+
+        Message[] messages = messagesProvider.getAllMessages();
+        for (Message message : messages) {
+            setupMessage(message);
+        }
+    }
+
+    private void setupMessage(Message message) {
+        messagesDao.addMessage(message);
     }
 
     private void setupGoal(Goal goal) {
         goalsDao.addGoal(goal);
 
-        Message message = messagesProvider.getRandomMessage(goal.getId());
-        messagesDao.addMessage(message);
-
-        Message firstMessage = new Message(goal.getId() * 10000 + 1, "first msg for goal "+goal.getId(), goal.getId());
+        Message firstMessage = new Message(goal.getId() * 10000 + 1, "first msg for goal "+goal.getId(), goal.getId(), 0L);
         firstMessage.setType(FIRST);
         messagesDao.addMessage(firstMessage);
 
-        Message lastMessage = new Message(goal.getId() * 10000 + 2, "last msg for goal "+goal.getId(), goal.getId());
+        Message lastMessage = new Message(goal.getId() * 10000 + 2, "last msg for goal "+goal.getId(), goal.getId(), null);
         lastMessage.setType(LAST);
         messagesDao.addMessage(lastMessage);
     }

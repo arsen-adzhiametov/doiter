@@ -10,6 +10,7 @@ public class Message {
     private final String text;
     private final long userGoalId;
     private Long deliveryTime;
+    private Long orderIndex;
     private Type type = Type.OTHER;
 
     public enum Type {
@@ -18,10 +19,11 @@ public class Message {
         OTHER
     }
 
-    public Message(long id, String text, long userGoalId) {
+    public Message(long id, String text, long userGoalId, Long orderIndex) {
         this.id = id;
         this.text = text;
         this.userGoalId = userGoalId;
+        this.orderIndex = orderIndex;
     }
 
     public long getId() {
@@ -48,5 +50,9 @@ public class Message {
     }
     public Type getType() {
         return type;
+    }
+
+    public Long getOrderIndex() {
+        return orderIndex;
     }
 }

@@ -8,7 +8,8 @@ public class Goal {
     private final String name;
     private Long id;
     private Long endTime;
-    private Status type = Status.OTHER;
+    private Long lastMessageIndex;
+    private Status status = Status.OTHER;
 
     public enum Status {
         ACTIVE,
@@ -36,11 +37,15 @@ public class Goal {
         return endTime;
     }
 
-    public Status getType() {
-        return type;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public void setType(Status type) {
-        this.type = type;
+    public Long getLastMessageIndex() {
+        return lastMessageIndex;
+    }
+
+    public void setLastMessageIndex(Long lastMessageIndex) {
+        this.lastMessageIndex = lastMessageIndex;
     }
 }

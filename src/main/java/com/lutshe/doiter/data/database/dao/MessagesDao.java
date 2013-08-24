@@ -18,6 +18,7 @@ public class MessagesDao {
     static final String DELIVERY_TIME = "delivery_time";
     static final String USER_GOAL_ID = "user_goal_id";
     static final String TYPE = "type";
+    static final String ORDER_INDEX = "order_index";
 
     static final String SELECT_ALL_MESSAGES = "SELECT * FROM " + MESSAGES_TABLE + " WHERE " + USER_GOAL_ID;
     static final String SELECT_LAST_NOTIFICATION_TIME = "SELECT max(" + DELIVERY_TIME + ") FROM " + MESSAGES_TABLE;
@@ -31,11 +32,12 @@ public class MessagesDao {
         values.put(USER_GOAL_ID, message.getUserGoalId());
         values.put(TEXT, message.getText());
         values.put(TYPE, message.getType().name());
+        values.put(ORDER_INDEX, message.getOrderIndex());
         db.getWritableDatabase().insert(MESSAGES_TABLE, null, values);
     }
 
     public Message[] getAllMessages(Long goalId) {
-        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " AND "+DELIVERY_TIME+ " IS NOT NULL", null);
+        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " AND " + DELIVERY_TIME + " IS NOT NULL", null);
         Message[] messages = null;
         if (cursor != null && cursor.moveToFirst()) {
             messages = new Message[cursor.getCount()];
@@ -61,7 +63,17 @@ public class MessagesDao {
     }
 
     public Message getMessage(Long goalId, Message.Type type) {
-        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES+ " = "+goalId + " and " + TYPE + " = '" + type.name() + "'", null);
+        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " and " + TYPE + " = '" + type.name() + "'", null);
+        try {
+            cursor.moveToFirst();
+            return mapMessage(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public Message getMessage(Long goalId, Long messageIndex) {
+        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " and " + ORDER_INDEX + " = " + messageIndex, null);
         try {
             cursor.moveToFirst();
             return mapMessage(cursor);
@@ -71,15 +83,21 @@ public class MessagesDao {
     }
 
     private Message mapMessage(Cursor cursor) {
-        Long id = cursor.getLong(cursor.getColumnIndex(MESSAGE_ID));
-        Long goalId = cursor.getLong(cursor.getColumnIndex(USER_GOAL_ID));
-        String text = cursor.getString(cursor.getColumnIndex(TEXT));
-        Long deliveryTime = cursor.getLong(cursor.getColumnIndex(DELIVERY_TIME));
-        Message.Type type = Message.Type.valueOf(cursor.getString(cursor.getColumnIndex(TYPE)));
+        Message message = null;
+        try {
+            Long id = cursor.getLong(cursor.getColumnIndex(MESSAGE_ID));
+            Long goalId = cursor.getLong(cursor.getColumnIndex(USER_GOAL_ID));
+            String text = cursor.getString(cursor.getColumnIndex(TEXT));
+            Long deliveryTime = cursor.getLong(cursor.getColumnIndex(DELIVERY_TIME));
+            Long orderIndex = cursor.getLong(cursor.getColumnIndex(ORDER_INDEX));
+            Message.Type type = Message.Type.valueOf(cursor.getString(cursor.getColumnIndex(TYPE)));
 
-        Message message = new Message(id, text, goalId);
-        message.setDeliveryTime(deliveryTime);
-        message.setType(type);
+            message = new Message(id, text, goalId, orderIndex);
+            message.setDeliveryTime(deliveryTime);
+            message.setType(type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return message;
     }
 

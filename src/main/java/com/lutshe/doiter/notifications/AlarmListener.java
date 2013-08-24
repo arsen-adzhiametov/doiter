@@ -44,28 +44,41 @@ public class AlarmListener extends BroadcastReceiver {
 
     private int deliverMessages() {
         Goal[] userGoals = goalsDao.getActiveUserGoals();
+        if (userGoals == null) return 0;
         for (Goal goal : userGoals) {
             DateTime goalEndTime = new DateTime(goal.getEndTime());
-            if (isGoalGoesToEnd(goalEndTime)) {
-                updateData(goal, Message.Type.LAST);
+            if (isToday(goalEndTime)) {
+                deliverLastMessage(goal);
             } else {
-                updateData(goal, Message.Type.OTHER);
+                deliverOtherMessage(goal);
             }
         }
         return userGoals.length;
     }
 
-    private void updateData(Goal goal, Message.Type type) {
-        Message message = messagesDao.getMessage(goal.getId(), type);
+    private void deliverOtherMessage(Goal goal) {
+        long nextMessageIndex = goal.getLastMessageIndex()+1;
+        Message message = messagesDao.getMessage(goal.getId(), nextMessageIndex);
+        if (message == null) {
+            deliverLastMessage(goal);
+            return;
+        }
         messagesDao.updateMessageDeliveryTime(message.getId());
-        if (type== Message.Type.LAST) goalsDao.updateGoalStatus(goal.getId(), Goal.Status.INACTIVE);
+        goalsDao.updateGoalLastMessage(goal.getId(), nextMessageIndex);
     }
 
-    private boolean isGoalGoesToEnd(DateTime goalEndTime) {
+    private void deliverLastMessage(Goal goal) {
+        Message message = messagesDao.getMessage(goal.getId(), Message.Type.LAST);
+        messagesDao.updateMessageDeliveryTime(message.getId());
+        goalsDao.updateGoalStatus(goal.getId(), Goal.Status.INACTIVE);
+    }
+
+    private boolean isToday(DateTime goalEndTime) {
         return goalEndTime.getDayOfYear() == DateTime.now().getDayOfYear();
     }
 
     private void sendNotification(int quantity) {
+        if (quantity==0) return;
         Notification notification = notificationFactory.createNotification(quantity);
         int notificationId = 0;
         notificationManager.notify(notificationId, notification);

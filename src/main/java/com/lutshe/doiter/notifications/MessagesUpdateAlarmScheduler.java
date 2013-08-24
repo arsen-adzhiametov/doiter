@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
@@ -31,20 +30,8 @@ public class MessagesUpdateAlarmScheduler {
 
     public void scheduleNextAlarm() {
         DateTime nextNotificationTime = getNextNotificationTime();
-        if (!isAlarmAlreadySet()) {
-            Log.d("12345", "Alarm setting");
-            PendingIntent pendingIntent = getPendingIntent();
-            alarmManager.set(AlarmManager.RTC_WAKEUP, nextNotificationTime.getMillis(), pendingIntent);
-        }
-    }
-
-    private boolean isAlarmAlreadySet() {
-        boolean alarmSet = (PendingIntent.getBroadcast(
-                context,
-                0,
-                new Intent(context, AlarmListener_.class),
-                PendingIntent.FLAG_NO_CREATE) != null);
-        return alarmSet;
+        PendingIntent pendingIntent = getPendingIntent();
+        alarmManager.set(AlarmManager.RTC_WAKEUP, nextNotificationTime.getMillis(), pendingIntent);
     }
 
     private PendingIntent getPendingIntent() {

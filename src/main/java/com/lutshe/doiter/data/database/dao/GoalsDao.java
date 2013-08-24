@@ -17,6 +17,7 @@ public class GoalsDao {
     static final String END_TIME = "end_time";
     static final String GOAL_NAME = "name";
     static final String GOAL_STATUS = "status";
+    static final String LAST_MESSAGE_INDEX = "last_message_index";
 
     static final String BUT_ONLY_USER_GOALS = " WHERE " + END_TIME + " is not null";
     static final String BUT_ONLY_ACTIVE_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE'";
@@ -43,10 +44,17 @@ public class GoalsDao {
         db.getWritableDatabase().update(GOALS_TABLE, values, GOAL_ID + "=" + goalId, null);
     }
 
+    public void updateGoalLastMessage(Long goalId, long lastMessageIndex) {
+        ContentValues values = new ContentValues();
+        values.put(LAST_MESSAGE_INDEX, lastMessageIndex);
+        db.getWritableDatabase().update(GOALS_TABLE, values, GOAL_ID + "=" + goalId, null);
+    }
+
     public void addGoal(Goal goal) {
         ContentValues values = new ContentValues();
         values.put(GOAL_ID, goal.getId());
         values.put(GOAL_NAME, goal.getName());
+        values.put(LAST_MESSAGE_INDEX, goal.getLastMessageIndex());
         db.getWritableDatabase().insert(GOALS_TABLE, null, values);
     }
 
@@ -96,9 +104,11 @@ public class GoalsDao {
         String name = cursor.getString(cursor.getColumnIndex(GOAL_NAME));
         Long endTime = cursor.getLong(cursor.getColumnIndex(END_TIME));
         Goal.Status status = Goal.Status.valueOf(cursor.getString(cursor.getColumnIndex(GOAL_STATUS)));
+        Long lastMessageIndex = cursor.getLong(cursor.getColumnIndex(LAST_MESSAGE_INDEX));
         Goal goal = new Goal(name, goalId);
         goal.setEndTime(endTime);
-        goal.setType(status);
+        goal.setStatus(status);
+        goal.setLastMessageIndex(lastMessageIndex);
         return goal;
     }
 

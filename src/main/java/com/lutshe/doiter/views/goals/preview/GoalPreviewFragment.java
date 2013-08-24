@@ -86,5 +86,6 @@ public class GoalPreviewFragment extends Fragment {
     private void addFirstMessage() {
         Message message = messagesDao.getMessage(goalId, Message.Type.FIRST);
         messagesDao.updateMessageDeliveryTime(message.getId());
+        goalsDao.updateGoalLastMessage(goalId, message.getOrderIndex());
     }
 }
