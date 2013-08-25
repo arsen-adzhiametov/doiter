@@ -70,7 +70,7 @@ public class GoalPreviewFragment extends Fragment {
     }
 
     private void showGoal() {
-        fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
+        fragmentsSwitcher.show(UserGoalsListFragment_.builder().build(), false);
     }
 
     private void scheduleNextAlarm() {

@@ -31,9 +31,9 @@ public class MainActivity extends Activity {
         }
 
         if (goalsDao.getUserGoalsCount() == 0) {
-            fragmentsSwitcher.show(R.id.fragment_container, GoalsListFragment_.builder().build());
+            fragmentsSwitcher.show(GoalsListFragment_.builder().build(), false);
         } else {
-            fragmentsSwitcher.show(R.id.fragment_container, UserGoalsListFragment_.builder().build());
+            fragmentsSwitcher.show(UserGoalsListFragment_.builder().build(), false);
         }
     }
 

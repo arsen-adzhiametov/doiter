@@ -34,6 +34,6 @@ public class UserGoalsListFragment extends Fragment {
 
     @Click(R.id.showAllGoalsButton)
     void showAllGoals(){
-        fragmentsSwitcher.show(R.id.fragment_container, GoalsListFragment_.builder().build());
+        fragmentsSwitcher.show(GoalsListFragment_.builder().build(), true);
     }
 }

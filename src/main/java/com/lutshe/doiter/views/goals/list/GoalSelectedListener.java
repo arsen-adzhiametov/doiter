@@ -2,10 +2,8 @@ package com.lutshe.doiter.views.goals.list;
 
 import android.view.View;
 import android.widget.AdapterView;
-
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
-import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.views.goals.preview.GoalPreviewFragment;
 import com.lutshe.doiter.views.goals.preview.GoalPreviewFragment_;
@@ -28,6 +26,6 @@ public class GoalSelectedListener implements AdapterView.OnItemClickListener {
         Goal goal = goalsListAdapter.getItem(position);
 
         GoalPreviewFragment detailFragment = GoalPreviewFragment_.builder().goalId(goal.getId()).build();
-        fragmentsSwitcher.show(R.id.fragment_container, detailFragment);
+        fragmentsSwitcher.show(detailFragment, true);
     }
 }
