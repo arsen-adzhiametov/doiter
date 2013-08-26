@@ -14,9 +14,7 @@ import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
-import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
 import com.lutshe.doiter.views.goals.list.GoalItemView;
 import com.lutshe.doiter.views.goals.list.GoalItemView_;
@@ -29,9 +27,6 @@ public class UserGoalsListAdapter extends BaseAdapter{
 
     private Goal[] userGoals;
 
-    @Bean(GoalsProviderStub.class)
-    GoalsProvider goalsProvider;
-
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;
 
@@ -43,7 +38,7 @@ public class UserGoalsListAdapter extends BaseAdapter{
 
     @AfterInject
     void initAdapter() {
-        userGoals = goalsDao.getAllUserGoals();
+        userGoals = goalsDao.getActiveUserGoals();
     }
 
     @Override
@@ -75,8 +70,8 @@ public class UserGoalsListAdapter extends BaseAdapter{
         if (goalView == null) {
             goalView = GoalItemView_.build(context);
         }
-        long goalId = getItem(position).getId();
-        Goal goal = goalsProvider.getGoalById(goalId);
+
+        Goal goal = getItem(position);
         Bitmap bitmap = imagesProvider.getImage(goal.getId());
         return goalView.bind(goal, bitmap);
     }

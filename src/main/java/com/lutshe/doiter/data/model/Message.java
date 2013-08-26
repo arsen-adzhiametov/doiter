@@ -5,7 +5,7 @@ package com.lutshe.doiter.data.model;
  */
 public class Message {
 
-    private long id;
+    private Long id;
 
     private final String text;
     private final long userGoalId;
@@ -19,14 +19,14 @@ public class Message {
         OTHER
     }
 
-    public Message(long id, String text, long userGoalId, Long orderIndex) {
+    public Message(Long id, String text, long userGoalId, Long orderIndex) {
         this.id = id;
         this.text = text;
         this.userGoalId = userGoalId;
         this.orderIndex = orderIndex;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -54,5 +54,9 @@ public class Message {
 
     public Long getOrderIndex() {
         return orderIndex;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

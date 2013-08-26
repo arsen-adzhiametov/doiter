@@ -106,4 +106,23 @@ public class MessagesDao {
         values.put(DELIVERY_TIME, DateTime.now().getMillis());
         db.getWritableDatabase().update(MESSAGES_TABLE, values, MESSAGE_ID + "=" + messageId, null);
     }
+
+    public Long getMaxMessageIdForGoal(Long id) {
+        Cursor cursor = db.getReadableDatabase().rawQuery("select max(" + ORDER_INDEX + ") from " + MESSAGES_TABLE + " where " + USER_GOAL_ID + " = " + id, null);
+        if (cursor.getCount() == 0) {
+            return -1L;
+        }
+
+        try {
+            cursor.moveToNext();
+            return cursor.getLong(0);
+        } catch (Exception e) {
+            // TODO send exceptions to bugsense or something else
+            e.printStackTrace();
+        } finally {
+            cursor.close();
+        }
+
+        return -1L;
+    }
 }

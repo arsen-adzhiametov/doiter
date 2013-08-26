@@ -7,10 +7,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
-import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
 import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
 
@@ -32,8 +31,8 @@ public class UserGoalDetailFragment extends Fragment {
     @Bean
     MessagesListAdapter messagesListAdapter;
 
-    @Bean(GoalsProviderStub.class)
-    GoalsProvider goalsProvider;
+    @Bean
+    GoalsDao goalsDao;
 
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;
@@ -46,7 +45,7 @@ public class UserGoalDetailFragment extends Fragment {
         messagesListAdapter.initAdapter(goalId);
         userGoalMessagesList.setAdapter(messagesListAdapter);
 
-        Goal goal = goalsProvider.getGoalById(goalId);
+        Goal goal = goalsDao.getGoal(goalId);
         goalName.setText(goal.getName());
 
         Bitmap bitmap = imagesProvider.getImage(goalId);

@@ -12,10 +12,9 @@ import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.RootContext;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
-import com.lutshe.doiter.data.provider.GoalsProvider;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.stub.GoalsProviderStub;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
 
 /**
@@ -26,8 +25,8 @@ public class GoalsListAdapter extends BaseAdapter {
 
     private Goal[] goals;
 
-    @Bean(GoalsProviderStub.class)
-    GoalsProvider goalsProvider;
+    @Bean
+    GoalsDao goalsProvider;
 
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;

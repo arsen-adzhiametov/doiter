@@ -1,0 +1,1 @@
+<WakefulIntentService listener="com.lutshe.doiter.preloaders.AppListener" />

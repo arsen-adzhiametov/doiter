@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.annotations.Trace;
 import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.model.Message;
@@ -23,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, 1);
     }
 
+    @Trace
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + GOALS_TABLE + " (" +
