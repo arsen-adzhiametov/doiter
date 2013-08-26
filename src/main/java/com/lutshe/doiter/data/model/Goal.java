@@ -41,6 +41,10 @@ public class Goal {
         this.status = status;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public Long getLastMessageIndex() {
         return lastMessageIndex;
     }

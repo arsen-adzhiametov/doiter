@@ -25,7 +25,7 @@
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="000000"
+            android:text="1377623291944"
             android:id="@+id/editEndTime"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"

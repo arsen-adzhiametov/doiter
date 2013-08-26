@@ -21,17 +21,19 @@ public class GoalsDao {
 
     static final String BUT_ONLY_ACTIVE_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE'";
     static final String BUT_ONLY_USER_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE' or " + GOAL_STATUS + " = 'INACTIVE'";
+    static final String BUT_ONLY_GOAL_WITH_ID = " WHERE " + GOAL_ID + " = ";
 
     static final String SELECT_ALL_GOALS = "SELECT * FROM " + GOALS_TABLE;
     static final String SELECT_ACTIVE_GOALS = SELECT_ALL_GOALS + BUT_ONLY_ACTIVE_GOALS;
+    static final String SELECT_GOAL_WITH_ID = SELECT_ALL_GOALS + BUT_ONLY_GOAL_WITH_ID;
 
     static final String SELECT_ALL_GOALS_COUNT = "SELECT count(*) FROM " + GOALS_TABLE;
-    static final String SELECT_USER_GOALS_COUNT = SELECT_ALL_GOALS_COUNT + BUT_ONLY_ACTIVE_GOALS;
+    static final String SELECT_USER_GOALS_COUNT = SELECT_ALL_GOALS_COUNT + BUT_ONLY_USER_GOALS;
+    static final String SELECT_ACTIVE_GOALS_COUNT = SELECT_ALL_GOALS_COUNT + BUT_ONLY_ACTIVE_GOALS;
     static final String SELECT_ALL_USER_GOALS = SELECT_ALL_GOALS + BUT_ONLY_USER_GOALS;
 
     @Bean
     DatabaseHelper db;
-    private Goal[] allUserGoals;
 
     public void updateGoalEndTime(Long goalId, Long endTime) {
         ContentValues values = new ContentValues();
@@ -90,7 +92,7 @@ public class GoalsDao {
         return getCount(SELECT_ALL_GOALS_COUNT);
     }
 
-    public int getActiveUserGoalsCount() {
+    public int getUserGoalsCount() {
         return getCount(SELECT_USER_GOALS_COUNT);
     }
 
@@ -116,7 +118,7 @@ public class GoalsDao {
     }
 
     public Goal getGoal(Long goalId) {
-        Cursor cursor = db.getReadableDatabase().rawQuery("select * from " + GOALS_TABLE + " where " + GOAL_ID + " = " + goalId, null);
+        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_GOAL_WITH_ID + goalId, null);
         try {
             if (cursor.getCount() == 0) {
                 return null;

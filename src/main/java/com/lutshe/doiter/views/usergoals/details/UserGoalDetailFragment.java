@@ -11,6 +11,7 @@ import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
 
 /**
@@ -27,6 +28,9 @@ public class UserGoalDetailFragment extends Fragment {
 
     @ViewById(R.id.userGoalMessagesList)
     ListView userGoalMessagesList;
+
+    @ViewById(R.id.textTimeCountdown)
+    TextView timerView;
 
     @Bean
     MessagesListAdapter messagesListAdapter;
@@ -50,5 +54,7 @@ public class UserGoalDetailFragment extends Fragment {
 
         Bitmap bitmap = imagesProvider.getImage(goalId);
         goalCover.setImageBitmap(bitmap);
+
+        new FinalCountdown(goal.getEndTime(), timerView).start();
     }
 }

@@ -27,11 +27,7 @@ public class FragmentsSwitcher {
         FragmentClass fragmentClass = FragmentClass.valueOf(fragment.getClass().getSimpleName());
         switch (fragmentClass) {
             case GoalsListFragment_:
-                doTransaction(fragment, addToBackStack);
-                return;
             case GoalPreviewFragment_:
-                doTransaction(fragment, addToBackStack);
-                return;
             case UserGoalDetailFragment_:
                 doTransaction(fragment, addToBackStack);
                 return;

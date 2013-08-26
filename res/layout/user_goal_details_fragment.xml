@@ -11,6 +11,8 @@
             android:scaleType="centerCrop"
             />
 
+    <include layout="@layout/timer_container"/>
+
     <TextView
             android:id="@+id/goalNameDetail"
             android:layout_below="@id/goalCoverDetail"

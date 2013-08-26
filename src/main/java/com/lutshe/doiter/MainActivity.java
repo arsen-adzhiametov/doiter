@@ -26,7 +26,6 @@ public class MainActivity extends Activity {
     @Bean GoalsDao goalsDao;
     @Bean TestDataSetup testDataSetup;
 
-
     @SystemService AlarmManager alarmManager;
 
     @AfterViews
@@ -38,7 +37,7 @@ public class MainActivity extends Activity {
             WakefulIntentService.scheduleAlarms(new AppListener(), this, true);
         }
 
-        if (goalsDao.getActiveUserGoalsCount() == 0) {
+        if (goalsDao.getUserGoalsCount() == 0) {
             fragmentsSwitcher.show(GoalsListFragment_.builder().build(), false);
         } else {
             fragmentsSwitcher.show(UserGoalsListFragment_.builder().build(), false);

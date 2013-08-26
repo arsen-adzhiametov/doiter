@@ -12,8 +12,12 @@ import com.googlecode.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.MainActivity_;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
+import com.lutshe.doiter.data.database.dao.MessagesDao;
+import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+
+import java.util.Random;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -25,16 +29,20 @@ public class NotificationFactory {
     Context context;
 
     @Bean
-    GoalsDao goalsProvider;
+    GoalsDao goalsDao;
+
+    @Bean
+    MessagesDao messagesDao;
 
     @Bean(ImagesProviderStub.class)
     ImagesProvider imagesProvider;
 
+    private static final Random random = new Random();
+
     public Notification createNotification(int quantity) {
-        Long goalId = 1L; //TODO
-        Bitmap icon = imagesProvider.getImage(goalId);
-        String text = "Blah - Blah - Blah - Blah";  //TODO
-        String title = "You have a " + quantity + " new messages";   //TODO
+        Bitmap icon = getRandomActualImage();
+        String text = getRandomActualMessage();
+        String title = getTitleText(quantity);
 
         Intent notificationIntent = new Intent(context, MainActivity_.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -53,6 +61,28 @@ public class NotificationFactory {
                         .setContentTitle(title);
 
         return nb.build();
+    }
+
+    private String getTitleText(int quantity){
+        String template = "You have a " + quantity + " new message";
+        if (quantity == 1) return template;
+        else return template+"s";
+    }
+
+    private Goal getRandomUserGoal(){
+        Goal[] goals = goalsDao.getAllUserGoals();
+        int i = random.nextInt(goals.length);
+        return goals[i];
+    }
+
+    private String getRandomActualMessage(){
+        Goal goal = getRandomUserGoal();
+        return messagesDao.getMessage(goal.getId(), goal.getLastMessageIndex()).getText();
+    }
+
+    private Bitmap getRandomActualImage(){
+        Goal goal = getRandomUserGoal();
+        return imagesProvider.getImage(goal.getId());
     }
 
 }
