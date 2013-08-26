@@ -1,34 +1,28 @@
 package com.lutshe.doiter.data.rest.clients;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.lutshe.doiter.data.model.Goal;
+import android.content.Context;
 
-import retrofit.RestAdapter;
+import com.googlecode.androidannotations.annotations.EBean;
+import com.lutshe.doiter.R;
+import com.lutshe.doiter.data.model.Goal;
 
 /**
  * Created by Arturro on 26.08.13.
  */
 @EBean
-public class GoalsRestClient implements GoalsService {
+public class GoalsRestClient extends AbstractRestClient<GoalsService> implements GoalsService {
 
-    private static GoalsService goalsService;
-
-    private static synchronized GoalsService service() {
-        if (goalsService == null) {
-            RestAdapter adapter = new RestAdapter.Builder().setServer("http://192.168.1.17:8844/api/json/v1").setDebug(true).build();
-            goalsService = adapter.create(GoalsService.class);
-        }
-        return goalsService;
+    protected GoalsRestClient(Context context) {
+        super(GoalsService.class, context.getResources().getString(R.string.serverUrl));
     }
 
     @Override
     public Goal[] getAllGoals() {
-        return service().getAllGoals();
+        return service.getAllGoals();
     }
 
     @Override
     public Goal getGoal(Long goalId) {
-        return service().getGoal(goalId);
+        return service.getGoal(goalId);
     }
 }

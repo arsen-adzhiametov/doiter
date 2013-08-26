@@ -3,7 +3,6 @@ package com.lutshe.doiter.preloaders;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.commonsware.cwac.wakeful.WakefulIntentService;
@@ -17,8 +16,9 @@ public class AppListener implements WakefulIntentService.AlarmListener {
         Log.i("Loaders alarm", "scheduling");
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis() + 10 * 1000,
-                60 * 1000,
+                System.currentTimeMillis() + 10000,//AlarmManager.INTERVAL_HOUR,
+//                AlarmManager.INTERVAL_DAY,
+                10000,
                 pendingIntent);
     }
 
