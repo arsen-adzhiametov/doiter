@@ -55,6 +55,6 @@ public class UserGoalDetailFragment extends Fragment {
         Bitmap bitmap = imagesProvider.getImage(goalId);
         goalCover.setImageBitmap(bitmap);
 
-        new FinalCountdown(goal.getEndTime(), timerView).start();
+        FinalCountdown.getTimer(goal.getEndTime(), timerView).start();
     }
 }
