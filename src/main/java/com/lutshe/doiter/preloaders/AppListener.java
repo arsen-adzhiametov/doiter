@@ -16,9 +16,8 @@ public class AppListener implements WakefulIntentService.AlarmListener {
         Log.i("Loaders alarm", "scheduling");
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis() + 10000,//AlarmManager.INTERVAL_HOUR,
-//                AlarmManager.INTERVAL_DAY,
-                10000,
+                System.currentTimeMillis() + AlarmManager.INTERVAL_HOUR,
+                AlarmManager.INTERVAL_DAY,
                 pendingIntent);
     }
 
