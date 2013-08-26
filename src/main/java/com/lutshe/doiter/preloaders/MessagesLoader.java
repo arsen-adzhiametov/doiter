@@ -10,7 +10,6 @@ import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.model.Message;
 import com.lutshe.doiter.data.rest.clients.MessagesRestClient;
-import com.lutshe.doiter.data.rest.clients.MessagesService;
 
 /**
  * Created by Arturro on 24.08.13.
@@ -33,6 +32,10 @@ public class MessagesLoader implements Loader {
     @Override
     public void load() {
         Goal[] userGoals = goalsDao.getActiveUserGoals();
+        if (userGoals == null) {
+            return;
+        }
+
         for (Goal userGoal : userGoals) {
             Long maxAvailable = messagesDao.getMaxMessageIdForGoal(userGoal.getId());
             Long lastReceived = userGoal.getLastMessageIndex();

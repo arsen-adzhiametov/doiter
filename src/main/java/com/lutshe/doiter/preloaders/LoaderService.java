@@ -9,10 +9,11 @@ import android.util.Log;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.EService;
 
 import org.joda.time.DateTime;
+
+import retrofit.RetrofitError;
 
 /**
  * Created by Arturro on 24.08.13.
@@ -48,8 +49,10 @@ public class LoaderService extends WakefulIntentService {
 
         for (Loader loader : loaders) {
             long lastCallTime = getLastCallTime(loader);
+            Log.i(TAG, "last call time for " + loader.getClass().getName() + " is " + new DateTime(lastCallTime).toString());
 
-            boolean shouldBeCalled = System.currentTimeMillis() - loader.getLoadingInterval() < lastCallTime;
+            boolean shouldBeCalled = System.currentTimeMillis() >= lastCallTime + loader.getLoadingInterval();
+            Log.i(TAG, shouldBeCalled ? "calling it" : "skipping it");
             if (shouldBeCalled) {
                 callLoader(loader);
             }
@@ -61,7 +64,11 @@ public class LoaderService extends WakefulIntentService {
         try {
             loader.load();
             updateLastCallTime(loader);
-        } catch (Throwable e) {
+        }
+        catch (RetrofitError re) {
+            Log.w(TAG, "error calling service: " + re.getCause().getMessage());
+        }
+        catch (Throwable e) {
             Log.e(TAG, "failed to execute loader", e);
         }
     }
