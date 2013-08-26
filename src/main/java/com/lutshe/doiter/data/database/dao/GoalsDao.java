@@ -20,15 +20,18 @@ public class GoalsDao {
     static final String LAST_MESSAGE_INDEX = "last_message_index";
 
     static final String BUT_ONLY_ACTIVE_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE'";
+    static final String BUT_ONLY_USER_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE' or " + GOAL_STATUS + " = 'INACTIVE'";
 
     static final String SELECT_ALL_GOALS = "SELECT * FROM " + GOALS_TABLE;
     static final String SELECT_ACTIVE_GOALS = SELECT_ALL_GOALS + BUT_ONLY_ACTIVE_GOALS;
 
     static final String SELECT_ALL_GOALS_COUNT = "SELECT count(*) FROM " + GOALS_TABLE;
     static final String SELECT_USER_GOALS_COUNT = SELECT_ALL_GOALS_COUNT + BUT_ONLY_ACTIVE_GOALS;
+    static final String SELECT_ALL_USER_GOALS = SELECT_ALL_GOALS + BUT_ONLY_USER_GOALS;
 
     @Bean
     DatabaseHelper db;
+    private Goal[] allUserGoals;
 
     public void updateGoalEndTime(Long goalId, Long endTime) {
         ContentValues values = new ContentValues();
@@ -59,6 +62,11 @@ public class GoalsDao {
     public Goal[] getAllGoals() {
         return getGoals(SELECT_ALL_GOALS);
     }
+
+    public Goal[] getAllUserGoals() {
+        return getGoals(SELECT_ALL_USER_GOALS);
+    }
+
     public Goal[] getActiveUserGoals() {
         return getGoals(SELECT_ACTIVE_GOALS);
     }

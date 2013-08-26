@@ -38,7 +38,7 @@ public class UserGoalsListAdapter extends BaseAdapter{
 
     @AfterInject
     void initAdapter() {
-        userGoals = goalsDao.getActiveUserGoals();
+        userGoals = goalsDao.getAllUserGoals();
     }
 
     @Override
