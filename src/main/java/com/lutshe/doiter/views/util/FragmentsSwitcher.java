@@ -3,9 +3,12 @@ package com.lutshe.doiter.views.util;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.views.UpdatableView;
 
 /**
  * Created by Artur
@@ -15,6 +18,7 @@ public class FragmentsSwitcher {
 
     private Activity activity;
     private int containerId = R.id.fragment_container;
+    private Fragment currentFragment;
 
     private enum FragmentClass {
         GoalsListFragment_,
@@ -40,25 +44,26 @@ public class FragmentsSwitcher {
     }
 
     private void doTransaction(Fragment fragment, boolean addToBackStack) {
+        FragmentTransaction transaction = activity.getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.fadein, R.anim.fadeout, R.anim.fadein, R.anim.fadeout)
+                .replace(containerId, fragment);
+
         if (addToBackStack) {
-            activity.getFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.fadein, R.anim.fadeout, R.anim.fadein, R.anim.fadeout)
-                    .replace(containerId, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        } else {
-            activity.getFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.fadein, R.anim.fadeout, R.anim.fadein, R.anim.fadeout)
-                    .replace(containerId, fragment)
-                    .commit();
+            transaction.addToBackStack(null);
         }
 
+        currentFragment = fragment;
+        transaction.commit();
     }
 
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
 
+    public void updateCurrentFragment() {
+        if (currentFragment instanceof UpdatableView) {
+            ((UpdatableView) currentFragment).update();
+        }
+    }
 }

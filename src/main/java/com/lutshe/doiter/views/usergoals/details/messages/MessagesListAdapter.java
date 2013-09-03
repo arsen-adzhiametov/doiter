@@ -18,6 +18,7 @@ import com.lutshe.doiter.data.model.Message;
 @EBean
 public class MessagesListAdapter extends BaseAdapter {
 
+    private Long goalId;
     private Message[] messages;
 
     @Bean
@@ -27,7 +28,8 @@ public class MessagesListAdapter extends BaseAdapter {
     Context context;
 
     public void initAdapter(Long goalId){
-        messages = messagesDao.getAllMessages(goalId);
+        this.goalId = goalId;
+        loadMessages(goalId);
     }
 
     @Override
@@ -54,5 +56,15 @@ public class MessagesListAdapter extends BaseAdapter {
         }
         Message message = getItem(position);
         return messageItemView.bind(message);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        loadMessages(goalId);
+        super.notifyDataSetChanged();
+    }
+
+    private void loadMessages(Long goalId) {
+        messages = messagesDao.getAllMessages(goalId);
     }
 }

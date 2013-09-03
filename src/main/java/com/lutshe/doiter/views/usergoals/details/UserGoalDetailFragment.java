@@ -5,12 +5,18 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.googlecode.androidannotations.annotations.*;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.FragmentArg;
+import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
 
@@ -18,7 +24,7 @@ import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
  * Created by Arsen Adzhiametov on 7/31/13.
  */
 @EFragment(R.layout.user_goal_details_fragment)
-public class UserGoalDetailFragment extends Fragment {
+public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @ViewById(R.id.goalCoverDetail)
     ImageView goalCover;
@@ -56,5 +62,10 @@ public class UserGoalDetailFragment extends Fragment {
         goalCover.setImageBitmap(bitmap);
 
         FinalCountdown.getTimer(goal.getEndTime(), timerView).start();
+    }
+
+    @Override
+    public void update() {
+        messagesListAdapter.notifyDataSetChanged();
     }
 }

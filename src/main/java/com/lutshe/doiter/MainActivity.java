@@ -2,17 +2,18 @@ package com.lutshe.doiter;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.content.Intent;
 
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Fullscreen;
 import com.googlecode.androidannotations.annotations.NoTitle;
 import com.googlecode.androidannotations.annotations.SystemService;
+import com.googlecode.androidannotations.annotations.Trace;
 import com.lutshe.doiter.data.database.TestDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
-import com.lutshe.doiter.preloaders.AppListener;
+import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
@@ -34,7 +35,7 @@ public class MainActivity extends Activity {
 
         if (isFirstLaunch()) {
             testDataSetup.setup();
-            WakefulIntentService.scheduleAlarms(new AppListener(), this, true);
+            UpdatesAlarmListener.scheduleUpdates(getApplicationContext());
         }
 
         if (goalsDao.getUserGoalsCount() == 0) {
@@ -46,5 +47,11 @@ public class MainActivity extends Activity {
 
     private boolean isFirstLaunch() {
         return goalsDao.getAllGoalsCount() == 0;
+    }
+
+    @Trace
+    @Override
+    protected void onNewIntent(Intent intent) {
+        fragmentsSwitcher.updateCurrentFragment();
     }
 }

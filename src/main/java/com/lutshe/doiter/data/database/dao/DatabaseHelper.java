@@ -3,14 +3,26 @@ package com.lutshe.doiter.data.database.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.Trace;
 import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.model.Message;
 
-import static com.lutshe.doiter.data.database.dao.GoalsDao.*;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.*;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.END_TIME;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.GOALS_TABLE;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_ID;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_NAME;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_STATUS;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.LAST_MESSAGE_INDEX;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.DELIVERY_TIME;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.MESSAGES_TABLE;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.MESSAGE_ID;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.ORDER_INDEX;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.TEXT;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.TYPE;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.USER_GOAL_ID;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -36,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ");");
 
         db.execSQL("CREATE TABLE " + MESSAGES_TABLE + " (" +
-                MESSAGE_ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TEXT + " TEXT NOT NULL, " +
                 DELIVERY_TIME + " LONG, " +
                 USER_GOAL_ID + " INTEGER NOT NULL, " +

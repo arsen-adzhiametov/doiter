@@ -2,9 +2,11 @@ package com.lutshe.doiter.data.database.dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.lutshe.doiter.data.model.Message;
+
 import org.joda.time.DateTime;
 
 /**
@@ -37,7 +39,7 @@ public class MessagesDao {
     }
 
     public Message[] getAllMessages(Long goalId) {
-        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " AND " + DELIVERY_TIME + " IS NOT NULL", null);
+        Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " AND " + DELIVERY_TIME + " IS NOT NULL ORDER BY " + DELIVERY_TIME + " DESC", null);
         Message[] messages = null;
         if (cursor != null && cursor.moveToFirst()) {
             messages = new Message[cursor.getCount()];
@@ -65,6 +67,10 @@ public class MessagesDao {
     public Message getMessage(Long goalId, Message.Type type) {
         Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " and " + TYPE + " = '" + type.name() + "'", null);
         try {
+            if (cursor == null || cursor.getCount() == 0) {
+                return null;
+            }
+
             cursor.moveToFirst();
             return mapMessage(cursor);
         } finally {
@@ -75,6 +81,10 @@ public class MessagesDao {
     public Message getMessage(Long goalId, Long messageIndex) {
         Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " and " + ORDER_INDEX + " = " + messageIndex, null);
         try {
+            if (cursor == null || cursor.getCount() == 0) {
+                return null;
+            }
+
             cursor.moveToFirst();
             return mapMessage(cursor);
         } finally {

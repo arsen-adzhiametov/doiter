@@ -10,7 +10,7 @@ import com.commonsware.cwac.wakeful.WakefulIntentService;
 /**
  * Created by Arturro on 24.08.13.
  */
-public class AppListener implements WakefulIntentService.AlarmListener {
+public class UpdatesAlarmListener implements WakefulIntentService.AlarmListener {
     @Override
     public void scheduleAlarms(AlarmManager alarmManager, PendingIntent pendingIntent, Context context) {
         Log.i("Loaders alarm", "scheduling");
@@ -29,5 +29,9 @@ public class AppListener implements WakefulIntentService.AlarmListener {
     @Override
     public long getMaxAge() {
         return AlarmManager.INTERVAL_DAY * 2;
+    }
+
+    public static void scheduleUpdates(Context context) {
+        WakefulIntentService.scheduleAlarms(new UpdatesAlarmListener(), context, true);
     }
 }

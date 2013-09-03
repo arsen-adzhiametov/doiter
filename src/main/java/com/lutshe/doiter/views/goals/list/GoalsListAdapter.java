@@ -5,12 +5,9 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
-import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
@@ -34,31 +31,26 @@ public class GoalsListAdapter extends BaseAdapter {
     @RootContext
     Context context;
 
-    @AfterInject
-    void initAdapter() {
-        goals = goalsProvider.getAllGoals();
-    }
-
     @Override
     public int getCount() {
-        return goals.length;
+        return goals().length;
     }
 
     @Override
     public Goal getItem(int position) {
-        return goals[position];
+        return goals()[position];
+    }
+
+    private Goal[] goals() {
+        if (goals == null) {
+            loadGoals();
+        }
+        return goals;
     }
 
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    @ItemClick
-    public void listItemClicked(Goal goal) {
-        Toast toast = new Toast(context);
-        toast.setText(goal.getName());
-        toast.show();
     }
 
     @Override
@@ -72,5 +64,15 @@ public class GoalsListAdapter extends BaseAdapter {
         Goal goal = getItem(position);
         Bitmap bitmap = imagesProvider.getImage(goal.getId());
         return goalView.bind(goal, bitmap);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        loadGoals();
+        super.notifyDataSetChanged();
+    }
+
+    private void loadGoals() {
+        goals = goalsProvider.getAllGoals();
     }
 }

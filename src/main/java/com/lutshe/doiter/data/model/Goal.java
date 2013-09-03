@@ -52,4 +52,15 @@ public class Goal {
     public void setLastMessageIndex(Long lastMessageIndex) {
         this.lastMessageIndex = lastMessageIndex;
     }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", endTime=" + endTime +
+                ", lastMessageIndex=" + lastMessageIndex +
+                ", status=" + status +
+                '}';
+    }
 }

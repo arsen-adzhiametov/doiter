@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
-import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.ItemClick;
@@ -36,19 +35,14 @@ public class UserGoalsListAdapter extends BaseAdapter{
     @RootContext
     Context context;
 
-    @AfterInject
-    void initAdapter() {
-        userGoals = goalsDao.getAllUserGoals();
-    }
-
     @Override
     public int getCount() {
-        return userGoals.length;
+        return goals().length;
     }
 
     @Override
     public Goal getItem(int position) {
-        return userGoals[position];
+        return goals()[position];
     }
 
     @Override
@@ -74,5 +68,22 @@ public class UserGoalsListAdapter extends BaseAdapter{
         Goal goal = getItem(position);
         Bitmap bitmap = imagesProvider.getImage(goal.getId());
         return goalView.bind(goal, bitmap);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        loadGoals();
+        super.notifyDataSetChanged();
+    }
+
+    private Goal[] goals() {
+        if (userGoals == null) {
+            loadGoals();
+        }
+        return userGoals;
+    }
+
+    private void loadGoals() {
+        userGoals = goalsDao.getAllUserGoals();
     }
 }

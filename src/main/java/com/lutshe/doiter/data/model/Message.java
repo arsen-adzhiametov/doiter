@@ -19,6 +19,10 @@ public class Message {
         OTHER
     }
 
+    public Message(String text, long userGoalId, Long orderIndex) {
+        this(null, text, userGoalId, orderIndex);
+    }
+
     public Message(Long id, String text, long userGoalId, Long orderIndex) {
         this.id = id;
         this.text = text;
@@ -58,5 +62,17 @@ public class Message {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", userGoalId=" + userGoalId +
+                ", deliveryTime=" + deliveryTime +
+                ", orderIndex=" + orderIndex +
+                ", type=" + type +
+                '}';
     }
 }

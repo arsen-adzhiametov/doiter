@@ -1,11 +1,18 @@
 package com.lutshe.doiter.views.goals.preview;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.googlecode.androidannotations.annotations.*;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.FragmentArg;
+import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
@@ -16,6 +23,8 @@ import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
 import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
+
+import org.joda.time.DateTime;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -52,14 +61,16 @@ public class GoalPreviewFragment extends Fragment {
         Goal goal = goalsDao.getGoal(goalId);
         goalName.setText(goal.getName());
 
+        editEndTime.setText(String.valueOf(new DateTime().getMillis() + (AlarmManager.INTERVAL_DAY * 3)));
+
         Bitmap bitmap = imagesProvider.getImage(goalId);
         goalCover.setImageBitmap(bitmap);
     }
 
     @Click(R.id.addGoalButton)
     void addToUserGoals() {
-        activateGoal();
         addFirstMessage();
+        activateGoal();
         scheduleNextAlarm();
         showGoal();
     }

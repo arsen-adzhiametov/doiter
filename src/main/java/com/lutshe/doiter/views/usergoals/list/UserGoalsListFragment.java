@@ -3,8 +3,14 @@ package com.lutshe.doiter.views.usergoals.list;
 import android.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.googlecode.androidannotations.annotations.*;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
@@ -12,7 +18,7 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
  * Created by Arsen Adzhiametov on 7/31/13.
  */
 @EFragment(R.layout.user_goal_list_fragment)
-public class UserGoalsListFragment extends Fragment {
+public class UserGoalsListFragment extends Fragment implements UpdatableView {
 
     @ViewById(R.id.userGoalsList)
     ListView userGoalsList;
@@ -35,5 +41,10 @@ public class UserGoalsListFragment extends Fragment {
     @Click(R.id.showAllGoalsButton)
     void showAllGoals(){
         fragmentsSwitcher.show(GoalsListFragment_.builder().build(), true);
+    }
+
+    @Override
+    public void update() {
+        userGoalsListAdapter.notifyDataSetChanged();
     }
 }

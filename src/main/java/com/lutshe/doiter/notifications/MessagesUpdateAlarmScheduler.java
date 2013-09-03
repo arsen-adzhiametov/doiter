@@ -4,11 +4,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.SystemService;
+import com.googlecode.androidannotations.annotations.Trace;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
+
 import org.joda.time.DateTime;
 
 /**
@@ -28,6 +31,7 @@ public class MessagesUpdateAlarmScheduler {
     @Bean
     MessagesDao messagesDao;
 
+    @Trace
     public void scheduleNextAlarm() {
         DateTime nextNotificationTime = getNextNotificationTime();
         PendingIntent pendingIntent = getPendingIntent();
