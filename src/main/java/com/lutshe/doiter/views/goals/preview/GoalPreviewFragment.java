@@ -19,7 +19,7 @@ import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.model.Message;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
@@ -41,7 +41,7 @@ public class GoalPreviewFragment extends Fragment {
     @ViewById(R.id.editEndTime)
     EditText editEndTime;
 
-    @Bean(ImagesProviderStub.class)
+    @Bean(ImagesProviderImpl.class)
     ImagesProvider imagesProvider;
 
     @Bean GoalsDao goalsDao;
@@ -63,7 +63,7 @@ public class GoalPreviewFragment extends Fragment {
 
         editEndTime.setText(String.valueOf(new DateTime().getMillis() + (AlarmManager.INTERVAL_DAY * 3)));
 
-        Bitmap bitmap = imagesProvider.getImage(goalId);
+        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         goalCover.setImageBitmap(bitmap);
     }
 

@@ -12,7 +12,7 @@ import com.googlecode.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 
 /**
  * Created by Artur
@@ -25,7 +25,7 @@ public class GoalsListAdapter extends BaseAdapter {
     @Bean
     GoalsDao goalsProvider;
 
-    @Bean(ImagesProviderStub.class)
+    @Bean(ImagesProviderImpl.class)
     ImagesProvider imagesProvider;
 
     @RootContext
@@ -62,7 +62,7 @@ public class GoalsListAdapter extends BaseAdapter {
         }
 
         Goal goal = getItem(position);
-        Bitmap bitmap = imagesProvider.getImage(goal.getId());
+        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         return goalView.bind(goal, bitmap);
     }
 

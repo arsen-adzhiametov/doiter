@@ -53,6 +53,10 @@ public class Goal {
         this.lastMessageIndex = lastMessageIndex;
     }
 
+    public String getImageName() {
+        return getId() + ".png";
+    }
+
     @Override
     public String toString() {
         return "Goal{" +

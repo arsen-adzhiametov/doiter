@@ -1,0 +1,111 @@
+package com.lutshe.doiter.data.provider;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.support.v4.util.LruCache;
+import android.util.Log;
+import android.view.WindowManager;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.annotations.RootContext;
+import com.googlecode.androidannotations.annotations.SystemService;
+import com.googlecode.androidannotations.annotations.Trace;
+import com.googlecode.androidannotations.annotations.res.BooleanRes;
+import com.googlecode.androidannotations.annotations.res.StringRes;
+import com.googlecode.androidannotations.api.Scope;
+import com.lutshe.doiter.R;
+import com.lutshe.doiter.data.database.InitialDataSetup;
+import com.lutshe.doiter.views.util.IoUtils;
+
+/**
+ * Created by Arturro on 04.09.13.
+ */
+@EBean(scope = Scope.Singleton)
+public class ImagesProviderImpl implements ImagesProvider {
+
+    public static final int DEFAULT_BYTES_PER_PIXEL = 3;
+    public static final int CACHE_SIZE_MULTIPLIER = 3;
+
+    private static int requestsCount;
+
+    @StringRes(R.string.images_dir)
+    String imagesDir;
+
+    @BooleanRes(R.bool.debug)
+    Boolean isDebug;
+
+    @RootContext
+    Context context;
+
+    @SystemService
+    WindowManager windowManager;
+
+    private LruCache<String, Bitmap> bitmapsCache;
+
+    @AfterViews
+    void init() {
+        Point size = new Point();
+        windowManager.getDefaultDisplay().getSize(size);
+        bitmapsCache = new LruCache<String, Bitmap>(getCacheSize(size)) {
+            @Override
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount();
+            }
+        };
+    }
+
+    @Trace
+    @Override
+    public Bitmap getImage(String name) {
+        requestsCount ++;
+        logCacheStatistics();
+
+        Bitmap bitmap = bitmapsCache.get(name);
+        if (bitmap != null) {
+            return bitmap;
+        }
+
+        bitmap = loadImage(name);
+
+        if (bitmap == null) {
+            bitmap = getDefaultBitmap();
+        } else {
+            bitmapsCache.put(name, bitmap);
+        }
+
+        return bitmap;
+    }
+
+    private void logCacheStatistics() {
+        if (isDebug && requestsCount % 5 == 0) {
+            Log.i(getClass().getName(), "total requests count = " + requestsCount + " with " + bitmapsCache.hitCount() + " hits and " + bitmapsCache.missCount() + " misses.");
+        }
+    }
+
+    private Bitmap loadImage(String name) {
+        if (isImageFromResources(name)) {
+            return BitmapFactory.decodeResource(context.getResources(), getResourceId(name));
+        } else {
+            return IoUtils.getBitmap(imagesDir + name);
+        }
+    }
+
+    private boolean isImageFromResources(String name) {
+        return InitialDataSetup.goalsImages.containsKey(name);
+    }
+
+    private int getResourceId(String name) {
+        return InitialDataSetup.goalsImages.get(name);
+    }
+
+    private Bitmap getDefaultBitmap() {
+        return BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_donkey);
+    }
+
+    private int getCacheSize(Point screenSize) {
+        return DEFAULT_BYTES_PER_PIXEL * screenSize.x * screenSize.y * CACHE_SIZE_MULTIPLIER;
+    }
+}

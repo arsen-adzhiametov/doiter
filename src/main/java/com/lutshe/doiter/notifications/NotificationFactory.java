@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.NotificationCompat;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
@@ -15,7 +16,7 @@ import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 
 import java.util.Random;
 
@@ -34,7 +35,7 @@ public class NotificationFactory {
     @Bean
     MessagesDao messagesDao;
 
-    @Bean(ImagesProviderStub.class)
+    @Bean(ImagesProviderImpl.class)
     ImagesProvider imagesProvider;
 
     private static final Random random = new Random();
@@ -82,7 +83,7 @@ public class NotificationFactory {
 
     private Bitmap getRandomActualImage(){
         Goal goal = getRandomUserGoal();
-        return imagesProvider.getImage(goal.getId());
+        return imagesProvider.getImage(goal.getImageName());
     }
 
 }

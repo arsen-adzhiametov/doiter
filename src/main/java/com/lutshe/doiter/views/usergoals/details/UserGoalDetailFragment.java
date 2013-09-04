@@ -15,7 +15,7 @@ import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.data.provider.stub.ImagesProviderStub;
+import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
@@ -44,7 +44,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     @Bean
     GoalsDao goalsDao;
 
-    @Bean(ImagesProviderStub.class)
+    @Bean(ImagesProviderImpl.class)
     ImagesProvider imagesProvider;
 
     @FragmentArg
@@ -58,7 +58,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
         Goal goal = goalsDao.getGoal(goalId);
         goalName.setText(goal.getName());
 
-        Bitmap bitmap = imagesProvider.getImage(goalId);
+        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         goalCover.setImageBitmap(bitmap);
 
         FinalCountdown.getTimer(goal.getEndTime(), timerView).start();

@@ -11,7 +11,7 @@ import com.googlecode.androidannotations.annotations.Fullscreen;
 import com.googlecode.androidannotations.annotations.NoTitle;
 import com.googlecode.androidannotations.annotations.SystemService;
 import com.googlecode.androidannotations.annotations.Trace;
-import com.lutshe.doiter.data.database.TestDataSetup;
+import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
@@ -25,7 +25,8 @@ public class MainActivity extends Activity {
 
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean GoalsDao goalsDao;
-    @Bean TestDataSetup testDataSetup;
+    @Bean
+    InitialDataSetup testDataSetup;
 
     @SystemService AlarmManager alarmManager;
 
