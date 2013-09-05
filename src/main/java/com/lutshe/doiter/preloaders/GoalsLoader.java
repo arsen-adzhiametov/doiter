@@ -7,8 +7,6 @@ import android.util.Log;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.Trace;
-import com.googlecode.androidannotations.annotations.res.StringRes;
-import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.model.Goal;
@@ -40,9 +38,6 @@ class GoalsLoader implements Loader {
     @Bean MessagesRestClient messagesRestClient;
     @Bean ImageRestClient imageRestClient;
 
-    @StringRes(R.string.images_dir)
-    String imagesDir;
-
     @Override
     public long getLoadingInterval() {
         return LOADING_INTERVAL;
@@ -51,8 +46,6 @@ class GoalsLoader implements Loader {
     @Trace
     @Override
     public void load() {
-        new java.io.File(imagesDir).mkdirs();
-
         Goal[] allGoals = goalsRestClient.getAllGoals();
         for (Goal goal : allGoals) {
             storeGoal(goal);
@@ -72,6 +65,7 @@ class GoalsLoader implements Loader {
         Message[] messages = messagesRestClient.getMessagesForGoal(goal.getId(), 0L, 10L);
         Log.d(GoalsLoader.class.getName(), "number of messages: " + messages.length);
         for (Message message : messages) {
+            message.setId(null);
             messagesDao.addMessage(message);
         }
     }
@@ -87,7 +81,7 @@ class GoalsLoader implements Loader {
         try {
 
             Bitmap bitmap = getBitmap(res.getBody().in());
-            writeBitmapToFile(bitmap, imagesDir + goal.getImageName());
+            writeBitmapToFile(bitmap, goal.getImageName());
 
         } catch (IOException e) {
             Log.e(GoalsLoader.class.getName(), "error loading image for goal " + goal, e);

@@ -8,13 +8,11 @@ import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.SystemService;
 import com.googlecode.androidannotations.annotations.Trace;
 import com.googlecode.androidannotations.annotations.res.BooleanRes;
-import com.googlecode.androidannotations.annotations.res.StringRes;
 import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.InitialDataSetup;
@@ -31,9 +29,6 @@ public class ImagesProviderImpl implements ImagesProvider {
 
     private static int requestsCount;
 
-    @StringRes(R.string.images_dir)
-    String imagesDir;
-
     @BooleanRes(R.bool.debug)
     Boolean isDebug;
 
@@ -45,22 +40,24 @@ public class ImagesProviderImpl implements ImagesProvider {
 
     private LruCache<String, Bitmap> bitmapsCache;
 
-    @AfterViews
-    void init() {
-        Point size = new Point();
-        windowManager.getDefaultDisplay().getSize(size);
-        bitmapsCache = new LruCache<String, Bitmap>(getCacheSize(size)) {
-            @Override
-            protected int sizeOf(String key, Bitmap value) {
-                return value.getByteCount();
-            }
-        };
+    private synchronized void initCacheIfNeeded() {
+        if (bitmapsCache == null) {
+            Point size = new Point();
+            windowManager.getDefaultDisplay().getSize(size);
+            bitmapsCache = new LruCache<String, Bitmap>(getCacheSize(size)) {
+                @Override
+                protected int sizeOf(String key, Bitmap value) {
+                    return value.getByteCount();
+                }
+            };
+        }
     }
 
     @Trace
     @Override
     public Bitmap getImage(String name) {
         requestsCount ++;
+        initCacheIfNeeded();
         logCacheStatistics();
 
         Bitmap bitmap = bitmapsCache.get(name);
@@ -89,7 +86,7 @@ public class ImagesProviderImpl implements ImagesProvider {
         if (isImageFromResources(name)) {
             return BitmapFactory.decodeResource(context.getResources(), getResourceId(name));
         } else {
-            return IoUtils.getBitmap(imagesDir + name);
+            return IoUtils.getBitmap(name);
         }
     }
 

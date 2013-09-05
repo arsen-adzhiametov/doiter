@@ -9,9 +9,9 @@ import retrofit.http.GET;
  */
 public interface GoalsService {
 
-    @GET("json/v1/goals/all")
+    @GET("/json.v1.goals/all")
     Goal[] getAllGoals();
 
-    @GET("json/v1/goals/{goalId}")
+    @GET("/json.v1.goals/{goalId}")
     Goal getGoal(Long goalId);
 }

@@ -25,8 +25,7 @@ public class MainActivity extends Activity {
 
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean GoalsDao goalsDao;
-    @Bean
-    InitialDataSetup testDataSetup;
+    @Bean InitialDataSetup testDataSetup;
 
     @SystemService AlarmManager alarmManager;
 

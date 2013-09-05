@@ -2,9 +2,11 @@ package com.lutshe.doiter.views.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,7 +22,7 @@ public final class IoUtils {
 
     public static Bitmap getBitmap(String fileName) {
         try {
-            return  getBitmap(new FileInputStream(fileName));
+            return getBitmap(new FileInputStream(getFile(fileName)));
         } catch (FileNotFoundException e) {
             Log.e(IoUtils.class.getName(), "error loading bitmap " + fileName, e);
             return null;
@@ -39,7 +41,11 @@ public final class IoUtils {
         OutputStream os = null;
 
         try {
-            os = new FileOutputStream(fileName);
+            File file = getFile(fileName);
+            file.mkdirs();
+            file.createNewFile();
+
+            os = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
 
         } catch (IOException e) {
@@ -57,6 +63,11 @@ public final class IoUtils {
                 Log.wtf(IoUtils.class.getName(), e);
             }
         }
+    }
+
+    private static File getFile(String fileName) throws FileNotFoundException {
+        // FIXME http://stackoverflow.com/questions/6942677/sd-canwrite-always-returns-false
+        return new File(Environment.getExternalStorageDirectory() + File.separator + "doiter", fileName);
     }
 
     /**

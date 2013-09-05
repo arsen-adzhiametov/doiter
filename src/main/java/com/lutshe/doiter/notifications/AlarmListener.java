@@ -70,7 +70,7 @@ public class AlarmListener extends BroadcastReceiver {
     private boolean isActivityRunning() {
         List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(1);
         ComponentName runningActivity = tasks.get(0).topActivity;
-        return runningActivity.getPackageName().startsWith("com.lutshe");
+        return runningActivity.getPackageName().startsWith("com.lutshe.doiter");
     }
 
     private void notifyActivity(Context context) {

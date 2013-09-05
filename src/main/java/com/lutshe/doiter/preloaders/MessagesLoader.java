@@ -52,7 +52,7 @@ public class MessagesLoader implements Loader {
     private void loadMessagesForGoal(Goal userGoal, long loadFromIndex, Long lastReceived) {
         Message[] messages = messagesRestClient.getMessagesForGoal(userGoal.getId(), loadFromIndex, 10L - (loadFromIndex - lastReceived));
         for (Message message : messages) {
-            message.setId((Long) null);
+            message.setId(null);
             messagesDao.addMessage(message);
         }
     }
