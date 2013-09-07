@@ -2,14 +2,19 @@ package com.lutshe.doiter.views.timer;
 
 import android.os.CountDownTimer;
 import android.widget.TextView;
+import com.lutshe.doiter.data.model.Goal;
 import org.joda.time.DateTime;
+
+import java.util.HashMap;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
 public class FinalCountdown extends CountDownTimer {
 
-    private static final long COUNTDOWN_INTERVAL = 471;
+    public static HashMap<Long, CountDownTimer> timers = new HashMap<Long, CountDownTimer>();
+
+    private static final long COUNTDOWN_INTERVAL = 11;
     private TextView timerView;
 
     private FinalCountdown(long endTime, TextView timerView) {
@@ -17,9 +22,16 @@ public class FinalCountdown extends CountDownTimer {
         this.timerView = timerView;
     }
 
-    public static FinalCountdown getTimer(long goalEndTime, TextView timerView){
-        long timeDiff = goalEndTime - DateTime.now().getMillis();
-        return new FinalCountdown(timeDiff, timerView);
+    public static CountDownTimer getTimer(Goal goal, TextView timerView){
+        CountDownTimer timer = timers.get(goal.getId());
+        if (timer!=null) {
+            timer.cancel();
+            timers.remove(goal.getId());
+        }
+        long timeDiff = goal.getEndTime() - DateTime.now().getMillis();
+        CountDownTimer newTimer = new FinalCountdown(timeDiff, timerView);
+        timers.put(goal.getId(), newTimer);
+        return newTimer;
     }
 
     @Override
@@ -30,5 +42,11 @@ public class FinalCountdown extends CountDownTimer {
     @Override
     public void onFinish() {
         timerView.setText("Finish");
+    }
+
+    public static void invalidateTimers() {
+        for (CountDownTimer timer : timers.values()){
+            timer.cancel();
+        }
     }
 }

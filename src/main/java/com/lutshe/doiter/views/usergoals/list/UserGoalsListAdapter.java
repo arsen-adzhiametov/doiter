@@ -5,11 +5,8 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
-
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
@@ -48,13 +45,6 @@ public class UserGoalsListAdapter extends BaseAdapter{
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    @ItemClick
-    public void listItemClicked(Goal goal) {
-        Toast toast = new Toast(context);
-        toast.setText(goal.getName());
-        toast.show();
     }
 
     @Override

@@ -34,7 +34,7 @@ public class GoalItemView extends LinearLayout {
         goalName.setText(goal.getName());
         goalCover.setImageBitmap(bitmap);
         if (goal.getStatus() != Goal.Status.OTHER)
-        FinalCountdown.getTimer(goal.getEndTime(), timerView).start();
+        FinalCountdown.getTimer(goal, timerView).start();
         return this;
     }
 }

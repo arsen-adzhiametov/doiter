@@ -5,12 +5,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.FragmentArg;
-import com.googlecode.androidannotations.annotations.ViewById;
+import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.model.Goal;
@@ -61,7 +56,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
         Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         goalCover.setImageBitmap(bitmap);
 
-        FinalCountdown.getTimer(goal.getEndTime(), timerView).start();
+        FinalCountdown.getTimer(goal, timerView).start();
     }
 
     @Override

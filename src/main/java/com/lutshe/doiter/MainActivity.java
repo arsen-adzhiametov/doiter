@@ -3,18 +3,12 @@ package com.lutshe.doiter;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
-
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.Fullscreen;
-import com.googlecode.androidannotations.annotations.NoTitle;
-import com.googlecode.androidannotations.annotations.SystemService;
-import com.googlecode.androidannotations.annotations.Trace;
+import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
+import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
@@ -53,5 +47,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         fragmentsSwitcher.updateCurrentFragment();
+    }
+
+    @Override
+    protected void onPause() {
+        FinalCountdown.invalidateTimers();
+        super.onPause();
     }
 }
