@@ -47,6 +47,7 @@
             <meta-data android:name="com.commonsware.cwac.wakeful" android:resource="@xml/wakeful"/>
         </receiver>
         <service android:name=".preloaders.LoaderService_" />
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="96cfb43e6913852c3b39b9fee07ef00ed87760dc"/>
     </application>
 
 </manifest>

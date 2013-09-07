@@ -11,6 +11,7 @@ import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
+import com.crashlytics.android.Crashlytics;
 
 @NoTitle
 @Fullscreen
@@ -25,6 +26,7 @@ public class MainActivity extends Activity {
 
     @AfterViews
     void initViews() {
+        Crashlytics.start(this);
         fragmentsSwitcher.setActivity(this);
 
         if (isFirstLaunch()) {
