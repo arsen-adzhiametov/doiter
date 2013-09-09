@@ -40,6 +40,11 @@
         </receiver>
 
         <!-- Preloaders: https://github.com/commonsguy/cwac-wakeful -->
+        <receiver android:name=".preloaders.InternetConnectionListener">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <receiver android:name="com.commonsware.cwac.wakeful.AlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -47,6 +52,8 @@
             <meta-data android:name="com.commonsware.cwac.wakeful" android:resource="@xml/wakeful"/>
         </receiver>
         <service android:name=".preloaders.LoaderService_" />
+
+        <!--Bug Tracker-->
         <meta-data android:name="com.crashlytics.ApiKey" android:value="96cfb43e6913852c3b39b9fee07ef00ed87760dc"/>
     </application>
 
