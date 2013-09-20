@@ -20,7 +20,7 @@ import org.joda.time.DateTime;
 @EBean
 public class MessagesUpdateAlarmScheduler {
 
-    private static final long TIME_GAP = 10 * 1000;
+    private static final long TIME_GAP = 10 * 1000 * 100;
 
     @RootContext
     Context context;

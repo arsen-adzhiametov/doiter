@@ -11,7 +11,7 @@ import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.UpdatableView;
-import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
+import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
@@ -40,7 +40,7 @@ public class UserGoalsListFragment extends Fragment implements UpdatableView {
 
     @Click(R.id.showAllGoalsButton)
     void showAllGoals(){
-        fragmentsSwitcher.show(GoalsListFragment_.builder().build(), true);
+        fragmentsSwitcher.show(GoalsMapFragment_.builder().build(), true);
     }
 
     @Override

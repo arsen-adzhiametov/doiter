@@ -24,7 +24,8 @@ public class FragmentsSwitcher {
         GoalsListFragment_,
         GoalPreviewFragment_,
         UserGoalsListFragment_,
-        UserGoalDetailFragment_
+        UserGoalDetailFragment_,
+        GoalsMapFragment_
     }
 
     public void show(Fragment fragment, boolean addToBackStack) {
@@ -36,6 +37,7 @@ public class FragmentsSwitcher {
                 doTransaction(fragment, addToBackStack);
                 return;
             case UserGoalsListFragment_:
+            case GoalsMapFragment_:
                 activity.getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 doTransaction(fragment, addToBackStack);
                 return;

@@ -3,15 +3,22 @@ package com.lutshe.doiter;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
-import com.googlecode.androidannotations.annotations.*;
+
+import com.crashlytics.android.Crashlytics;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Fullscreen;
+import com.googlecode.androidannotations.annotations.NoTitle;
+import com.googlecode.androidannotations.annotations.SystemService;
+import com.googlecode.androidannotations.annotations.Trace;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
-import com.lutshe.doiter.views.goals.list.GoalsListFragment_;
+import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
-import com.crashlytics.android.Crashlytics;
 
 @NoTitle
 @Fullscreen
@@ -35,7 +42,7 @@ public class MainActivity extends Activity {
         }
 
         if (goalsDao.getUserGoalsCount() == 0) {
-            fragmentsSwitcher.show(GoalsListFragment_.builder().build(), false);
+            fragmentsSwitcher.show(GoalsMapFragment_.builder().build(), false);
         } else {
             fragmentsSwitcher.show(UserGoalsListFragment_.builder().build(), false);
         }

@@ -4,10 +4,6 @@
           android:versionCode="1"
           android:versionName="1.0">
 
-    <uses-sdk
-            android:minSdkVersion="13"
-            android:targetSdkVersion="17"/>
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -56,5 +52,4 @@
         <!--Bug Tracker-->
         <meta-data android:name="com.crashlytics.ApiKey" android:value="96cfb43e6913852c3b39b9fee07ef00ed87760dc"/>
     </application>
-
 </manifest>
