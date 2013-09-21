@@ -1,18 +1,11 @@
 package com.lutshe.doiter.views.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * Created by Arturro on 04.09.13.
@@ -20,9 +13,11 @@ import java.io.OutputStream;
 public final class IoUtils {
     private IoUtils(){};
 
-    public static Bitmap getBitmap(String fileName) {
+    public static Bitmap getBitmap(String fileName, Context context) {
+        InputStream is;
         try {
-            return getBitmap(new FileInputStream(getFile(fileName)));
+            is = context.openFileInput(fileName);
+            return getBitmap(is);
         } catch (FileNotFoundException e) {
             Log.e(IoUtils.class.getName(), "error loading bitmap " + fileName, e);
             return null;
@@ -37,17 +32,11 @@ public final class IoUtils {
         }
     }
 
-    public static void writeBitmapToFile(Bitmap bitmap, String fileName) {
+    public static void writeBitmapToFile(Bitmap bitmap, String fileName, Context context) {
         OutputStream os = null;
-
         try {
-            File file = getFile(fileName);
-            file.mkdirs();
-            file.createNewFile();
-
-            os = new FileOutputStream(file);
+            os = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
-
         } catch (IOException e) {
             Log.e(IoUtils.class.getName(), "error storing image " + fileName, e);
         } finally {
@@ -63,11 +52,6 @@ public final class IoUtils {
                 Log.wtf(IoUtils.class.getName(), e);
             }
         }
-    }
-
-    private static File getFile(String fileName) throws FileNotFoundException {
-        // FIXME http://stackoverflow.com/questions/6942677/sd-canwrite-always-returns-false
-        return new File(Environment.getExternalStorageDirectory() + File.separator + "doiter", fileName);
     }
 
     /**
