@@ -1,11 +1,12 @@
 package com.lutshe.doiter.preloaders;
 
 import android.app.AlarmManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.Trace;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
@@ -14,12 +15,11 @@ import com.lutshe.doiter.data.model.Message;
 import com.lutshe.doiter.data.rest.clients.GoalsRestClient;
 import com.lutshe.doiter.data.rest.clients.ImageRestClient;
 import com.lutshe.doiter.data.rest.clients.MessagesRestClient;
-
 import org.apache.http.HttpStatus;
+import retrofit.client.Response;
 
 import java.io.IOException;
-
-import retrofit.client.Response;
+import java.io.InputStream;
 
 import static com.lutshe.doiter.views.util.IoUtils.getBitmap;
 import static com.lutshe.doiter.views.util.IoUtils.writeBitmapToFile;
@@ -29,11 +29,12 @@ import static com.lutshe.doiter.views.util.IoUtils.writeBitmapToFile;
  */
 @EBean
 class GoalsLoader implements Loader {
+
     public static final long LOADING_INTERVAL = AlarmManager.INTERVAL_DAY * 7;
 
     @Bean GoalsDao goalsDao;
     @Bean MessagesDao messagesDao;
-
+    @RootContext Context context;
     @Bean GoalsRestClient goalsRestClient;
     @Bean MessagesRestClient messagesRestClient;
     @Bean ImageRestClient imageRestClient;
@@ -79,9 +80,9 @@ class GoalsLoader implements Loader {
         }
 
         try {
-
-            Bitmap bitmap = getBitmap(res.getBody().in());
-            writeBitmapToFile(bitmap, goal.getImageName());
+            InputStream is = res.getBody().in();
+            Bitmap bitmap = getBitmap(is);
+            writeBitmapToFile(bitmap, goal.getImageName(), context);
 
         } catch (IOException e) {
             Log.e(GoalsLoader.class.getName(), "error loading image for goal " + goal, e);

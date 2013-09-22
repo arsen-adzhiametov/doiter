@@ -86,7 +86,7 @@ public class ImagesProviderImpl implements ImagesProvider {
         if (isImageFromResources(name)) {
             return BitmapFactory.decodeResource(context.getResources(), getResourceId(name));
         } else {
-            return IoUtils.getBitmap(name);
+            return IoUtils.getBitmap(name, context);
         }
     }
 
