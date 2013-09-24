@@ -19,6 +19,7 @@ import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
+import com.newrelic.agent.android.NewRelic;
 
 @NoTitle
 @Fullscreen
@@ -34,6 +35,8 @@ public class MainActivity extends Activity {
     @AfterViews
     void initViews() {
         Crashlytics.start(this);
+        NewRelic.withApplicationToken("AA8a51d35143bc258445a7cb114119ad09312499f1").start(this.getApplication());
+
         fragmentsSwitcher.setActivity(this);
 
         if (isFirstLaunch()) {

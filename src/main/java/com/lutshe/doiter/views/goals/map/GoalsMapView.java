@@ -1,58 +1,48 @@
 package com.lutshe.doiter.views.goals.map;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.util.Log;
+import android.graphics.Rect;
+import android.view.SurfaceHolder;
 
+import com.lutshe.doiter.data.model.Goal;
 import com.lutshe.doiter.views.common.CanvasView;
-import com.lutshe.doiter.views.common.Drawer;
 import com.lutshe.doiter.views.common.Looper;
+import com.lutshe.doiter.views.common.TouchHandler;
+import com.lutshe.doiter.views.goals.map.model.Map;
+import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
  * Created by Arturro on 15.09.13.
  */
 public class GoalsMapView extends CanvasView {
 
-    private static final long REDRAW_RATE = 30;
-
     private Looper renderer;
+    private MapController controller;
+    private GoalsMapUpdater updater;
 
-    public GoalsMapView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-
-    public GoalsMapView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public GoalsMapView(Context context) {
+    public GoalsMapView(FragmentsSwitcher fragmentsSwitcher, Context context, Goal... goals) {
         super(context);
+        controller = new MapController(fragmentsSwitcher, new Map(goals));
+        setOnTouchListener(new TouchHandler(controller));
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Log.d("Drawer", "onAttachedToWindow");
-        renderer = new Drawer(this) {
-            @Override
-            protected void draw(Canvas canvas) {
-                Log.d("draw", "drawing!");
-                canvas.drawColor(Color.GREEN);
-                Paint paint = new Paint();
-                paint.setColor(Color.RED);
-                canvas.drawCircle(100, 100, 30, paint);
-            }
-        };
+    public void surfaceCreated(SurfaceHolder holder) {
+        super.surfaceCreated(holder);
+        Rect rect = getViewBounds();
+        controller.setScreenSize(rect.width(), rect.height());
+
+        renderer = new GoalsMapDrawer(this, controller, rect);
+        updater = new GoalsMapUpdater(controller);
+
+        new Thread(updater).start();
         new Thread(renderer).start();
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        Log.d("Drawer", "onDetachedFromWindow");
         renderer.shutDown();
+        updater.shutDown();
         super.onDetachedFromWindow();
     }
 }

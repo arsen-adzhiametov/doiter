@@ -5,7 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by Arturro on 04.09.13.
@@ -52,38 +56,5 @@ public final class IoUtils {
                 Log.wtf(IoUtils.class.getName(), e);
             }
         }
-    }
-
-    /**
-     * This class can not be uglier. So here you go:
-     * Method that returns 2.
-     * Or not.
-     */
-    public static int tryToCatchEverythingAndFinallyReturnTwoBitch(Throwable throwable) {
-        try {
-            throw new RuntimeException(throwable);
-        } catch (Exception e) {
-            try {
-                boolean iAmFalse = 0 == 1;
-                iAmFalse |= iAmFalse;
-            } finally {
-                try {
-                    throw e.getCause();
-                } catch (Throwable throwable1) {
-                    try {
-                        int length = throwable1.getClass().getName().getBytes().length;
-                        length -= length;
-                        int iAmInfinity = 1 / length;
-                    } catch (Throwable throwable2) {
-                        try {
-                            Log.wtf("WTF", "!!!");
-                        } finally {
-                            return 2;
-                        }
-                    }
-                }
-            }
-        }
-        return 0;
     }
 }

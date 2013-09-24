@@ -63,6 +63,11 @@
             <artifactId>androidannotations-api</artifactId>
             <version>2.7.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.newrelic.agent.android</groupId>
+            <artifactId>android-agent</artifactId>
+            <version>2.426.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -101,6 +106,18 @@
                         <id>CleanupResources</id>
                         <goals>
                             <goal>CleanupResources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.newrelic.agent.android</groupId>
+                <artifactId>agent-maven-plugin</artifactId>
+                <version>2.426.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>instrument</goal>
                         </goals>
                     </execution>
                 </executions>

@@ -41,4 +41,8 @@ public abstract class Looper implements Runnable {
 	public void shutDown() {
 		turnOffRequested = true;
 	}
+
+    public long getLastUpdateTime() {
+        return lastUpdateTime;
+    }
 }

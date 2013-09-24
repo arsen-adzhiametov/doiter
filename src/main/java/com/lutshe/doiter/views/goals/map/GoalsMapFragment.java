@@ -1,12 +1,14 @@
 package com.lutshe.doiter.views.goals.map;
 
 import android.app.Fragment;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.views.common.CanvasView;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
+import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
  * Created by Arturro on 15.09.13.
@@ -14,10 +16,15 @@ import com.lutshe.doiter.views.common.CanvasView;
 @EFragment(R.layout.goals_map_fragment)
 public class GoalsMapFragment extends Fragment {
 
+    @Bean(GoalsDao.class)
+    GoalsDao goalsDao;
+
+    @Bean
+    FragmentsSwitcher fragmentsSwitcher;
+
     @AfterViews
-    public void afterShown() {
-        LinearLayout layout = (LinearLayout) getView();
-        layout.addView(new CanvasView(getActivity()));
-        layout.invalidate();
+    public void init() {
+        GoalsMapView view = new GoalsMapView(fragmentsSwitcher, getActivity().getApplicationContext(), goalsDao.getAllGoals());
+        ((FrameLayout)getView()).addView(view);
     }
 }
