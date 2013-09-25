@@ -14,9 +14,6 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
  * Created by Arturro on 22.09.13.
  */
 public class MapController implements TouchEventsListener {
-    private static final String TAG = MapController.class.getName();
-    private static final int SLOWNESS_FACTOR = 1; // full stop in one second
-
     private final FragmentsSwitcher fragmentsSwitcher;
     private final Map map;
 
@@ -26,8 +23,8 @@ public class MapController implements TouchEventsListener {
     private int screenWidth;
     private int screenHeight;
 
-    private double currentOffsetX;
-    private double currentOffsetY;
+    private float currentOffsetX;
+    private float currentOffsetY;
 
     public MapController(FragmentsSwitcher fragmentsSwitcher, Map map) {
         this.fragmentsSwitcher = fragmentsSwitcher;
@@ -60,36 +57,39 @@ public class MapController implements TouchEventsListener {
     }
 
     public void updateState(long dt) {
-        if (scrollSpeedX != 0) {
-            currentOffsetX += (scrollSpeedX  * dt ) >> 10;
-            if (currentOffsetX > screenWidth) {
-                currentOffsetX -= screenWidth;
-            }
-            if (currentOffsetX < 0) {
-                currentOffsetX = screenWidth - currentOffsetX;
-            }
-        }
-
-        if (scrollSpeedY != 0) {
-            currentOffsetY += (scrollSpeedY * dt) >> 10;
-            if (currentOffsetY > screenHeight) {
-                currentOffsetY -= screenHeight;
-            }
-            if (currentOffsetY < 0) {
-                currentOffsetY = screenHeight - currentOffsetY;
-            }
-        }
+        addOffsets((scrollSpeedX  * dt ) >> 10, (scrollSpeedY * dt) >> 10);
     }
 
     @Override
     public void onScroll(float dx, float dy, long dt) {
-        scrollSpeedX = (int) ((dx * 1024) / dt);
-        scrollSpeedY = (int) ((dy * 1024) / dt);
+        addOffsets(dx, dy);
+    }
+
+    private void addOffsets(float dx, float dy) {
+        if (dx != 0) {
+            currentOffsetX = trim(currentOffsetX + dx, 0, screenWidth);
+        }
+
+        if (dy != 0) {
+            currentOffsetY = trim(currentOffsetY + dy, 0, screenHeight);
+        }
+    }
+
+    private float trim(float value, float minValue, float maxValue) {
+        if (value > maxValue) {
+            return value - maxValue;
+        }
+        if (value < minValue) {
+            return maxValue - value;
+        }
+        return value;
     }
 
     @Override
     public void onClick(float x, float y) {
-        Goal goal = map.findGoalUnder(x - currentOffsetX, y - currentOffsetY);
+        x = trim(x - currentOffsetX, 0, screenWidth);
+        y = trim(y - currentOffsetY, 0, screenHeight);
+        Goal goal = map.findGoalUnder(x, y);
         if (goal == null) return;
 
         Fragment detailFragment;
@@ -105,5 +105,12 @@ public class MapController implements TouchEventsListener {
     public void onEventFinished(float dx, float dy, long time) {
         scrollSpeedX = 0;
         scrollSpeedY = 0;
+    }
+
+    public int getCellWidth() {
+        return Map.CELL_WIDTH;
+    }
+    public int getCellHeight() {
+        return Map.CELL_HEIGHT;
     }
 }

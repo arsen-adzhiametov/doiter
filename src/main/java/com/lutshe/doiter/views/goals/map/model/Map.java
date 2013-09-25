@@ -16,8 +16,8 @@ public class Map {
 
     private static final int BORDER = 10;
 
-    private static final int CELL_WIDTH = GoalView.ViewType.WIDE_GOAL.w + BORDER * 2;
-    private static final int CELL_HEIGHT = GoalView.ViewType.TALL_GOAL.h + BORDER * 2;
+    public static final int CELL_WIDTH = GoalView.ViewType.WIDE_GOAL.w + BORDER * 2;
+    public static final int CELL_HEIGHT = GoalView.ViewType.TALL_GOAL.h + BORDER * 2;
 
     private GoalView[][] goalsGrid;
 
@@ -65,13 +65,21 @@ public class Map {
     }
 
     public Goal findGoalUnder(double x, double y) {
-        for (GoalView[] row : goalsGrid) {
-            for (GoalView view : row) {
-                if (view.getX() <= x && x <= view.getX() + view.getWidth() && view.getY() <= y && y <= view.getHeight() + view.getY()) {
-                    return view.getGoal();
-                }
-            }
+        int row = (int) (x / CELL_WIDTH);
+        int col = (int) (y / CELL_HEIGHT);
+
+        GoalView goalView;
+
+        goalView = goalsGrid[row][col];
+        if (hitTest(x, y, goalView)) {
+            return goalView.getGoal();
         }
+
+        // TODO: test siblings if moving out of borders is allowed
         return null;
+    }
+
+    private boolean hitTest(double x, double y, GoalView view) {
+        return view.getX() <= x && x <= view.getX() + view.getWidth() && view.getY() <= y && y <= view.getHeight() + view.getY();
     }
 }

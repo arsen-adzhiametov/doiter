@@ -45,32 +45,39 @@ public class TouchHandler implements View.OnTouchListener {
                 eventEndTime = System.currentTimeMillis();
                 eventEndX = event.getX();
                 eventEndY = event.getY();
-                listener.onEventFinished(eventEndX - eventStartX, eventEndY - eventEndX, eventEndTime - eventStartTime);
+                listener.onEventFinished(eventEndX - eventStartX, eventEndY - eventStartY, eventEndTime - eventStartTime);
                 if (!isLongerThanClick) {
+                    Log.d(TAG, "onClick " + event.getX() + " " + event.getY());
                     listener.onClick(event.getX(), event.getY());
                 }
                 Log.d(TAG, "UP " + event.getX() + " " + event.getY());
+                clearState();
                 break;
-
 
             case MotionEvent.ACTION_MOVE:
                 long eventTime = System.currentTimeMillis();
                 if (isLongerThanClick) {
+                    Log.v(TAG, "onScroll");
                     listener.onScroll(event.getX() - eventPrevX, event.getY() - eventPrevY, eventTime - eventPrevTime);
-                } else if (eventTime - eventPrevTime > MAX_CLICK_DURATION && (Math.abs(event.getX() - eventPrevX) < MAX_CLICK_MOVE || Math.abs(event.getY() - eventPrevY) < MAX_CLICK_MOVE)) {
+                } else if (eventTime - eventStartTime > MAX_CLICK_DURATION && (Math.abs(event.getX() - eventStartX) > MAX_CLICK_MOVE || Math.abs(event.getY() - eventStartY) > MAX_CLICK_MOVE)) {
+                    Log.d(TAG, "not a click");
                     isLongerThanClick = true;
                 }
 
-                eventPrevTime = System.currentTimeMillis();
+                eventPrevTime = eventTime;
                 eventPrevX = event.getX();
                 eventPrevY = event.getY();
-
-                Log.d(TAG, "MOVE " + event.getX() + " " + event.getY());
                 break;
             default:
                 Log.d(TAG, event.toString() + " " + event.getX() + " " + event.getY());
         }
 
         return true;
+    }
+
+    private void clearState() {
+        eventStartX = eventStartY = eventPrevX = eventPrevY = eventEndX = eventEndY = 0;
+        eventStartTime = eventPrevTime = eventEndTime = 0;
+        isLongerThanClick = false;
     }
 }

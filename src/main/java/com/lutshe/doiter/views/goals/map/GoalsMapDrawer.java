@@ -28,7 +28,7 @@ public class GoalsMapDrawer extends Drawer {
     protected void draw(Canvas canvas) {
         drawBackground(canvas);
 
-//        canvas.clipRect(0, 0, screenWidth, screenHeight);
+        canvas.clipRect(0, 0, screenWidth, screenHeight);
 
         canvas.save();
         canvas.translate((float) controller.getCurrentOffsetX(), (float) controller.getCurrentOffsetY());
@@ -42,6 +42,9 @@ public class GoalsMapDrawer extends Drawer {
     private void drawMap(int x, int y, Canvas canvas) {
         canvas.save();
         canvas.translate((float) x, (float) y);
+
+        drawGrid(canvas, controller);
+
         GoalView[][] views = controller.getGoalViews();
         for (GoalView[] row : views) {
             for (GoalView view : row) {
@@ -49,6 +52,20 @@ public class GoalsMapDrawer extends Drawer {
             }
         }
         canvas.restore();
+    }
+
+    private void drawGrid(Canvas canvas, MapController controller) {
+        Paint paint = new Paint();
+        paint.setColor(Color.RED);
+
+        canvas.drawLine(0, 0, 0, screenHeight, paint);
+        canvas.drawLine(0, 0, screenWidth, 0, paint);
+
+        paint.setColor(Color.MAGENTA);
+        for(int col = 1; col < controller.getGoalViews()[0].length; col++) {
+            int x = col * controller.getCellWidth();
+            canvas.drawLine(x, 0, x, screenHeight, paint);
+        }
     }
 
     private void drawBackground(Canvas canvas) {
