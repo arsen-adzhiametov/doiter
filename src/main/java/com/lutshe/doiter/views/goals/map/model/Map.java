@@ -65,16 +65,13 @@ public class Map {
     }
 
     public Goal findGoalUnder(double x, double y) {
-        int row = (int) (x / CELL_WIDTH);
-        int col = (int) (y / CELL_HEIGHT);
-
-        GoalView goalView;
-
-        goalView = goalsGrid[row][col];
-        if (hitTest(x, y, goalView)) {
-            return goalView.getGoal();
+        for (GoalView[] row : goalsGrid) {
+            for (GoalView goalView : row) {
+                if (hitTest(x, y, goalView)) {
+                    return goalView.getGoal();
+                }
+            }
         }
-
         // TODO: test siblings if moving out of borders is allowed
         return null;
     }
