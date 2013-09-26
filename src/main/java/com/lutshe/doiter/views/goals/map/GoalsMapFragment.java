@@ -8,6 +8,8 @@ import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
+import com.lutshe.doiter.data.provider.ImagesProvider;
+import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
@@ -22,9 +24,12 @@ public class GoalsMapFragment extends Fragment {
     @Bean
     FragmentsSwitcher fragmentsSwitcher;
 
+    @Bean(ImagesProviderImpl.class)
+    ImagesProvider imagesProvider;
+
     @AfterViews
     public void init() {
-        GoalsMapView view = new GoalsMapView(fragmentsSwitcher, getActivity().getApplicationContext(), goalsDao.getAllGoals());
+        GoalsMapView view = new GoalsMapView(fragmentsSwitcher, imagesProvider, getActivity().getApplicationContext(), goalsDao.getAllGoals());
         ((FrameLayout)getView()).addView(view);
     }
 }

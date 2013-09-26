@@ -3,6 +3,7 @@ package com.lutshe.doiter.views.goals.map;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 
 import com.lutshe.doiter.views.common.CanvasView;
@@ -22,11 +23,13 @@ public class GoalsMapDrawer extends Drawer {
         this.controller = controller;
         this.screenWidth = rect.width();
         this.screenHeight = rect.height();
+
+
     }
 
     @Override
     protected void draw(Canvas canvas) {
-        drawBackground(canvas);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         canvas.clipRect(0, 0, screenWidth, screenHeight);
 
@@ -68,14 +71,11 @@ public class GoalsMapDrawer extends Drawer {
         }
     }
 
-    private void drawBackground(Canvas canvas) {
-        canvas.drawColor(Color.BLUE);
-    }
-
     private void drawGoalView(Canvas canvas, GoalView view) {
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
         canvas.drawRect(view.getX(), view.getY(), view.getX() + view.getWidth(), view.getY() + view.getHeight(), paint);
+        canvas.drawBitmap(view.getScaledBitmap(), view.getX(), view.getY(), paint);
 
         paint.setColor(Color.BLACK);
         canvas.drawText(view.getGoal().getName(), view.getX() + 10, view.getY() + 10, paint);

@@ -1,14 +1,15 @@
 package com.lutshe.doiter.views.goals.map;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
 import com.lutshe.doiter.data.model.Goal;
+import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Looper;
 import com.lutshe.doiter.views.common.TouchHandler;
-import com.lutshe.doiter.views.goals.map.model.Map;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
@@ -20,9 +21,11 @@ public class GoalsMapView extends CanvasView {
     private MapController controller;
     private GoalsMapUpdater updater;
 
-    public GoalsMapView(FragmentsSwitcher fragmentsSwitcher, Context context, Goal... goals) {
+    public GoalsMapView(FragmentsSwitcher fragmentsSwitcher, ImagesProvider imagesProvider, Context context, Goal... goals) {
         super(context);
-        controller = new MapController(fragmentsSwitcher, new Map(goals));
+        setZOrderOnTop(true);
+        getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        controller = new MapController(fragmentsSwitcher, imagesProvider, goals);
         setOnTouchListener(new TouchHandler(controller));
     }
 
@@ -31,6 +34,7 @@ public class GoalsMapView extends CanvasView {
         super.surfaceCreated(holder);
         Rect rect = getViewBounds();
         controller.setScreenSize(rect.width(), rect.height());
+        controller.init();
 
         renderer = new GoalsMapDrawer(this, controller, rect);
         updater = new GoalsMapUpdater(controller);
