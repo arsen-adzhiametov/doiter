@@ -40,7 +40,7 @@
         </receiver>
 
         <!-- Preloaders: https://github.com/commonsguy/cwac-wakeful -->
-        <receiver android:name=".preloaders.InternetConnectionListener">
+        <receiver android:name=".preloaders.InternetConnectionListener_">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

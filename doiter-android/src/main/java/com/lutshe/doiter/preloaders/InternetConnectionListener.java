@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
+import com.googlecode.androidannotations.annotations.EReceiver;
+import com.googlecode.androidannotations.annotations.SystemService;
 import org.joda.time.DateTime;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -15,18 +17,23 @@ import static android.net.ConnectivityManager.TYPE_WIFI;
 /**
  * Created by Arsen Adzhiametov on 9/09/13.
  */
+@EReceiver
 public class InternetConnectionListener extends BroadcastReceiver {
 
     private static final String TAG = InternetConnectionListener.class.getName();
     private static final int MAX_DAYS_PERIOD_WITHOUT_UPDATE = 5;
+
     private Context context;
+
+    @SystemService
+    ConnectivityManager connectivityManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         Log.i(TAG, "Action: " + intent.getAction());
         if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-            NetworkInfo info = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+            NetworkInfo info = connectivityManager.getActiveNetworkInfo();
             if (info == null) return;
 
             boolean available = info.isAvailable();
