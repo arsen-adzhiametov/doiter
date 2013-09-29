@@ -3,6 +3,7 @@ package com.lutshe.doiter.data.database.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.crashlytics.android.Crashlytics;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.lutshe.doiter.model.Message;
@@ -127,8 +128,7 @@ public class MessagesDao {
             cursor.moveToNext();
             return cursor.getLong(0);
         } catch (Exception e) {
-            // TODO send exceptions to bugsense or something else
-            e.printStackTrace();
+            Crashlytics.logException(e);
         } finally {
             cursor.close();
         }

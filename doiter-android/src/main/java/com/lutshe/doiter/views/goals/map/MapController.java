@@ -2,6 +2,7 @@ package com.lutshe.doiter.views.goals.map;
 
 import android.app.Fragment;
 
+import android.util.Log;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.views.common.TouchEventsListener;
@@ -19,6 +20,8 @@ public class MapController implements TouchEventsListener {
     private final Map map;
 
     // per 1024 ms
+    private int scrollSpeedXDecrease = 0;
+    private int scrollSpeedYDecrease = 0;
     private int scrollSpeedX = 0;
     private int scrollSpeedY = 0;
 
@@ -59,20 +62,26 @@ public class MapController implements TouchEventsListener {
     }
 
     public void updateState(long dt) {
-//        scrollSpeedX -= (5 * dt) >> 10;
-//        scrollSpeedY -= (5 * dt) >> 10;
-//
-//        if (scrollSpeedX < 0) scrollSpeedX = 0;
-//        if (scrollSpeedY < 0) scrollSpeedY = 0;
-//
-//        if (scrollSpeedX == 0 && scrollSpeedY == 0) {
-//            return;
-//        }
-//
-//        long dx = (scrollSpeedX * dt) >> 10;
-//        long dy = (scrollSpeedY * dt) >> 10;
-//
-//        addOffsets(dx, dy);
+        if (scrollSpeedX == 0 && scrollSpeedY == 0) {
+            return;
+        }
+
+        if (Math.signum(scrollSpeedXDecrease) == Math.signum(scrollSpeedX)) {
+            scrollSpeedX -= scrollSpeedXDecrease;
+        } else {
+            scrollSpeedX = 0;
+        }
+
+        if (Math.signum(scrollSpeedYDecrease) == Math.signum(scrollSpeedY)) {
+            scrollSpeedY -= scrollSpeedYDecrease;
+        } else {
+            scrollSpeedY = 0;
+        }
+
+        long dx = (scrollSpeedX * dt) >> 10;
+        long dy = (scrollSpeedY * dt) >> 10;
+
+        addOffsets(dx, dy);
     }
 
     @Override
@@ -82,11 +91,11 @@ public class MapController implements TouchEventsListener {
 
     private void addOffsets(float dx, float dy) {
         if (dx != 0) {
-            currentOffsetX = trim(currentOffsetX + dx, screenWidth);
+            currentOffsetX = trim(currentOffsetX + dx, getMapWidth());
         }
 
         if (dy != 0) {
-            currentOffsetY = trim(currentOffsetY + dy, screenHeight);
+            currentOffsetY = trim(currentOffsetY + dy, getMapHeight());
         }
     }
 
@@ -102,8 +111,8 @@ public class MapController implements TouchEventsListener {
 
     @Override
     public void onClick(float x, float y) {
-        x = trim(x - currentOffsetX, screenWidth);
-        y = trim(y- currentOffsetY, screenHeight);
+        x = trim(x - currentOffsetX, getMapWidth());
+        y = trim(y - currentOffsetY, getMapHeight());
         Goal goal = map.findGoalUnder(x, y);
         if (goal == null) return;
 
@@ -120,6 +129,11 @@ public class MapController implements TouchEventsListener {
     public void onEventFinished(float dx, float dy, long time) {
         scrollSpeedX = (int) (dx * 1024 / time);
         scrollSpeedY = (int) (dy * 1024 / time);
+        scrollSpeedXDecrease = scrollSpeedX / 30;
+        scrollSpeedYDecrease = scrollSpeedY / 30;
+
+        Log.d("scroll" , dx + " " + dy + " per " + time + " ms");
+        Log.d("scroll" , scrollSpeedY + " " + scrollSpeedY + " per second");
     }
 
     public int getCellWidth() {

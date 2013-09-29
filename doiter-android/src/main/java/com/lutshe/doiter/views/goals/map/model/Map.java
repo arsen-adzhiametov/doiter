@@ -83,7 +83,6 @@ public class Map {
                 }
             }
         }
-        // TODO: test siblings if moving out of borders is allowed
         return null;
     }
 
