@@ -299,7 +299,7 @@
                         <configuration>
                             <quiet>true</quiet>
                             <files>
-                                <file>${basedir}/src/test/resources/local-db.properties</file>
+                                <file>${basedir}/src/test/resources/atf-doiter.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -493,7 +493,7 @@
                                 </goals>
                                 <configuration>
                                     <outputFile>
-                                        ${basedir}/src/test/resources/local-db.properties
+                                        ${basedir}/src/test/resources/atf-doiter.properties
                                     </outputFile>
                                 </configuration>
                             </execution>

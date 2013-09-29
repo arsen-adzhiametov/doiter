@@ -7,8 +7,8 @@ public class Message {
 
     private Long id;
 
-    private final String text;
-    private final long userGoalId;
+    private  String text;
+    private  long goalId;
     private Long deliveryTime;
     private Long orderIndex;
     private Type type = Type.OTHER;
@@ -19,14 +19,16 @@ public class Message {
         OTHER
     }
 
-    public Message(String text, long userGoalId, Long orderIndex) {
-        this(null, text, userGoalId, orderIndex);
+    public Message() {}
+
+    public Message(String text, long goalId, Long orderIndex) {
+        this(null, text, goalId, orderIndex);
     }
 
-    public Message(Long id, String text, long userGoalId, Long orderIndex) {
+    public Message(Long id, String text, long goalId, Long orderIndex) {
         this.id = id;
         this.text = text;
-        this.userGoalId = userGoalId;
+        this.goalId = goalId;
         this.orderIndex = orderIndex;
     }
 
@@ -38,8 +40,8 @@ public class Message {
         return text;
     }
 
-    public long getUserGoalId() {
-        return userGoalId;
+    public long getGoalId() {
+        return goalId;
     }
 
     public Long getDeliveryTime() {
@@ -69,7 +71,7 @@ public class Message {
         return "Message{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", userGoalId=" + userGoalId +
+                ", goalId=" + goalId +
                 ", deliveryTime=" + deliveryTime +
                 ", orderIndex=" + orderIndex +
                 ", type=" + type +

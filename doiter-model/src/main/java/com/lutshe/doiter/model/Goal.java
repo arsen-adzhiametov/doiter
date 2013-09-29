@@ -5,8 +5,8 @@ package com.lutshe.doiter.model;
  */
 public class Goal {
 
-    private final String name;
     private Long id;
+    private String name;
     private Long endTime;
     private Long lastMessageIndex;
     private Status status = Status.OTHER;
@@ -17,6 +17,8 @@ public class Goal {
         INACTIVE,
         OTHER
     }
+
+    public Goal() {}
 
     public Goal(String name, Long id) {
         this.name = name;

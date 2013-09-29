@@ -32,7 +32,7 @@ public class MessagesDao {
     public void addMessage(Message message) {
         ContentValues values = new ContentValues();
         values.put(MESSAGE_ID, message.getId());
-        values.put(USER_GOAL_ID, message.getUserGoalId());
+        values.put(USER_GOAL_ID, message.getGoalId());
         values.put(TEXT, message.getText());
         values.put(TYPE, message.getType().name());
         values.put(ORDER_INDEX, message.getOrderIndex());
