@@ -59,7 +59,7 @@ public class TouchHandler implements View.OnTouchListener {
                 if (isLongerThanClick) {
                     Log.v(TAG, "onScroll");
                     listener.onScroll(event.getX() - eventPrevX, event.getY() - eventPrevY, eventTime - eventPrevTime);
-                } else if (eventTime - eventStartTime > MAX_CLICK_DURATION && (Math.abs(event.getX() - eventStartX) > MAX_CLICK_MOVE || Math.abs(event.getY() - eventStartY) > MAX_CLICK_MOVE)) {
+                } else if (eventTime - eventStartTime > MAX_CLICK_DURATION || (Math.abs(event.getX() - eventStartX) > MAX_CLICK_MOVE || Math.abs(event.getY() - eventStartY) > MAX_CLICK_MOVE)) {
                     Log.d(TAG, "not a click");
                     isLongerThanClick = true;
                 }

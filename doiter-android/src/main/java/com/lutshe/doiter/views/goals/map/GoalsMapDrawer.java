@@ -14,6 +14,8 @@ public class GoalsMapDrawer extends Drawer {
     private final int screenWidth;
     private final int screenHeight;
 
+    private final Paint paint = new Paint();
+
     private final Bitmap cacheBitmap;
     private Canvas cacheCanvas;
 
@@ -48,7 +50,6 @@ public class GoalsMapDrawer extends Drawer {
         }
         canvas.save();
         canvas.translate((float) x, (float) y);
-//        canvas.clipRect(0, 0, screenWidth/2, screenHeight/2);
         canvas.drawBitmap(cacheBitmap, 0, 0, null);
         canvas.restore();
     }
@@ -63,7 +64,6 @@ public class GoalsMapDrawer extends Drawer {
     }
 
     private void drawGoalView(Canvas canvas, GoalView view) {
-        Paint paint = new Paint();
         paint.setColor(Color.GREEN);
         canvas.drawRect(view.getX(), view.getY(), view.getX() + view.getWidth(), view.getY() + view.getHeight(), paint);
         canvas.drawBitmap(view.getScaledBitmap(), view.getX(), view.getY(), paint);
