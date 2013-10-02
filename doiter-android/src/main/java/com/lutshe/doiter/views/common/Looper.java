@@ -22,13 +22,14 @@ public abstract class Looper implements Runnable {
 	public void run() {
 		while (!turnOffRequested) {
 			waitForAction();
-			doAction();
-            logIfTooSlow((currentTimeMillis() - lastUpdateTime) - actionDelay);
-			lastUpdateTime = currentTimeMillis();
+            long dt = currentTimeMillis() - lastUpdateTime;
+            logIfTooSlow(dt - actionDelay);
+            lastUpdateTime = currentTimeMillis();
+			doAction(dt);
 		}
 	}
 	
-	protected abstract void doAction();
+	protected abstract void doAction(long dt);
 	
 	private void waitForAction() {
 		long timeSinceLastUpdate = currentTimeMillis() - lastUpdateTime;
@@ -56,8 +57,4 @@ public abstract class Looper implements Runnable {
 	public void shutDown() {
 		turnOffRequested = true;
 	}
-
-    public long getLastUpdateTime() {
-        return lastUpdateTime;
-    }
 }

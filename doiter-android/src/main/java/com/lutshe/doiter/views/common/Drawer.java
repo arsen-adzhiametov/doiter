@@ -12,7 +12,7 @@ public abstract class Drawer extends Looper {
 	}
 
     @Override
-    protected void doAction() {
+    protected void doAction(long dt) {
 		Canvas canvas = view.getCanvas();
 
 		if (canvas == null) {
@@ -24,5 +24,4 @@ public abstract class Drawer extends Looper {
 	}
 	
 	abstract protected void draw(Canvas canvas);
-	
 }

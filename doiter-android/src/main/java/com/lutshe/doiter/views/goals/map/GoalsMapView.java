@@ -44,9 +44,9 @@ public class GoalsMapView extends CanvasView {
     }
 
     @Override
-    protected void onDetachedFromWindow() {
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        super.surfaceDestroyed(holder);
         renderer.shutDown();
         updater.shutDown();
-        super.onDetachedFromWindow();
     }
 }

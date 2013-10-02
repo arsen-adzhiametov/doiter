@@ -14,7 +14,7 @@ public class GoalsMapUpdater extends Looper {
     }
 
     @Override
-    protected void doAction() {
-        controller.updateState(System.currentTimeMillis() - getLastUpdateTime());
+    protected void doAction(long dt) {
+        controller.updateState(dt);
     }
 }

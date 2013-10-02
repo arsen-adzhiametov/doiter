@@ -2,6 +2,7 @@ package com.lutshe.doiter.views.goals.map;
 
 import android.graphics.*;
 
+import android.util.Log;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
 import com.lutshe.doiter.views.goals.map.model.GoalView;
@@ -26,10 +27,15 @@ public class GoalsMapDrawer extends Drawer {
         this.screenHeight = rect.height();
 
         cacheBitmap = Bitmap.createBitmap(controller.getMapWidth(), controller.getMapHeight(), Bitmap.Config.ARGB_8888);
+        if (cacheCanvas == null) {
+            cacheCanvas = new Canvas(cacheBitmap);
+            drawMapToCanvas(cacheCanvas);
+        }
     }
 
     @Override
     protected void draw(Canvas canvas) {
+        long start = System.currentTimeMillis();
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         canvas.clipRect(0, 0, screenWidth, screenHeight);
@@ -41,17 +47,11 @@ public class GoalsMapDrawer extends Drawer {
         drawMap(-controller.getMapWidth(), 0, canvas);
         drawMap(0, -controller.getMapHeight(), canvas);
         canvas.restore();
+        Log.d("DRAWING TOOK", String.valueOf(System.currentTimeMillis() - start));
     }
 
     private void drawMap(int x, int y, Canvas canvas) {
-        if (cacheCanvas == null) {
-            cacheCanvas = new Canvas(cacheBitmap);
-            drawMapToCanvas(cacheCanvas);
-        }
-        canvas.save();
-        canvas.translate((float) x, (float) y);
-        canvas.drawBitmap(cacheBitmap, 0, 0, null);
-        canvas.restore();
+        canvas.drawBitmap(cacheBitmap, x, y, null);
     }
 
     private void drawMapToCanvas(Canvas canvas) {
@@ -70,5 +70,11 @@ public class GoalsMapDrawer extends Drawer {
 
         paint.setColor(Color.BLACK);
         canvas.drawText(view.getGoal().getName(), view.getX() + 10, view.getY() + 10, paint);
+    }
+
+    @Override
+    public void shutDown() {
+        super.shutDown();
+        cacheBitmap.recycle();
     }
 }
