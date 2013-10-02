@@ -2,42 +2,82 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/top">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ribbon"
+                android:id="@+id/ribbon"
+                android:scaleType="fitCenter"/>
+
+        <TextView
+                android:id="@+id/goalNameDetail"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                style="@style/GabriolaGrayFontStyle"/>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/top"
+                    android:id="@+id/middle">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/zabor1"
+                android:src="@drawable/zabor_1"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iWillDoItIn"
+                android:text="@string/i_will_do_it_in"
+                android:layout_centerInParent="true"
+                android:paddingBottom="@dimen/text_from_seekbar_padding"
+                style="@style/GabriolaGrayFontStyle"/>
+
+        <SeekBar android:id="@+id/seekbar"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 android:max="60"
+                 android:thumb="@drawable/seek_thumb"
+                 android:progressDrawable="@android:color/transparent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/daysSetting"
+                android:layout_centerInParent="true"
+                android:paddingTop="@dimen/text_from_seekbar_padding"
+                style="@style/GabriolaOrangeFontStyle"/>
+    </RelativeLayout>
+
     <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/goalCoverDetail"
-            android:src="@drawable/ic_launcher"
-            android:layout_margin="0dp"
-            android:scaleType="centerCrop"
-            />
-
-    <TextView
-            android:id="@+id/goalNameDetail"
-            android:layout_below="@id/goalCoverDetail"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="goal text"
-            android:layout_margin="4dp"
-            android:layout_marginTop="4dp"
-            android:textSize="16dp"
-            />
-
-    <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1377623291944"
-            android:id="@+id/editEndTime"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:inputType="time"
-            android:textColor="#FFFFFF"
-            />
+            android:layout_below="@id/middle"
+            android:id="@+id/zabor2"
+            android:src="@drawable/zabor_1"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/middle"
+            android:id="@+id/goalCoverDetail"/>
+
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Goal"
+            android:text="@string/add_goal_button_text"
             android:id="@+id/addGoalButton"
-            android:layout_alignLeft="@+id/editEndTime"
             android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

@@ -3,6 +3,7 @@
 
     <string name="app_name">Doiter</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="i_will_do_it_in">I will do it in</string>
+    <string name="add_goal_button_text">Add Goal</string>
 
 </resources>

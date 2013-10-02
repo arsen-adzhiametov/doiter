@@ -18,7 +18,7 @@ import com.lutshe.doiter.views.UpdatableView;
 @EFragment(R.layout.goals_list_fragment)
 public class GoalsListFragment extends Fragment implements UpdatableView {
 
-    @ViewById(R.id.goalsList)
+    @ViewById(R.id.goalList)
     GridView goalsList;
 
     @Bean

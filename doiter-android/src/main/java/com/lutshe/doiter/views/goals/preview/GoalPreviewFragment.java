@@ -1,29 +1,20 @@
 package com.lutshe.doiter.views.goals.preview;
 
-import android.app.AlarmManager;
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.graphics.Typeface;
+import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.Click;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.FragmentArg;
-import com.googlecode.androidannotations.annotations.ViewById;
+import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
-import com.lutshe.doiter.model.Goal;
-import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.ImagesProviderImpl;
+import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
-
 import org.joda.time.DateTime;
 
 /**
@@ -32,39 +23,41 @@ import org.joda.time.DateTime;
 @EFragment(R.layout.goal_preview_fragment)
 public class GoalPreviewFragment extends Fragment {
 
-    @ViewById(R.id.goalCoverDetail)
-    ImageView goalCover;
+//    @ViewById(R.id.goalCoverDetail)
+//    ImageView goalCover;
 
     @ViewById(R.id.goalNameDetail)
     TextView goalName;
 
-    @ViewById(R.id.editEndTime)
-    EditText editEndTime;
+    @ViewById(R.id.daysSetting)
+    TextView days;
 
-    @Bean(ImagesProviderImpl.class)
-    ImagesProvider imagesProvider;
+    @ViewById(R.id.iWillDoItIn)
+    TextView iWillDoItInTextView;
 
+    @ViewById(R.id.seekbar)
+    SeekBar seekBar;
+
+    @Bean SeekBarChangeListener seekBarChangeListener;
+    @Bean(ImagesProviderImpl.class) ImagesProvider imagesProvider;
     @Bean GoalsDao goalsDao;
     @Bean MessagesDao messagesDao;
-
-    @Bean
-    FragmentsSwitcher fragmentsSwitcher;
-
-    @Bean
-    MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
+    @Bean FragmentsSwitcher fragmentsSwitcher;
+    @Bean MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
 
     @FragmentArg
     Long goalId;
 
     @AfterViews
     public void bindData() {
+        seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
         Goal goal = goalsDao.getGoal(goalId);
         goalName.setText(goal.getName());
 
-        editEndTime.setText(String.valueOf(new DateTime().getMillis() + (AlarmManager.INTERVAL_DAY * 3)));
+//        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
+//        goalCover.setImageBitmap(bitmap);
 
-        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
-        goalCover.setImageBitmap(bitmap);
+        setTypefaceToTextViews();
     }
 
     @Click(R.id.addGoalButton)
@@ -84,7 +77,8 @@ public class GoalPreviewFragment extends Fragment {
     }
 
     private void activateGoal() {
-        Long endTime = Long.valueOf(editEndTime.getText().toString());
+        int days = seekBar.getProgress();
+        Long endTime = DateTime.now().plusDays(days).getMillis();
         goalsDao.updateGoalEndTime(goalId, endTime);
         goalsDao.updateGoalStatus(goalId, Goal.Status.ACTIVE);
     }
@@ -94,4 +88,13 @@ public class GoalPreviewFragment extends Fragment {
         messagesDao.updateMessageDeliveryTime(message.getId());
         goalsDao.updateGoalLastMessage(goalId, message.getOrderIndex());
     }
+
+    private void setTypefaceToTextViews() {
+        String fontPath = "fonts/Gabriola.ttf";
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), fontPath);
+        goalName.setTypeface(typeface);
+        days.setTypeface(typeface);
+        iWillDoItInTextView.setTypeface(typeface);
+    }
+
 }

@@ -48,7 +48,6 @@ public class FragmentsSwitcher {
     private void doTransaction(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = activity.getFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations(R.anim.fadein, R.anim.fadeout, R.anim.fadein, R.anim.fadeout)
                 .replace(containerId, fragment);
 
         if (addToBackStack) {

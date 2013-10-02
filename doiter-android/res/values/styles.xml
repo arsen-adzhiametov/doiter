@@ -19,4 +19,15 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!--Gabriola font theme-->
+    <style name="GabriolaGrayFontStyle">
+        <item name="android:textSize">@dimen/gabriola_text_size</item>
+        <item name="android:textColor">@color/gray_text_color</item>
+    </style>
+
+    <style name="GabriolaOrangeFontStyle">
+        <item name="android:textSize">@dimen/gabriola_text_size</item>
+        <item name="android:textColor">@color/orange_seek_thumb_color</item>
+    </style>
+
 </resources>
