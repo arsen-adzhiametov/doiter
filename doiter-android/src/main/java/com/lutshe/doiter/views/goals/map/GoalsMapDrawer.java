@@ -1,10 +1,6 @@
 package com.lutshe.doiter.views.goals.map;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
+import android.graphics.*;
 
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
@@ -18,13 +14,16 @@ public class GoalsMapDrawer extends Drawer {
     private final int screenWidth;
     private final int screenHeight;
 
+    private final Bitmap cacheBitmap;
+    private Canvas cacheCanvas;
+
     public GoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
         this.controller = controller;
         this.screenWidth = rect.width();
         this.screenHeight = rect.height();
 
-
+        cacheBitmap = Bitmap.createBitmap(controller.getMapWidth(), controller.getMapHeight(), Bitmap.Config.ARGB_8888);
     }
 
     @Override
@@ -43,31 +42,23 @@ public class GoalsMapDrawer extends Drawer {
     }
 
     private void drawMap(int x, int y, Canvas canvas) {
+        if (cacheCanvas == null) {
+            cacheCanvas = new Canvas(cacheBitmap);
+            drawMapToCanvas(cacheCanvas);
+        }
         canvas.save();
         canvas.translate((float) x, (float) y);
+//        canvas.clipRect(0, 0, screenWidth/2, screenHeight/2);
+        canvas.drawBitmap(cacheBitmap, 0, 0, null);
+        canvas.restore();
+    }
 
-        drawGrid(canvas, controller);
-
+    private void drawMapToCanvas(Canvas canvas) {
         GoalView[][] views = controller.getGoalViews();
         for (GoalView[] row : views) {
             for (GoalView view : row) {
                 drawGoalView(canvas, view);
             }
-        }
-        canvas.restore();
-    }
-
-    private void drawGrid(Canvas canvas, MapController controller) {
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-
-        canvas.drawLine(0, 0, 0, screenHeight, paint);
-        canvas.drawLine(0, 0, screenWidth, 0, paint);
-
-        paint.setColor(Color.MAGENTA);
-        for(int col = 1; col < controller.getGoalViews()[0].length; col++) {
-            int x = col * controller.getCellWidth();
-            canvas.drawLine(x, 0, x, screenHeight, paint);
         }
     }
 

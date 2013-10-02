@@ -7,7 +7,7 @@ public abstract class Drawer extends Looper {
 	private final CanvasView view;
 	
 	public Drawer(CanvasView view) {
-        super(REDRAW_RATE);
+        super(REDRAW_RATE, "drawer");
 		this.view = view;
 	}
 
