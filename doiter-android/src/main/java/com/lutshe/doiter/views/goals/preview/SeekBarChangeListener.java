@@ -12,16 +12,28 @@ import com.lutshe.doiter.R;
 @EBean
 public class SeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
-    @ViewById(R.id.daysSetting)
-    TextView days;
+    @ViewById(R.id.daysText)
+    TextView daysTextTextView;
+    @ViewById(R.id.daysQuantity)
+    TextView daysQuantityTextView;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        String text = progress + " day";
-        if (!String.valueOf(progress).endsWith("1")){
-            text = text + "s";
+        String text = getAppropriateString(progress);
+        daysQuantityTextView.setText(" " + progress + " ");
+        daysTextTextView.setText(text);
+
+    }
+
+    private String getAppropriateString(int progress) {
+        String number = String.valueOf(progress);
+        if ((number.endsWith("2") || number.endsWith("3") || number.endsWith("4")) && !number.startsWith("1")){
+            return  "дня";
+        } else if (!String.valueOf(progress).endsWith("1") || progress == 11) {
+            return  "дней";
+        } else {
+            return  "день";
         }
-        days.setText(text);
     }
 
     @Override

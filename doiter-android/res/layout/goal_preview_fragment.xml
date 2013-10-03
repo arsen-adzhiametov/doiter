@@ -1,15 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" android:layout_gravity="center">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/top">
+                    android:layout_alignParentTop="true"
+                    android:paddingBottom="@dimen/padding_20"
+                    android:id="@+id/top_layout">
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ribbon"
+                android:src="@drawable/ribbon_2"
+                android:paddingTop="@dimen/padding_20"
                 android:id="@+id/ribbon"
                 android:scaleType="fitCenter"/>
 
@@ -17,67 +20,99 @@
                 android:id="@+id/goalNameDetail"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:maxLines="2"
                 android:layout_centerInParent="true"
-                style="@style/GabriolaGrayFontStyle"/>
+                style="@style/GabriolaOrangeDarkFontStyle"/>
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/top"
-                    android:id="@+id/middle">
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/bottom_layout">
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/zabor1"
-                android:src="@drawable/zabor_1"
+                android:paddingBottom="@dimen/padding_20"
+                android:paddingTop="@dimen/padding_20"
+                android:src="@drawable/button_set_a_goal2"
+                android:id="@+id/addGoalButton"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
+                android:clickable="true"/>
 
         <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/addGoalText"
                 android:layout_height="wrap_content"
-                android:id="@+id/iWillDoItIn"
-                android:text="@string/i_will_do_it_in"
-                android:layout_centerInParent="true"
-                android:paddingBottom="@dimen/text_from_seekbar_padding"
-                style="@style/GabriolaGrayFontStyle"/>
-
-        <SeekBar android:id="@+id/seekbar"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_centerInParent="true"
-                 android:max="60"
-                 android:thumb="@drawable/seek_thumb"
-                 android:progressDrawable="@android:color/transparent"/>
-        <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/daysSetting"
                 android:layout_centerInParent="true"
-                android:paddingTop="@dimen/text_from_seekbar_padding"
-                style="@style/GabriolaOrangeFontStyle"/>
+                android:text="@string/add_goal_button_text"
+                style="@style/GabriolaWhiteFontStyle"/>
     </RelativeLayout>
 
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/middle"
-            android:id="@+id/zabor2"
-            android:src="@drawable/zabor_1"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"/>
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/middle"
-            android:id="@+id/goalCoverDetail"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/top_layout"
+                    android:layout_above="@id/bottom_layout"
+                    android:id="@+id/middle">
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_goal_button_text"
-            android:id="@+id/addGoalButton"
-            android:layout_alignParentBottom="true"/>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/zabor1"
+                    android:src="@drawable/zabor_verh"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iWillDoItIn"
+                    android:text="@string/i_will_do_it_in"
+                    android:paddingBottom="@dimen/padding_100"
+                    style="@style/GabriolaGrayFontStyle"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/daysQuantity"
+                    android:text="@string/starting_days"
+                    android:layout_toRightOf="@id/iWillDoItIn"
+                    android:paddingBottom="@dimen/padding_100"
+                    style="@style/GabriolaOrangeFontStyle"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/daysText"
+                    android:text="@string/days"
+                    android:layout_toRightOf="@id/daysQuantity"
+                    android:paddingBottom="@dimen/padding_100"
+                    style="@style/GabriolaGrayFontStyle"/>
+
+            <SeekBar
+                    android:layout_width="match_parent"
+                    android:id="@+id/seekbar"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="85dp"
+                    android:max="60"
+                    android:thumb="@drawable/seek_thumb"
+                    android:progressDrawable="@android:color/transparent"/>
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/zabor1"
+                    android:id="@+id/zabor2"
+                    android:src="@drawable/zabor_niz"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
 
 </RelativeLayout>

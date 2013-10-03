@@ -27,13 +27,19 @@ public class GoalPreviewFragment extends Fragment {
 //    ImageView goalCover;
 
     @ViewById(R.id.goalNameDetail)
-    TextView goalName;
+    TextView goalNameTextView;
 
-    @ViewById(R.id.daysSetting)
-    TextView days;
+    @ViewById(R.id.daysText)
+    TextView daysTextTextView;
+
+    @ViewById(R.id.daysQuantity)
+    TextView daysQuantityTextView;
 
     @ViewById(R.id.iWillDoItIn)
     TextView iWillDoItInTextView;
+
+    @ViewById(R.id.addGoalText)
+    TextView addGoalTextView;
 
     @ViewById(R.id.seekbar)
     SeekBar seekBar;
@@ -52,7 +58,7 @@ public class GoalPreviewFragment extends Fragment {
     public void bindData() {
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
         Goal goal = goalsDao.getGoal(goalId);
-        goalName.setText(goal.getName());
+        goalNameTextView.setText(goal.getName());
 
 //        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
 //        goalCover.setImageBitmap(bitmap);
@@ -92,9 +98,11 @@ public class GoalPreviewFragment extends Fragment {
     private void setTypefaceToTextViews() {
         String fontPath = "fonts/Gabriola.ttf";
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), fontPath);
-        goalName.setTypeface(typeface);
-        days.setTypeface(typeface);
+        goalNameTextView.setTypeface(typeface);
+        daysQuantityTextView.setTypeface(typeface);
         iWillDoItInTextView.setTypeface(typeface);
+        daysTextTextView.setTypeface(typeface);
+        addGoalTextView.setTypeface(typeface);
     }
 
 }

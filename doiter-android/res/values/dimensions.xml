@@ -3,8 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <!-- SeekBar dimens -->
     <dimen name="seek_thumb_diameter">30dp</dimen>
-    <dimen name="text_from_seekbar_padding">100dp</dimen>
-    <dimen name="gabriola_text_size">40dp</dimen>
+    <dimen name="padding_100">100dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+    <dimen name="text_size_40">40dp</dimen>
+    <dimen name="text_size_60">60dp</dimen>
+
 </resources>

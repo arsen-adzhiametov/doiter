@@ -21,13 +21,23 @@
 
     <!--Gabriola font theme-->
     <style name="GabriolaGrayFontStyle">
-        <item name="android:textSize">@dimen/gabriola_text_size</item>
-        <item name="android:textColor">@color/gray_text_color</item>
+        <item name="android:textSize">@dimen/text_size_40</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="GabriolaOrangeDarkFontStyle">
+        <item name="android:textSize">@dimen/text_size_40</item>
+        <item name="android:textColor">@color/orange_dark</item>
     </style>
 
     <style name="GabriolaOrangeFontStyle">
-        <item name="android:textSize">@dimen/gabriola_text_size</item>
-        <item name="android:textColor">@color/orange_seek_thumb_color</item>
+        <item name="android:textSize">@dimen/text_size_60</item>
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <style name="GabriolaWhiteFontStyle">
+        <item name="android:textSize">@dimen/text_size_40</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

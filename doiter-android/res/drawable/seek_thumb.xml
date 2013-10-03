@@ -5,7 +5,7 @@
        android:thicknessRatio="2"
        android:useLevel="false">
 
-    <solid android:color="@color/orange_seek_thumb_color"/>
+    <solid android:color="@color/orange"/>
 
     <size android:width="@dimen/seek_thumb_diameter"
           android:height="@dimen/seek_thumb_diameter"/>
