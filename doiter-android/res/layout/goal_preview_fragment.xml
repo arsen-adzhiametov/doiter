@@ -6,7 +6,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:paddingBottom="@dimen/padding_20"
+                    android:paddingBottom="@dimen/padding_15"
                     android:id="@+id/top_layout">
         <ImageView
                 android:layout_width="wrap_content"
@@ -25,64 +25,7 @@
                 style="@style/GabriolaOrangeDarkFontStyle"/>
     </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/top_layout"
-                    android:id="@+id/middle">
 
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/zabor1"
-                    android:src="@drawable/zabor_verh"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/iWillDoItIn"
-                    android:text="@string/i_will_do_it_in"
-                    android:paddingBottom="@dimen/padding_100"
-                    style="@style/GabriolaGrayFontStyle"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daysQuantity"
-                    android:text="@string/starting_days"
-                    android:layout_toRightOf="@id/iWillDoItIn"
-                    android:paddingBottom="@dimen/padding_100"
-                    style="@style/GabriolaOrangeFontStyle"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daysText"
-                    android:text="@string/days"
-                    android:layout_toRightOf="@id/daysQuantity"
-                    android:paddingBottom="@dimen/padding_100"
-                    style="@style/GabriolaGrayFontStyle"/>
-
-            <SeekBar
-                    android:layout_width="match_parent"
-                    android:id="@+id/seekbar"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="85dp"
-                    android:max="60"
-                    android:thumb="@drawable/seek_thumb"
-                    android:progressDrawable="@android:color/transparent"/>
-
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/zabor1"
-                    android:id="@+id/zabor2"
-                    android:src="@drawable/zabor_niz"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"/>
-        </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
@@ -93,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/padding_20"
-                android:paddingTop="@dimen/padding_20"
+                android:paddingTop="@dimen/padding_15"
                 android:src="@drawable/button_set_a_goal2"
                 android:id="@+id/addGoalButton"
                 android:scaleType="fitCenter"
@@ -106,6 +49,67 @@
                 android:layout_centerInParent="true"
                 android:text="@string/add_goal_button_text"
                 style="@style/GabriolaWhiteFontStyle"/>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/top_layout"
+                    android:layout_above="@id/bottom_layout"
+                    android:id="@+id/middle">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/zabor1"
+                android:src="@drawable/zabor_verh"
+                android:paddingBottom="@dimen/padding_10"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iWillDoItIn"
+                android:text="@string/i_will_do_it_in"
+                android:paddingBottom="@dimen/padding_100"
+                style="@style/GabriolaGrayFontStyle"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/daysQuantity"
+                android:text="@string/starting_days"
+                android:layout_toRightOf="@id/iWillDoItIn"
+                android:paddingBottom="@dimen/padding_100"
+                style="@style/GabriolaOrangeFontStyle"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/daysText"
+                android:text="@string/days"
+                android:layout_toRightOf="@id/daysQuantity"
+                android:paddingBottom="@dimen/padding_100"
+                style="@style/GabriolaGrayFontStyle"/>
+
+        <SeekBar
+                android:layout_width="match_parent"
+                android:id="@+id/seekbar"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="85dp"
+                android:max="60"
+                android:thumb="@drawable/seek_thumb"
+                android:progressDrawable="@android:color/transparent"/>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/zabor1"
+                android:id="@+id/zabor2"
+                android:src="@drawable/ninepatch"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
     </RelativeLayout>
 
 </RelativeLayout>
