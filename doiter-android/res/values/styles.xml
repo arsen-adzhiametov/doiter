@@ -25,6 +25,11 @@
         <item name="android:textColor">@color/gray</item>
     </style>
 
+    <style name="GabriolaGraySmallFontStyle">
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
     <style name="GabriolaOrangeDarkFontStyle">
         <item name="android:textSize">@dimen/text_size_35</item>
         <item name="android:textColor">@color/orange_dark</item>

@@ -9,8 +9,9 @@
                     android:paddingBottom="@dimen/padding_15"
                     android:id="@+id/top_layout">
         <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ribbon_2"
                 android:paddingTop="@dimen/padding_20"
                 android:id="@+id/ribbon"
@@ -26,18 +27,18 @@
     </RelativeLayout>
 
 
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:id="@+id/bottom_layout">
         <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:paddingBottom="@dimen/padding_20"
                 android:paddingTop="@dimen/padding_15"
-                android:src="@drawable/button_set_a_goal2"
+                android:src="@drawable/button_set_a_goal"
                 android:id="@+id/addGoalButton"
                 android:scaleType="fitCenter"
                 android:clickable="true"/>
@@ -56,60 +57,112 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/top_layout"
                     android:layout_above="@id/bottom_layout"
-                    android:id="@+id/middle">
+                    android:id="@+id/middle_layout">
 
         <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/zabor1"
-                android:src="@drawable/zabor_verh"
+                android:src="@drawable/zabor_verh_min"
                 android:paddingBottom="@dimen/padding_10"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/iWillDoItIn"
-                android:text="@string/i_will_do_it_in"
-                android:paddingBottom="@dimen/padding_100"
-                style="@style/GabriolaGrayFontStyle"/>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iWillDoItIn"
+                    android:text="@string/i_will_do_it_in"
+                    style="@style/GabriolaGrayFontStyle"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/daysQuantity"
-                android:text="@string/starting_days"
-                android:layout_toRightOf="@id/iWillDoItIn"
-                android:paddingBottom="@dimen/padding_100"
-                style="@style/GabriolaOrangeFontStyle"/>
+            <TextView
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"                    android:id="@+id/daysQuantity"
+                    android:text="@string/starting_days"
+                    android:layout_toRightOf="@id/iWillDoItIn"
+                    style="@style/GabriolaOrangeFontStyle"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/daysText"
-                android:text="@string/days"
-                android:layout_toRightOf="@id/daysQuantity"
-                android:paddingBottom="@dimen/padding_100"
-                style="@style/GabriolaGrayFontStyle"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/daysText"
+                    android:text="@string/days"
+                    android:layout_toRightOf="@id/daysQuantity"
+                    style="@style/GabriolaGrayFontStyle"/>
+        </RelativeLayout>
 
         <SeekBar
                 android:layout_width="match_parent"
-                android:id="@+id/seekbar"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="85dp"
+                android:paddingLeft="@dimen/padding_30"
+                android:paddingRight="@dimen/padding_30"
+                android:paddingTop="@dimen/padding_90"
+                android:id="@+id/seekbar"
                 android:max="60"
                 android:thumb="@drawable/seek_thumb"
                 android:progressDrawable="@android:color/transparent"/>
 
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_below="@id/zabor1"
-                android:id="@+id/zabor2"
-                android:src="@drawable/ninepatch"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"/>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/zabor1"
+                        android:layout_above="@id/bottom_layout">
+            <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:adjustViewBounds="true"
+                    android:id="@+id/zabor2_top"
+                    android:src="@drawable/zabor_top"
+
+                    />
+
+            <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:adjustViewBounds="true"
+                    android:id="@+id/zabor2_bottom"
+                    android:src="@drawable/zabor_bottom"
+                   />
+
+            <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/zabor2_top"
+                    android:layout_above="@+id/zabor2_bottom"
+                    android:id="@+id/zabor2_middle"
+                    android:src="@drawable/square"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    />
+
+
+        </RelativeLayout>
+
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:layout_below="@id/zabor1">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/goal_description"
+                    android:text="@string/goal_description"
+                    android:padding="30dp"
+                    android:gravity="center"
+                    style="@style/GabriolaGraySmallFontStyle"/>
+        </ScrollView>
+
     </RelativeLayout>
 
 </RelativeLayout>

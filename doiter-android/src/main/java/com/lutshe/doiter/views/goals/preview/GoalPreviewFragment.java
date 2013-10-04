@@ -38,6 +38,9 @@ public class GoalPreviewFragment extends Fragment {
     @ViewById(R.id.iWillDoItIn)
     TextView iWillDoItInTextView;
 
+    @ViewById(R.id.goal_description)
+    TextView goalDescriptionTextView;
+
     @ViewById(R.id.addGoalText)
     TextView addGoalTextView;
 
@@ -103,6 +106,7 @@ public class GoalPreviewFragment extends Fragment {
         iWillDoItInTextView.setTypeface(typeface);
         daysTextTextView.setTypeface(typeface);
         addGoalTextView.setTypeface(typeface);
+        goalDescriptionTextView.setTypeface(typeface);
     }
 
 }
