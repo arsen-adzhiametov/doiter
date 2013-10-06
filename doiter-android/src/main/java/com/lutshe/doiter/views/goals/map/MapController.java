@@ -36,11 +36,11 @@ public class MapController implements TouchEventsListener {
         this.map = new Map(imagesProvider, goals);
     }
 
-    public double getCurrentOffsetX() {
+    public float getCurrentOffsetX() {
         return currentOffsetX;
     }
 
-    public double getCurrentOffsetY() {
+    public float getCurrentOffsetY() {
         return currentOffsetY;
     }
 
@@ -123,6 +123,11 @@ public class MapController implements TouchEventsListener {
             detailFragment = UserGoalDetailFragment_.builder().goalId(goal.getId()).build();
         }
         fragmentsSwitcher.show(detailFragment, true);
+    }
+
+    @Override
+    public void onEventStarted() {
+        scrollSpeedX = scrollSpeedY = 0;
     }
 
     @Override

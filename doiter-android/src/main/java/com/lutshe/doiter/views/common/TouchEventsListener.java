@@ -6,5 +6,6 @@ package com.lutshe.doiter.views.common;
 public interface TouchEventsListener {
     void onScroll(float dx, float dy, long dt);
     void onClick(float x, float y);
+    void onEventStarted();
     void onEventFinished(float dx, float dy, long dt);
 }

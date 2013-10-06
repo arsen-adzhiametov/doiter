@@ -1,9 +1,6 @@
 package com.lutshe.doiter.views.goals.map.model;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
+import android.graphics.*;
 import android.util.Log;
 
 import com.lutshe.doiter.model.Goal;
@@ -15,10 +12,12 @@ import com.lutshe.doiter.data.provider.ImagesProvider;
 public class GoalView {
     private static final String TAG = GoalView.class.getName();
 
-    private static final float BORDER_SIZE = 10;
+    private static final float BORDER_SIZE = 15;
     private final Goal goal;
     private int x;
     private int y;
+
+    private Rect rect;
 
     private Bitmap scaledBitmap;
 
@@ -74,7 +73,26 @@ public class GoalView {
             canvas.drawBitmap(bitmap, 0, 0, new Paint(Paint.FILTER_BITMAP_FLAG));
         }
 
+        goalView.rect = new Rect(goalView.x, goalView.y, goalView.x + goalView.getScaledBitmap().getWidth(), goalView.y + goalView.getScaledBitmap().getHeight());
+
         return goalView;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GoalView goalView = (GoalView) o;
+
+        if (!goal.equals(goalView.goal)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return goal.hashCode();
     }
 
     public int getX() {
@@ -94,11 +112,11 @@ public class GoalView {
     }
 
     public int getWidth() {
-        return scaledBitmap.getWidth();
+        return rect.width();
     }
 
     public int getHeight() {
-        return scaledBitmap.getHeight();
+        return rect.height();
     }
 
     public Goal getGoal() {
@@ -107,5 +125,9 @@ public class GoalView {
 
     public Bitmap getScaledBitmap() {
         return scaledBitmap;
+    }
+
+    public Rect getRect() {
+        return rect;
     }
 }

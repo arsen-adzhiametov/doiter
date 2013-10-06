@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.views.ActivityLifecycleListener;
 import com.lutshe.doiter.views.UpdatableView;
 
 /**
@@ -65,6 +66,18 @@ public class FragmentsSwitcher {
     public void updateCurrentFragment() {
         if (currentFragment instanceof UpdatableView) {
             ((UpdatableView) currentFragment).update();
+        }
+    }
+
+    public void onResume() {
+        if (currentFragment instanceof ActivityLifecycleListener) {
+           ((ActivityLifecycleListener) currentFragment).resume();
+        }
+    }
+
+    public void onPause() {
+        if (currentFragment instanceof ActivityLifecycleListener) {
+            ((ActivityLifecycleListener) currentFragment).pause();
         }
     }
 }

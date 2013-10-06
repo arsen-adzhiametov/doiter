@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
 
+import android.os.Bundle;
 import com.crashlytics.android.Crashlytics;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Bean;
@@ -16,6 +17,7 @@ import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
+import com.lutshe.doiter.views.loading.LoadingFragment_;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
@@ -64,6 +66,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         FinalCountdown.invalidateTimers();
+        fragmentsSwitcher.onPause();
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        fragmentsSwitcher.onResume();
+        super.onResume();
     }
 }

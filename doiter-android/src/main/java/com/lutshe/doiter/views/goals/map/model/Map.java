@@ -11,13 +11,11 @@ import com.lutshe.doiter.data.provider.ImagesProvider;
 public class Map {
     private static final String TAG = Map.class.getName();
 
-    private static final double ROWS_PER_SCREEN = 3.5;
-    private static final double COLS_PER_SCREEN = 2.5;
+    private static final double ROWS_PER_SCREEN = 2.5;
+    private static final double COLS_PER_SCREEN = 1.5;
 
     private static final double MIN_ROWS = 4;
     private static final double MIN_COLS = 3;
-
-    private static final int BORDER = 10;
 
     public int cellWidth;
     public int cellHeight;

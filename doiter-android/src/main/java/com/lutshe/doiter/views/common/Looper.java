@@ -12,7 +12,7 @@ public abstract class Looper implements Runnable {
 	
 	private final long actionDelay;
     private final String name;
-	
+
 	public Looper(long actionDelay, String name) {
 		this.actionDelay = actionDelay;
         this.name = name;

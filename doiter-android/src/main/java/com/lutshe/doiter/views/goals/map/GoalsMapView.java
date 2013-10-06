@@ -3,12 +3,13 @@ package com.lutshe.doiter.views.goals.map;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.views.common.CanvasView;
-import com.lutshe.doiter.views.common.Looper;
+import com.lutshe.doiter.views.common.Drawer;
 import com.lutshe.doiter.views.common.TouchHandler;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
@@ -17,7 +18,7 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
  */
 public class GoalsMapView extends CanvasView {
 
-    private Looper renderer;
+    private Drawer renderer;
     private MapController controller;
     private GoalsMapUpdater updater;
 
@@ -36,16 +37,26 @@ public class GoalsMapView extends CanvasView {
         controller.setScreenSize(rect.width(), rect.height());
         controller.init();
 
-        renderer = new GoalsMapDrawer(this, controller, rect);
+        startDrawing();
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        Log.i("DRAWING", "surface destroyed");
+        super.surfaceDestroyed(holder);
+        stopDrawing();
+    }
+
+    public void startDrawing() {
+        //        renderer = new FMCGoalsMapDrawer(this, controller, rect);
+        renderer = new SGCGoalsMapDrawer(this, controller, getViewBounds());
         updater = new GoalsMapUpdater(controller);
 
         new Thread(updater).start();
         new Thread(renderer).start();
     }
 
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        super.surfaceDestroyed(holder);
+    public void stopDrawing() {
         renderer.shutDown();
         updater.shutDown();
     }

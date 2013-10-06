@@ -40,6 +40,7 @@ public class TouchHandler implements View.OnTouchListener {
                 eventStartTime = eventPrevTime = System.currentTimeMillis();
                 eventStartX = eventPrevX = event.getX();
                 eventStartY = eventPrevY = event.getY();
+                listener.onEventStarted();
                 break;
             case MotionEvent.ACTION_UP:
                 eventEndTime = System.currentTimeMillis();

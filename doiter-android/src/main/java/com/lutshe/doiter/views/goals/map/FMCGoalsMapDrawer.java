@@ -2,15 +2,20 @@ package com.lutshe.doiter.views.goals.map;
 
 import android.graphics.*;
 
+import android.support.v4.util.LruCache;
 import android.util.Log;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
 import com.lutshe.doiter.views.goals.map.model.GoalView;
 
 /**
+ * FMC - Full Map Cache: the whole map is hold in memory (as a bit) which leads to stable performance
+ * no matter how difficult the layout is. But memory usage is big - and when map is big (lots of goals)
+ * this view should not be used.
+ *
  * Created by Arturro on 22.09.13.
  */
-public class GoalsMapDrawer extends Drawer {
+public class FMCGoalsMapDrawer extends Drawer {
     private final MapController controller;
     private final int screenWidth;
     private final int screenHeight;
@@ -20,7 +25,7 @@ public class GoalsMapDrawer extends Drawer {
     private final Bitmap cacheBitmap;
     private Canvas cacheCanvas;
 
-    public GoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
+    public FMCGoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
         this.controller = controller;
         this.screenWidth = rect.width();
@@ -41,7 +46,7 @@ public class GoalsMapDrawer extends Drawer {
         canvas.clipRect(0, 0, screenWidth, screenHeight);
 
         canvas.save();
-        canvas.translate((float) controller.getCurrentOffsetX(), (float) controller.getCurrentOffsetY());
+        canvas.translate(controller.getCurrentOffsetX(), controller.getCurrentOffsetY());
         drawMap(0, 0, canvas);
         drawMap(-controller.getMapWidth(), -controller.getMapHeight(), canvas);
         drawMap(-controller.getMapWidth(), 0, canvas);

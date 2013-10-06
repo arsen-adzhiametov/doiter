@@ -53,7 +53,7 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback {
 		return getHolder().getSurfaceFrame();
 	}
 
-	private void waitForViewToBeReady() {
+	protected void waitForViewToBeReady() {
 		while (!isReady()) {
 			Log.d("waiting", "waiting for view to initialize");
 			try {

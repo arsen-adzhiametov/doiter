@@ -18,7 +18,7 @@ public abstract class Drawer extends Looper {
 		if (canvas == null) {
 			return;
 		}
-		
+
 		draw(canvas);
 		view.releaseCanvas(canvas);
 	}

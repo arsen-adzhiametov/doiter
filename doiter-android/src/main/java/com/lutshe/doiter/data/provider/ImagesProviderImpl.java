@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.os.Debug;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.view.WindowManager;
