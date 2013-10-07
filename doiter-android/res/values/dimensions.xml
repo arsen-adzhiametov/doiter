@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="seek_thumb_diameter">30dp</dimen>
+    <dimen name="seek_thumb_diameter">33dp</dimen>
 
     <dimen name="padding_100">100dp</dimen>
     <dimen name="padding_20">20dp</dimen>
