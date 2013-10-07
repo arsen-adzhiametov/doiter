@@ -3,10 +3,9 @@
                 android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:paddingBottom="@dimen/padding_15"
                     android:id="@+id/top_layout">
         <ImageView
                 android:layout_width="fill_parent"
@@ -14,8 +13,9 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/ribbon_2"
                 android:paddingTop="@dimen/padding_20"
+                android:paddingBottom="@dimen/padding_15"
                 android:id="@+id/ribbon"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitXY"/>
 
         <TextView
                 android:id="@+id/goalNameDetail"
@@ -52,14 +52,14 @@
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/top_layout"
                     android:layout_above="@id/bottom_layout"
                     android:id="@+id/middle_layout">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:paddingBottom="@dimen/padding_10"
@@ -72,7 +72,7 @@
                     android:id="@+id/zabor_verh_top"
                     android:src="@drawable/zabor_verh_top"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="fitXY"/>
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                     android:adjustViewBounds="true"
                     android:id="@+id/zabor2_top"
                     android:src="@drawable/zabor_niz_top"
-
+                    android:scaleType="fitXY"
                     />
 
             <ImageView
@@ -165,7 +165,7 @@
                     android:adjustViewBounds="true"
                     android:id="@+id/zabor2_bottom"
                     android:src="@drawable/zabor_niz_bottom"
-                    />
+                    android:scaleType="fitXY"/>
 
             <ImageView
                     android:layout_width="fill_parent"

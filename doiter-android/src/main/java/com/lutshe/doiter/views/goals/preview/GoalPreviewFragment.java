@@ -26,26 +26,13 @@ public class GoalPreviewFragment extends Fragment {
 //    @ViewById(R.id.goalCoverDetail)
 //    ImageView goalCover;
 
-    @ViewById(R.id.goalNameDetail)
-    TextView goalNameTextView;
-
-    @ViewById(R.id.daysText)
-    TextView daysTextTextView;
-
-    @ViewById(R.id.daysQuantity)
-    TextView daysQuantityTextView;
-
-    @ViewById(R.id.iWillDoItIn)
-    TextView iWillDoItInTextView;
-
-    @ViewById(R.id.goal_description)
-    TextView goalDescriptionTextView;
-
-    @ViewById(R.id.addGoalText)
-    TextView addGoalTextView;
-
-    @ViewById(R.id.seekbar)
-    SeekBar seekBar;
+    @ViewById(R.id.goalNameDetail)TextView goalNameTextView;
+    @ViewById(R.id.daysText)TextView daysTextTextView;
+    @ViewById(R.id.daysQuantity)TextView daysQuantityTextView;
+    @ViewById(R.id.iWillDoItIn)TextView iWillDoItInTextView;
+    @ViewById(R.id.goal_description)TextView goalDescriptionTextView;
+    @ViewById(R.id.addGoalText)TextView addGoalTextView;
+    @ViewById(R.id.seekbar)SeekBar seekBar;
 
     @Bean SeekBarChangeListener seekBarChangeListener;
     @Bean(ImagesProviderImpl.class) ImagesProvider imagesProvider;
@@ -53,6 +40,7 @@ public class GoalPreviewFragment extends Fragment {
     @Bean MessagesDao messagesDao;
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
+    @Bean ViewPaddingAdapter viewPaddingAdapter;
 
     @FragmentArg
     Long goalId;
