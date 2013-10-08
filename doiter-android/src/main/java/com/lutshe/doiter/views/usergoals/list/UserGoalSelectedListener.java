@@ -10,7 +10,7 @@ import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EBean
 public class UserGoalSelectedListener implements AdapterView.OnItemClickListener{

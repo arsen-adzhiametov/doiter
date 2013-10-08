@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 import java.util.HashMap;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 public class FinalCountdown extends CountDownTimer {
 

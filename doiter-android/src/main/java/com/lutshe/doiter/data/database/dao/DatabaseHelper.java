@@ -25,7 +25,7 @@ import static com.lutshe.doiter.data.database.dao.MessagesDao.TYPE;
 import static com.lutshe.doiter.data.database.dao.MessagesDao.USER_GOAL_ID;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EBean(scope = Scope.Singleton)
 public class DatabaseHelper extends SQLiteOpenHelper {

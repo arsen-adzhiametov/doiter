@@ -16,7 +16,7 @@ import com.lutshe.doiter.views.goals.list.GoalItemView;
 import com.lutshe.doiter.views.goals.list.GoalItemView_;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EBean
 public class UserGoalsListAdapter extends BaseAdapter{

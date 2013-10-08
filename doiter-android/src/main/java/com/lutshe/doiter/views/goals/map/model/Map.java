@@ -50,8 +50,8 @@ public class Map {
             for(int col = 0; col < cols; col++) {
                 int viewId = (row * cols) + col;
                 GoalView view = createGoalView(goals[viewId % goals.length]);
-                view.setX(col * cellWidth);
-                view.setY(row * cellHeight);
+                view.setX(col * cellWidth + (cellWidth - view.getWidth()) / 2);
+                view.setY(row * cellHeight + (cellHeight - view.getHeight()) / 2);
                 goalsGrid[row][col] = view;
             }
         }

@@ -76,8 +76,8 @@ public class SGCGoalsMapDrawer extends Drawer {
     }
 
     private void drawGoalView(Canvas canvas, GoalView view) {
-        paint.setColor(Color.GREEN);
-        canvas.drawRect(0, 0, view.getWidth(), view.getHeight(), paint);
+//        paint.setColor(Color.GREEN);
+//        canvas.drawRect(0, 0, view.getWidth(), view.getHeight(), paint);
         canvas.drawBitmap(view.getScaledBitmap(), 0, 0, paint);
 
         paint.setColor(Color.BLACK);

@@ -16,7 +16,7 @@ import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EFragment(R.layout.user_goal_details_fragment)
 public class UserGoalDetailFragment extends Fragment implements UpdatableView {

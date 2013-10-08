@@ -13,7 +13,7 @@ import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.UpdatableView;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EFragment(R.layout.goals_list_fragment)
 public class GoalsListFragment extends Fragment implements UpdatableView {

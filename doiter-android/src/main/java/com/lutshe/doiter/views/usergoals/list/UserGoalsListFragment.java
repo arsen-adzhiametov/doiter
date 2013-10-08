@@ -15,7 +15,7 @@ import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EFragment(R.layout.user_goal_list_fragment)
 public class UserGoalsListFragment extends Fragment implements UpdatableView {

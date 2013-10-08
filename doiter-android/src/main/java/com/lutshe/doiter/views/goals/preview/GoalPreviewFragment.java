@@ -18,7 +18,7 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.joda.time.DateTime;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EFragment(R.layout.goal_preview_fragment)
 public class GoalPreviewFragment extends Fragment {

@@ -15,7 +15,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 
 /**
- * Created by Arsen Adzhiametov on 9/09/13.
+ * Created by Arsen Adzhiametov on goal8/09/13.
  */
 @EReceiver
 public class InternetConnectionListener extends BroadcastReceiver {

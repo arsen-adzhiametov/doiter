@@ -24,7 +24,7 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EReceiver
 public class AlarmListener extends BroadcastReceiver {

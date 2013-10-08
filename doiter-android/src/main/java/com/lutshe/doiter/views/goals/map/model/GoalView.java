@@ -17,8 +17,6 @@ public class GoalView {
     private int x;
     private int y;
 
-    private Rect rect;
-
     private Bitmap scaledBitmap;
 
     public GoalView(Goal goal) {
@@ -38,7 +36,7 @@ public class GoalView {
         if (bitmap.getWidth() >= bitmap.getHeight()) {
             if (Math.abs(bitmap.getWidth() - bitmap.getHeight()) < 20) {
                 // square or almost square and width is bigger than height
-                ratio = (maxWidth - BORDER_SIZE * 2) / bitmap.getWidth();
+                ratio = (maxWidth - BORDER_SIZE * 6) / bitmap.getWidth();
                 Log.d(TAG, "almost square, little wide");
             } else {
                 Log.d(TAG, "image is wide");
@@ -47,7 +45,7 @@ public class GoalView {
         } else {
             if (Math.abs(bitmap.getWidth() - bitmap.getHeight()) < 20) {
                 Log.d(TAG, "almost square, little tall");
-                ratio = (maxHeight - BORDER_SIZE * 2) / bitmap.getHeight();
+                ratio = (maxHeight - BORDER_SIZE * 6) / bitmap.getHeight();
             } else {
                 Log.d(TAG, "image is tall");
                 ratio = (maxHeight - BORDER_SIZE) / bitmap.getHeight();
@@ -72,8 +70,6 @@ public class GoalView {
             canvas.setMatrix(scaleMatrix);
             canvas.drawBitmap(bitmap, 0, 0, new Paint(Paint.FILTER_BITMAP_FLAG));
         }
-
-        goalView.rect = new Rect(goalView.x, goalView.y, goalView.x + goalView.getScaledBitmap().getWidth(), goalView.y + goalView.getScaledBitmap().getHeight());
 
         return goalView;
     }
@@ -112,11 +108,11 @@ public class GoalView {
     }
 
     public int getWidth() {
-        return rect.width();
+        return scaledBitmap.getWidth();
     }
 
     public int getHeight() {
-        return rect.height();
+        return scaledBitmap.getHeight();
     }
 
     public Goal getGoal() {
@@ -125,9 +121,5 @@ public class GoalView {
 
     public Bitmap getScaledBitmap() {
         return scaledBitmap;
-    }
-
-    public Rect getRect() {
-        return rect;
     }
 }

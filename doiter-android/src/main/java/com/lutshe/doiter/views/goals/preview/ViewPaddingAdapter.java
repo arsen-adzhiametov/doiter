@@ -11,7 +11,7 @@ import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EBean
 public class ViewPaddingAdapter {

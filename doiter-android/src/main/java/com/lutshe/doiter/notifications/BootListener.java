@@ -9,7 +9,7 @@ import com.googlecode.androidannotations.annotations.EReceiver;
 import com.googlecode.androidannotations.annotations.Trace;
 
 /**
- * Created by Arsen Adzhiametov on 7/31/13.
+ * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EReceiver
 public class BootListener extends BroadcastReceiver {

@@ -25,29 +25,32 @@ import static com.lutshe.doiter.model.Message.Type.OTHER;
 public class InitialDataSetup {
 
     public static Goal[] initialGoals = new Goal[]{
-        new Goal("Learn to ride a donkey", 0L),
-                new Goal("Rate this app", 1L),
-                new Goal("Go on a date", 2L),
-                new Goal("Buy a car", 3L),
-                new Goal("Gain a super power", 4L),
-                new Goal("Kick Chuck Norris ass", 5L),
-                new Goal("Don't get AIDS", 6L),
-                new Goal("Learn to play guitar", 7L),
-                new Goal("Learn new language", 8L),
-                new Goal("Run 10 kilometers", 9L)};
+                new Goal("Меньше сидеть в интернете", 0L),
+                new Goal("Убраться в квартире", 1L),
+                new Goal("Научиться готовить", 2L),
+                new Goal("Завечти домашнее животное", 3L),
+                new Goal("Научиться отдыхать", 4L),
+                new Goal("Провести отпуск в Зимбабве", 5L),
+                new Goal("уволиться с работы", 6L),
+                new Goal("Расстаться с девушкой", 7L),
+                new Goal("Бросить курить", 8L),
+                new Goal("Выйти замуж", 9L),
+                new Goal("Научиться танцевать", 10L),
+    };
 
     public static Map<String, Integer> goalsImages = new HashMap<String, Integer>() {
         {
-            put(initialGoals[0].getImageName(), R.drawable.sample_donkey);
-            put(initialGoals[1].getImageName(), R.drawable.sample_rate);
-            put(initialGoals[2].getImageName(), R.drawable.sample_dating);
-            put(initialGoals[3].getImageName(), R.drawable.sample_car);
-            put(initialGoals[4].getImageName(), R.drawable.sample_power);
-            put(initialGoals[5].getImageName(), R.drawable.sample_norris);
-            put(initialGoals[6].getImageName(), R.drawable.sample_aids);
-            put(initialGoals[7].getImageName(), R.drawable.sample_guitar);
-            put(initialGoals[8].getImageName(), R.drawable.sample_languages);
-            put(initialGoals[9].getImageName(), R.drawable.sample_running);
+            put(initialGoals[0].getImageName(), R.drawable.goal0);
+            put(initialGoals[1].getImageName(), R.drawable.goal1);
+            put(initialGoals[2].getImageName(), R.drawable.goal2);
+            put(initialGoals[3].getImageName(), R.drawable.goal3);
+            put(initialGoals[4].getImageName(), R.drawable.goal4);
+            put(initialGoals[5].getImageName(), R.drawable.goal5);
+            put(initialGoals[6].getImageName(), R.drawable.goal6);
+            put(initialGoals[7].getImageName(), R.drawable.goal7);
+            put(initialGoals[8].getImageName(), R.drawable.goal8);
+            put(initialGoals[9].getImageName(), R.drawable.goal9);
+            put(initialGoals[10].getImageName(), R.drawable.goal10);
         }
     };
 
@@ -61,11 +64,6 @@ public class InitialDataSetup {
         for (Goal goal : initialGoals) {
             setupGoal(goal);
         }
-    }
-
-    private void setupMessage(Message message) {
-        Log.d("test data setup", "adding message " + message);
-        messagesDao.addMessage(message);
     }
 
     private void setupGoal(Goal goal) {
