@@ -100,7 +100,7 @@ public class ImagesProviderImpl implements ImagesProvider {
     }
 
     private Bitmap getDefaultBitmap() {
-        return BitmapFactory.decodeResource(context.getResources(), R.drawable.sample_donkey);
+        return BitmapFactory.decodeResource(context.getResources(), R.drawable.bg);
     }
 
     private int getCacheSize(Point screenSize) {
