@@ -109,7 +109,7 @@
                     android:id="@+id/zabor_verh_bottom"
                     android:src="@drawable/zabor_verh_bottom"
                     android:adjustViewBounds="true"
-                    />
+                    android:scaleType="fitXY"/>
 
         </RelativeLayout>
 
