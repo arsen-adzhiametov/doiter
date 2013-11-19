@@ -17,6 +17,7 @@
         <item name="android:windowBackground">@drawable/bg_repeatable</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <!--Gabriola font theme-->

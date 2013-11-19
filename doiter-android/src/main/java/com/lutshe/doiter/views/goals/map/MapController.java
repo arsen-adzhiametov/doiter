@@ -3,6 +3,8 @@ package com.lutshe.doiter.views.goals.map;
 import android.app.Fragment;
 
 import android.util.Log;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.views.common.TouchEventsListener;
@@ -119,6 +121,8 @@ public class MapController implements TouchEventsListener {
         Fragment detailFragment;
         if (goal.getStatus() == Goal.Status.OTHER) {
             detailFragment = GoalPreviewFragment_.builder().goalId(goal.getId()).build();
+            EasyTracker tracker = EasyTracker.getInstance(fragmentsSwitcher.getActivity());
+            tracker.send(MapBuilder.createEvent("goal_selection", "goal_previewing", goal.getName().toString(), 1L).build());
         } else {
             detailFragment = UserGoalDetailFragment_.builder().goalId(goal.getId()).build();
         }

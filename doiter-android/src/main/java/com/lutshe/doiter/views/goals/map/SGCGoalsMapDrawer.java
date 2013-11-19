@@ -15,11 +15,13 @@ import com.lutshe.doiter.views.goals.map.model.GoalView;
  */
 public class SGCGoalsMapDrawer extends Drawer {
     public static final int MAX_GOALS_IN_CACHE = 20;
+    public static final int ZACHATOCHNIJ_SCREEN_SHOW_TIME = 1500;
 
     private final MapController controller;
 
     private final Paint paint = new Paint();
     private final Rect screenRect;
+    private long firstFrameDrawTime;
 
     public SGCGoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
@@ -45,6 +47,29 @@ public class SGCGoalsMapDrawer extends Drawer {
 
     @Override
     protected void draw(Canvas canvas) {
+        if (firstFrameDrawTime == 0) {
+            drawPreloadScreen(canvas);
+            firstFrameDrawTime = System.currentTimeMillis();
+            return;
+        }
+
+        if (System.currentTimeMillis() - firstFrameDrawTime < ZACHATOCHNIJ_SCREEN_SHOW_TIME) {
+            drawPreloadScreen(canvas);
+            drawGoalsScreen(new Canvas());
+        } else {
+            drawGoalsScreen(canvas);
+        }
+    }
+
+    private void drawPreloadScreen(Canvas canvas) {
+        Log.d("DRAWING", "Drawing preload screen");
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(30);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText("Achievements Time!", screenRect.centerX(), screenRect.centerY(), paint);
+    }
+
+    private void drawGoalsScreen(Canvas canvas) {
         long start = System.currentTimeMillis();
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 

@@ -62,6 +62,9 @@ public class FragmentsSwitcher {
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
+    public Activity getActivity() {
+        return activity;
+    }
 
     public void updateCurrentFragment() {
         if (currentFragment instanceof UpdatableView) {

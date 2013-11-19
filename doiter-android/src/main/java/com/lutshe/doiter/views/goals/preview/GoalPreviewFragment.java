@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.graphics.Typeface;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
@@ -63,6 +65,9 @@ public class GoalPreviewFragment extends Fragment {
         activateGoal();
         scheduleNextAlarm();
         showGoal();
+
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.send(MapBuilder.createEvent("goal_selection", "goal_selected", goalNameTextView.getText().toString(), 1L).build());
     }
 
     private void showGoal() {
