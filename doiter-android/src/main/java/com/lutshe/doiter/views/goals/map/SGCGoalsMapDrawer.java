@@ -1,11 +1,16 @@
 package com.lutshe.doiter.views.goals.map;
 
+import android.content.res.Resources;
 import android.graphics.*;
+import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.util.LruCache;
 import android.util.Log;
+import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
 import com.lutshe.doiter.views.goals.map.model.GoalView;
+import com.lutshe.doiter.views.util.BitmapUtils;
+import com.lutshe.doiter.views.util.ScaleProperties;
 
 /**
  * SGC - Single Goal Cache: goal views are cached individually bounding maximum memory usage by LruCache.
@@ -15,25 +20,45 @@ import com.lutshe.doiter.views.goals.map.model.GoalView;
  */
 public class SGCGoalsMapDrawer extends Drawer {
     public static final int MAX_GOALS_IN_CACHE = 20;
-    public static final int ZACHATOCHNIJ_SCREEN_SHOW_TIME = 1500;
+    public static final int LEFT_TIP_OFFSET = 13;
+    public static final int RIGHT_TIP_OFFSET = 11;
 
     private final MapController controller;
 
     private final Paint paint = new Paint();
     private final Rect screenRect;
-    private long firstFrameDrawTime;
+    private final Resources resources;
+
+    private final int tipHeight;
+    private final ScaleProperties tipsScaleProperties;
+    private final float scaledLeftTipOffset;
+    private final float scaledRightTipOffset;
+    private final NinePatchDrawable gradient;
 
     public SGCGoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
         this.controller = controller;
         this.screenRect = rect;
+        this.resources = view.getResources();
+
+        this.tipHeight = screenRect.height() / 13;
+        this.tipsScaleProperties = BitmapUtils.fillScaleProperties(resources, R.drawable.tip_blue_1, tipHeight);
+
+        scaledLeftTipOffset = LEFT_TIP_OFFSET * tipsScaleProperties.getRatio();
+        scaledRightTipOffset = RIGHT_TIP_OFFSET * tipsScaleProperties.getRatio();
+
+        String fontPath = "fonts/Gabriola.ttf";
+        Typeface typeface = Typeface.createFromAsset(resources.getAssets(), fontPath);
+        paint.setTypeface(typeface);
+
+        gradient = (NinePatchDrawable) resources.getDrawable(R.drawable.gradient);
     }
 
     private final LruCache<GoalView, Bitmap> goalsCache = new LruCache<GoalView, Bitmap>(MAX_GOALS_IN_CACHE) {
         @Override
         protected Bitmap create(GoalView view) {
             Log.d("DRAWING CACHE", "miss: creating bitmap");
-            Bitmap cacheBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+            Bitmap cacheBitmap = Bitmap.createBitmap((int) (view.getWidth() + scaledLeftTipOffset  + scaledRightTipOffset), view.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas cacheCanvas = new Canvas(cacheBitmap);
             drawGoalView(cacheCanvas, view);
             return cacheBitmap;
@@ -47,29 +72,6 @@ public class SGCGoalsMapDrawer extends Drawer {
 
     @Override
     protected void draw(Canvas canvas) {
-        if (firstFrameDrawTime == 0) {
-            drawPreloadScreen(canvas);
-            firstFrameDrawTime = System.currentTimeMillis();
-            return;
-        }
-
-        if (System.currentTimeMillis() - firstFrameDrawTime < ZACHATOCHNIJ_SCREEN_SHOW_TIME) {
-            drawPreloadScreen(canvas);
-            drawGoalsScreen(new Canvas());
-        } else {
-            drawGoalsScreen(canvas);
-        }
-    }
-
-    private void drawPreloadScreen(Canvas canvas) {
-        Log.d("DRAWING", "Drawing preload screen");
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(30);
-        paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText("Achievements Time!", screenRect.centerX(), screenRect.centerY(), paint);
-    }
-
-    private void drawGoalsScreen(Canvas canvas) {
         long start = System.currentTimeMillis();
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
@@ -101,12 +103,22 @@ public class SGCGoalsMapDrawer extends Drawer {
     }
 
     private void drawGoalView(Canvas canvas, GoalView view) {
-//        paint.setColor(Color.GREEN);
-//        canvas.drawRect(0, 0, view.getWidth(), view.getHeight(), paint);
-        canvas.drawBitmap(view.getScaledBitmap(), 0, 0, paint);
+        canvas.drawBitmap(view.getScaledBitmap(), scaledLeftTipOffset, 0, paint);
+        Long goalId = view.getGoal().getId();
 
-        paint.setColor(Color.BLACK);
-        canvas.drawText(view.getGoal().getName(), 10, 10, paint);
+        Bitmap leftTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getLeftTip(goalId), tipsScaleProperties);
+        Bitmap rightTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getRightTip(goalId), tipsScaleProperties);
+
+        canvas.drawBitmap(leftTip, 0, tipHeight / 3, paint);
+        canvas.drawBitmap(rightTip, canvas.getWidth() - rightTip.getWidth(), tipHeight / 3, paint);
+
+        gradient.setBounds((int) scaledLeftTipOffset, tipHeight * 2, (int) (canvas.getWidth() - scaledRightTipOffset), canvas.getHeight());
+        gradient.draw(canvas);
+
+        paint.setColor(Color.WHITE);
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(tipHeight / 2);
+        canvas.drawText(view.getGoal().getName(), canvas.getWidth() / 2, canvas.getHeight() - paint.getTextSize() / 2, paint);
     }
 
     @Override
