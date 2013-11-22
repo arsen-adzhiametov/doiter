@@ -22,6 +22,7 @@ public class SGCGoalsMapDrawer extends Drawer {
     public static final int MAX_GOALS_IN_CACHE = 20;
     public static final int LEFT_TIP_OFFSET = 13;
     public static final int RIGHT_TIP_OFFSET = 11;
+    public static final int SHADOW_OFFSET = 30;
 
     private final MapController controller;
 
@@ -31,9 +32,14 @@ public class SGCGoalsMapDrawer extends Drawer {
 
     private final int tipHeight;
     private final ScaleProperties tipsScaleProperties;
+
     private final float scaledLeftTipOffset;
     private final float scaledRightTipOffset;
+
+    private final int gradientHeight;
+
     private final NinePatchDrawable gradient;
+    private final NinePatchDrawable shadow;
 
     public SGCGoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
@@ -52,13 +58,16 @@ public class SGCGoalsMapDrawer extends Drawer {
         paint.setTypeface(typeface);
 
         gradient = (NinePatchDrawable) resources.getDrawable(R.drawable.gradient);
+        shadow = (NinePatchDrawable) resources.getDrawable(R.drawable.goal_shadow);
+
+        gradientHeight = screenRect.height() / 10;
     }
 
     private final LruCache<GoalView, Bitmap> goalsCache = new LruCache<GoalView, Bitmap>(MAX_GOALS_IN_CACHE) {
         @Override
         protected Bitmap create(GoalView view) {
             Log.d("DRAWING CACHE", "miss: creating bitmap");
-            Bitmap cacheBitmap = Bitmap.createBitmap((int) (view.getWidth() + scaledLeftTipOffset  + scaledRightTipOffset), view.getHeight(), Bitmap.Config.ARGB_8888);
+            Bitmap cacheBitmap = Bitmap.createBitmap((view.getWidth() + SHADOW_OFFSET * 2), view.getHeight() + SHADOW_OFFSET * 2, Bitmap.Config.ARGB_8888);
             Canvas cacheCanvas = new Canvas(cacheBitmap);
             drawGoalView(cacheCanvas, view);
             return cacheBitmap;
@@ -103,22 +112,25 @@ public class SGCGoalsMapDrawer extends Drawer {
     }
 
     private void drawGoalView(Canvas canvas, GoalView view) {
-        canvas.drawBitmap(view.getScaledBitmap(), scaledLeftTipOffset, 0, paint);
+        shadow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        shadow.draw(canvas);
+
+        canvas.drawBitmap(view.getScaledBitmap(), SHADOW_OFFSET, SHADOW_OFFSET, paint);
         Long goalId = view.getGoal().getId();
 
         Bitmap leftTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getLeftTip(goalId), tipsScaleProperties);
         Bitmap rightTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getRightTip(goalId), tipsScaleProperties);
 
-        canvas.drawBitmap(leftTip, 0, tipHeight / 3, paint);
-        canvas.drawBitmap(rightTip, canvas.getWidth() - rightTip.getWidth(), tipHeight / 3, paint);
+        canvas.drawBitmap(leftTip, SHADOW_OFFSET - scaledLeftTipOffset, SHADOW_OFFSET + tipHeight / 3, paint);
+        canvas.drawBitmap(rightTip, canvas.getWidth() - SHADOW_OFFSET - rightTip.getWidth() + scaledRightTipOffset, SHADOW_OFFSET + tipHeight / 3, paint);
 
-        gradient.setBounds((int) scaledLeftTipOffset, tipHeight * 2, (int) (canvas.getWidth() - scaledRightTipOffset), canvas.getHeight());
-        gradient.draw(canvas);
+        gradient.setBounds(SHADOW_OFFSET, gradientHeight, (canvas.getWidth() - SHADOW_OFFSET), canvas.getHeight() - SHADOW_OFFSET);
+//        gradient.draw(canvas);
 
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(tipHeight / 2);
-        canvas.drawText(view.getGoal().getName(), canvas.getWidth() / 2, canvas.getHeight() - paint.getTextSize() / 2, paint);
+        canvas.drawText(view.getGoal().getName(), canvas.getWidth() / 2, canvas.getHeight() - paint.getTextSize() / 2 - SHADOW_OFFSET, paint);
     }
 
     @Override
