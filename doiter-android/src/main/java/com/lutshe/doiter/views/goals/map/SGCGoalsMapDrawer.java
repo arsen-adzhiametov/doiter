@@ -4,7 +4,11 @@ import android.content.res.Resources;
 import android.graphics.*;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.util.LruCache;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
+import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
@@ -130,7 +134,12 @@ public class SGCGoalsMapDrawer extends Drawer {
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(tipHeight / 2);
-        canvas.drawText(view.getGoal().getName(), canvas.getWidth() / 2, canvas.getHeight() - paint.getTextSize() / 2 - SHADOW_OFFSET, paint);
+
+        canvas.save();
+        canvas.translate(canvas.getWidth()/2, canvas.getHeight() - paint.getTextSize() * 3);
+        StaticLayout textLayout = new StaticLayout(view.getGoal().getName(), new TextPaint(paint), view.getWidth() - 10,Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        textLayout.draw(canvas);
+        canvas.restore();
     }
 
     @Override
