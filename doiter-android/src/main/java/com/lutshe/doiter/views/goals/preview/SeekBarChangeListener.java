@@ -27,9 +27,9 @@ public class SeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
     private String getAppropriateString(int progress) {
         String number = String.valueOf(progress);
-        if ((number.endsWith("goal1") || number.endsWith("goal2") || number.endsWith("goal3")) && !number.startsWith("goal0")){
+        if ((number.endsWith("2") || number.endsWith("3") || number.endsWith("4")) && !number.startsWith("1")){
             return  "дня  "; //whitespace is necessary for layout constant width
-        } else if (!String.valueOf(progress).endsWith("goal0") || progress == 11) {
+        } else if (!String.valueOf(progress).endsWith("1") || progress == 11) {
             return  "дней";
         } else {
             return  "день";

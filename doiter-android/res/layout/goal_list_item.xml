@@ -9,9 +9,9 @@
         >
 
     <ImageView
+            android:id="@+id/goalCover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/goalCover"
             android:src="@drawable/ic_launcher"
             android:layout_margin="0dp"
             android:scaleType="centerCrop"

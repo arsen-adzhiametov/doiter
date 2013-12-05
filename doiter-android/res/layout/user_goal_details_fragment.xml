@@ -2,36 +2,207 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/goalCoverDetail"
-            android:src="@drawable/ic_launcher"
-            android:layout_margin="0dp"
-            android:scaleType="centerCrop"
-            />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_20"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/top_layout">
+        <ImageView
+                android:id="@+id/clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_20"
+                android:paddingRight="@dimen/padding_20"
+                android:adjustViewBounds="true"
+                android:src="@drawable/clock"
+                android:scaleType="fitXY"/>
 
-    <include layout="@layout/timer_container"/>
+        <include layout="@layout/timer_container"/>
 
-    <TextView
-            android:id="@+id/goalNameDetail"
-            android:layout_below="@id/goalCoverDetail"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="goal text"
-            android:layout_margin="4dp"
-            android:layout_marginTop="4dp"
-            android:textSize="16dp"
-            />
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/timer_text_container"
+                        android:layout_toRightOf="@id/clock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/remaining"
+                    android:text="Осталось"
+                    style="@style/GabriolaGrayFontStyle"/>
 
-    <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/userGoalMessagesList"
-            android:numColumns="1"
-            android:layout_margin="0dp"
-            android:stretchMode="columnWidth"
-            android:layout_below="@id/goalNameDetail"
-            />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/days_quantity"
+                    android:text="@string/starting_days"
+                    android:layout_toRightOf="@id/remaining"
+                    style="@style/GabriolaOrangeFontStyle"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/days_text"
+                    android:text="@string/days"
+                    android:layout_toRightOf="@id/days_quantity"
+                    style="@style/GabriolaGrayFontStyle"/>
+        </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/goal_cover_holder"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_20"
+                        android:paddingRight="@dimen/padding_20"
+                        android:layout_below="@id/timer_text_container"
+                        android:layout_centerHorizontal="true">
+            <ImageView
+                    android:id="@+id/left_image_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/padding_30"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:src="@drawable/arrow"/>
+
+            <ImageView
+                    android:id="@+id/right_image_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:src="@drawable/arrow_active"/>
+
+            <ImageView
+                    android:id="@+id/goal_cover_3_screen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/left_image_button"
+                    android:layout_toLeftOf="@id/right_image_button"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/goal2"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/goal_name_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/goal_cover_holder"
+                        android:layout_marginTop="-50dp">
+
+            <ImageView
+                    android:id="@+id/goal_name_bg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ribbon_screen3"
+                    android:paddingRight="@dimen/padding_20"
+                    android:paddingLeft="@dimen/padding_20"
+                    android:scaleType="fitCenter"/>
+
+            <TextView
+                    android:id="@+id/goal_name_3_screen"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Название цели"
+                    style="@style/GabriolaWhiteFontStyle"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/bottom_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_20"
+                    android:paddingRight="@dimen/padding_20"
+                    android:layout_alignParentBottom="true">
+
+        <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingBottom="@dimen/padding_20"
+                android:paddingTop="@dimen/padding_15"
+                android:src="@drawable/button_more_advices_screen3"
+                android:id="@+id/addGoalButton"
+                android:scaleType="fitCenter"
+                android:clickable="true"/>
+
+        <TextView
+                android:id="@+id/back_to_all_button_text"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Еще советов"
+                style="@style/GabriolaWhiteFontStyle"/>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/top_layout"
+                    android:layout_above="@id/bottom_layout"
+                    android:id="@+id/middle_layout">
+
+        <ImageView
+                android:id="@+id/zabor_top_3_screen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/zabor_verh_3screen"
+                android:paddingTop="@dimen/padding_15"
+                android:scaleType="fitXY"/>
+
+        <ImageView
+                android:id="@+id/zabor_bottom_3_screen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/zabor_niz_3screen"
+                android:scaleType="fitXY"/>
+
+        <ImageView
+                android:id="@+id/zabor_middle_3_screen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/zabor_top_3_screen"
+                android:layout_above="@id/zabor_bottom_3_screen"
+                android:src="@drawable/square"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
+
+        <ListView
+                android:id="@+id/user_goal_messages_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numColumns="1"
+                android:layout_margin="0dp"
+                android:stretchMode="columnWidth"
+                android:layout_below="@id/zabor_top_3_screen"
+                android:layout_above="@id/zabor_bottom_3_screen"
+                />
+
+        <ImageView
+                android:id="@+id/yellow_pick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_30"
+                android:src="@drawable/nomber_yellow"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

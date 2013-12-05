@@ -23,7 +23,7 @@ public class GoalItemView extends LinearLayout {
     @ViewById(R.id.goalCover)
     ImageView goalCover;
 
-    @ViewById(R.id.textTimeCountdown)
+    @ViewById(R.id.text_time_countdown)
     TextView timerView;
 
     public GoalItemView(Context context) {
