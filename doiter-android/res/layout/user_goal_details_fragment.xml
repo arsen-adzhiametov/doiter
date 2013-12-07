@@ -47,10 +47,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/days_text"
-                    android:text="@string/days"
+
                     android:layout_toRightOf="@id/days_quantity"
                     style="@style/GabriolaGrayFontStyle"/>
         </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/bottom_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_20"
+                    android:paddingRight="@dimen/padding_20"
+                    android:layout_alignParentBottom="true">
+
+        <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingBottom="@dimen/padding_20"
+                android:paddingTop="@dimen/padding_15"
+                android:src="@drawable/button_more_advices_screen3"
+                android:id="@+id/addGoalButton"
+                android:scaleType="fitCenter"
+                android:clickable="true"/>
+
+        <TextView
+                android:id="@+id/back_to_all_button_text"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Еще советов"
+                style="@style/GabriolaWhiteFontStyle"/>
+    </RelativeLayout>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:weightSum="1.0"
+            android:layout_below="@id/top_layout"
+            android:layout_above="@id/bottom_layout"
+            android:orientation="vertical">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+
+
+                        android:id="@+id/middle_layout_one">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/goal_cover_holder"
@@ -58,7 +103,8 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/padding_20"
                         android:paddingRight="@dimen/padding_20"
-                        android:layout_below="@id/timer_text_container"
+
+                        android:layout_centerInParent="true"
                         android:layout_centerHorizontal="true">
             <ImageView
                     android:id="@+id/left_image_button"
@@ -93,9 +139,9 @@
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/goal_name_holder"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/goal_cover_holder"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginTop="-50dp">
 
             <ImageView
@@ -116,43 +162,14 @@
                     android:text="Название цели"
                     style="@style/GabriolaWhiteFontStyle"/>
         </RelativeLayout>
-
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/bottom_layout"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/padding_20"
-                    android:paddingRight="@dimen/padding_20"
-                    android:layout_alignParentBottom="true">
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.5"
 
-        <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:paddingBottom="@dimen/padding_20"
-                android:paddingTop="@dimen/padding_15"
-                android:src="@drawable/button_more_advices_screen3"
-                android:id="@+id/addGoalButton"
-                android:scaleType="fitCenter"
-                android:clickable="true"/>
-
-        <TextView
-                android:id="@+id/back_to_all_button_text"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Еще советов"
-                style="@style/GabriolaWhiteFontStyle"/>
-    </RelativeLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/top_layout"
-                    android:layout_above="@id/bottom_layout"
-                    android:id="@+id/middle_layout">
+                    android:id="@+id/middle_layout_two">
 
         <ImageView
                 android:id="@+id/zabor_top_3_screen"
@@ -204,5 +221,7 @@
                 android:adjustViewBounds="true"/>
 
     </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
