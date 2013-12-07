@@ -68,7 +68,7 @@
                 android:paddingBottom="@dimen/padding_20"
                 android:paddingTop="@dimen/padding_15"
                 android:src="@drawable/button_more_advices_screen3"
-                android:id="@+id/addGoalButton"
+                android:id="@+id/more_goals_button"
                 android:scaleType="fitCenter"
                 android:clickable="true"/>
 
@@ -93,8 +93,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="0.5"
-
-
                         android:id="@+id/middle_layout_one">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -141,8 +139,7 @@
                         android:id="@+id/goal_name_holder"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="-50dp">
+                        android:layout_alignParentBottom="true">
 
             <ImageView
                     android:id="@+id/goal_name_bg"
@@ -168,7 +165,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.5"
-
                     android:id="@+id/middle_layout_two">
 
         <ImageView
