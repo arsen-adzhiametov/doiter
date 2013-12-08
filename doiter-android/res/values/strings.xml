@@ -6,7 +6,8 @@
     <string name="i_will_do_it_in">Я сделаю это за</string>
     <string name="add_goal_button_text">Поставить цель!</string>
     <string name="starting_days">" 0 "</string>
-    <string name="days">дней</string>
+    <string name="remaining">"Осталось "</string>
+    <string name="days">" дней"</string>
     <string name="goal_description">Осёл - не очень ропулярное средство передвижения. Зато оригинальное
     и удобное. Наверное. В общем, наши советы помогут вам полусить право на вождение ослов. Только
     будьте бдительныб иногда осёл опрокидывает водителя, а потом хамит. </string>

@@ -121,6 +121,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:id="@+id/iWillDoItIn"
                     android:text="@string/i_will_do_it_in"
                     style="@style/GabriolaGrayFontStyle"/>
@@ -137,6 +138,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:id="@+id/daysText"
                     android:text="@string/days"
                     android:layout_toRightOf="@id/daysQuantity"
