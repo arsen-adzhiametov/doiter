@@ -12,7 +12,7 @@ import com.lutshe.doiter.data.provider.ImagesProvider;
 public class GoalView {
     private static final String TAG = GoalView.class.getName();
 
-    private static final float BORDER_SIZE = 15;
+    private static final float BORDER_SIZE = 45;
     private final Goal goal;
     private int x;
     private int y;

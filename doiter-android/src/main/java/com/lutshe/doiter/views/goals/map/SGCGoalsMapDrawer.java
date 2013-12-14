@@ -2,6 +2,7 @@ package com.lutshe.doiter.views.goals.map;
 
 import android.content.res.Resources;
 import android.graphics.*;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.util.LruCache;
 import android.text.Layout;
@@ -42,7 +43,10 @@ public class SGCGoalsMapDrawer extends Drawer {
 
     private final int gradientHeight;
 
-    private final NinePatchDrawable gradient;
+    private Bitmap gradientLeft;
+    private Bitmap gradientMiddle;
+    private Bitmap gradientRight;
+
     private final NinePatchDrawable shadow;
 
     public SGCGoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
@@ -61,10 +65,14 @@ public class SGCGoalsMapDrawer extends Drawer {
         Typeface typeface = Typeface.createFromAsset(resources.getAssets(), fontPath);
         paint.setTypeface(typeface);
 
-        gradient = (NinePatchDrawable) resources.getDrawable(R.drawable.gradient);
         shadow = (NinePatchDrawable) resources.getDrawable(R.drawable.goal_shadow);
 
-        gradientHeight = screenRect.height() / 10;
+        gradientHeight = screenRect.height() / 8;
+        ScaleProperties gradientScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.left_side_gradient, gradientHeight);
+        ScaleProperties middleGradientScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.middle_of_gradient, gradientHeight);
+        gradientLeft = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.left_side_gradient, gradientScaleProps);
+        gradientMiddle = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.middle_of_gradient, middleGradientScaleProps);
+        gradientRight = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.right_side_gradient, gradientScaleProps);
     }
 
     private final LruCache<GoalView, Bitmap> goalsCache = new LruCache<GoalView, Bitmap>(MAX_GOALS_IN_CACHE) {
@@ -128,8 +136,18 @@ public class SGCGoalsMapDrawer extends Drawer {
         canvas.drawBitmap(leftTip, SHADOW_OFFSET - scaledLeftTipOffset, SHADOW_OFFSET + tipHeight / 3, paint);
         canvas.drawBitmap(rightTip, canvas.getWidth() - SHADOW_OFFSET - rightTip.getWidth() + scaledRightTipOffset, SHADOW_OFFSET + tipHeight / 3, paint);
 
-        gradient.setBounds(SHADOW_OFFSET, gradientHeight, (canvas.getWidth() - SHADOW_OFFSET), canvas.getHeight() - SHADOW_OFFSET);
-//        gradient.draw(canvas);
+        // draw gradient
+        canvas.drawBitmap(gradientLeft, SHADOW_OFFSET, canvas.getHeight() - SHADOW_OFFSET - gradientHeight, paint);
+        canvas.drawBitmap(gradientRight, canvas.getWidth() - SHADOW_OFFSET - gradientRight.getWidth(), canvas.getHeight() - SHADOW_OFFSET - gradientHeight, paint);
+        canvas.save();
+        canvas.clipRect(SHADOW_OFFSET + gradientLeft.getWidth(), 0, canvas.getWidth() - SHADOW_OFFSET - gradientRight.getWidth(), canvas.getHeight());
+        int left = SHADOW_OFFSET + gradientLeft.getWidth();
+        while (left <= canvas.getWidth() - SHADOW_OFFSET - gradientRight.getWidth()) {
+            canvas.drawBitmap(gradientMiddle, left, canvas.getHeight() - gradientHeight - SHADOW_OFFSET, paint);
+            left += gradientMiddle.getWidth();
+        }
+        canvas.restore();
+        //
 
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);

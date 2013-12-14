@@ -14,8 +14,8 @@ public class Map {
     private static final double ROWS_PER_SCREEN = 2.5;
     private static final double COLS_PER_SCREEN = 1.5;
 
-    private static final double MIN_ROWS = 4;
-    private static final double MIN_COLS = 3;
+    private static final double MIN_ROWS = 3;
+    private static final double MIN_COLS = 2;
 
     public int cellWidth;
     public int cellHeight;
