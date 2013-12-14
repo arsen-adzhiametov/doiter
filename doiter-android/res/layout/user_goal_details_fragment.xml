@@ -127,32 +127,32 @@
                         android:paddingRight="@dimen/padding_20"
                         android:layout_centerHorizontal="true">
             <ImageView
-                    android:id="@+id/left_image_button"
+                    android:id="@+id/prev_arrow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="@dimen/padding_30"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:clickable="true"
-                    android:src="@drawable/arrow"/>
+                    android:src="@drawable/prev_arrow_button_selector"/>
 
             <ImageView
-                    android:id="@+id/right_image_button"
+                    android:id="@+id/next_arrow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/padding_30"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:clickable="true"
-                    android:src="@drawable/arrow_active"/>
+                    android:src="@drawable/next_arrow_button_selector"/>
 
             <ImageView
                     android:id="@+id/goal_cover_3_screen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@id/left_image_button"
-                    android:layout_toLeftOf="@id/right_image_button"
+                    android:layout_toRightOf="@id/prev_arrow_button"
+                    android:layout_toLeftOf="@id/next_arrow_button"
                     android:adjustViewBounds="true"
                     android:src="@drawable/goal2"/>
 
