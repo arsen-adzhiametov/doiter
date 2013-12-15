@@ -20,7 +20,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <!--Gabriola font theme-->
+    <!--Gabriola font themes-->
     <style name="GabriolaGrayFontStyle">
         <item name="android:textSize">@dimen/text_size_35</item>
         <item name="android:textColor">@color/gray</item>

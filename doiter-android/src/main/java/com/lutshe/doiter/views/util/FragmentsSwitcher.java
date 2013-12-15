@@ -26,7 +26,8 @@ public class FragmentsSwitcher {
         GoalPreviewFragment_,
         UserGoalsListFragment_,
         UserGoalDetailFragment_,
-        GoalsMapFragment_
+        GoalsMapFragment_,
+        UserGoalMessagesListFragment_
     }
 
     public void show(Fragment fragment, boolean addToBackStack) {
@@ -35,6 +36,7 @@ public class FragmentsSwitcher {
             case GoalsListFragment_:
             case GoalPreviewFragment_:
             case UserGoalDetailFragment_:
+            case UserGoalMessagesListFragment_:
                 doTransaction(fragment, addToBackStack);
                 return;
             case UserGoalsListFragment_:

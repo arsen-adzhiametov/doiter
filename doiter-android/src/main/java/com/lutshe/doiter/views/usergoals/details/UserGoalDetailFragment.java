@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
@@ -14,7 +13,8 @@ import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.timer.FinalCountdown;
-import com.lutshe.doiter.views.usergoals.details.messages.MessagesListAdapter;
+import com.lutshe.doiter.views.usergoals.details.messages.UserGoalMessagesListFragment_;
+import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.joda.time.DateTime;
 
 /**
@@ -29,20 +29,18 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     @ViewById(R.id.goal_name_3_screen)TextView goalNameTextView;
     @ViewById(R.id.back_to_all_button_text)TextView backToAllButtonTextView;
     @ViewById(R.id.goal_cover_3_screen)ImageView goalCover;
-    @ViewById(R.id.user_goal_messages_list)ListView userGoalMessagesList;
+    @ViewById(R.id.message_number)TextView messageNumberTextView;
+    @ViewById(R.id.message_text)TextView messageTextTextView;
     @ViewById(R.id.text_time_countdown)TextView timerView;
 
-    @Bean MessagesListAdapter messagesListAdapter;
     @Bean GoalsDao goalsDao;
     @Bean(ImagesProviderImpl.class)ImagesProvider imagesProvider;
+    @Bean FragmentsSwitcher fragmentsSwitcher;
 
     @FragmentArg Long goalId;
 
     @AfterViews
     public void bindData() {
-        messagesListAdapter.initAdapter(goalId);
-        userGoalMessagesList.setAdapter(messagesListAdapter);
-
         Goal goal = goalsDao.getGoal(goalId);
         Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         goalNameTextView.setText(goal.getName());
@@ -54,9 +52,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     }
 
     @Override
-    public void update() {
-        messagesListAdapter.notifyDataSetChanged();
-    }
+    public void update() {}
 
     private void setTypefaceToTextViews() {
         String fontPath = "fonts/Gabriola.ttf";
@@ -66,12 +62,19 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
         daysTextTextView.setTypeface(typeface);
         goalNameTextView.setTypeface(typeface);
         backToAllButtonTextView.setTypeface(typeface);
+        messageNumberTextView.setTypeface(typeface);
+        messageTextTextView.setTypeface(typeface);
     }
 
     private long getDaysRemaining(Goal goal) {
         long timeDiff = goal.getEndTime() - DateTime.now().getMillis();
         long daysRemaining = timeDiff/(1000*60*60*24);
         return daysRemaining;
+    }
+
+    @Click(R.id.more_tips_button)
+    void showAllTips(){
+        fragmentsSwitcher.show(UserGoalMessagesListFragment_.builder().goalId(goalId).build(), true);
     }
 
 }
