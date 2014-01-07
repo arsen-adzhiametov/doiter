@@ -138,18 +138,11 @@ public class MapController implements TouchEventsListener {
     public void onEventFinished(float dx, float dy, long time) {
         scrollSpeedX = (int) (dx * 1024 / time);
         scrollSpeedY = (int) (dy * 1024 / time);
-        scrollSpeedXDecrease = scrollSpeedX / 30;
-        scrollSpeedYDecrease = scrollSpeedY / 30;
+        scrollSpeedXDecrease = scrollSpeedX / 40;
+        scrollSpeedYDecrease = scrollSpeedY / 40;
 
         Log.d("scroll" , dx + " " + dy + " per " + time + " ms");
         Log.d("scroll" , scrollSpeedY + " " + scrollSpeedY + " per second");
-    }
-
-    public int getCellWidth() {
-        return map.cellWidth;
-    }
-    public int getCellHeight() {
-        return map.cellHeight;
     }
 
     public void init() {

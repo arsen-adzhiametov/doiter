@@ -14,9 +14,12 @@ public class GoalView {
 
     private static final float BORDER_SIZE = 45;
     private final Goal goal;
+
+    // position of left top corner of image inside the cell
     private int x;
     private int y;
 
+    // TODO: save ratio to scale all other stuff (tips, shadows, font) to the same ratio?
     private Bitmap scaledBitmap;
 
     public GoalView(Goal goal) {

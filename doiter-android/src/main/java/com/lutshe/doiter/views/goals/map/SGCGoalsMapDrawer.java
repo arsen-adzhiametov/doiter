@@ -120,42 +120,64 @@ public class SGCGoalsMapDrawer extends Drawer {
     }
 
     private boolean isVisible(int offsetX, int offsetY, GoalView view) {
-        return screenRect.intersects(view.getX() + offsetX, view.getY() + offsetY, view.getX() + offsetX + view.getWidth(), view.getY() + offsetY + view.getHeight());
+        return screenRect.intersects(view.getX() - SHADOW_OFFSET * 2 + offsetX, view.getY() - SHADOW_OFFSET * 2 + offsetY, view.getX() + SHADOW_OFFSET * 2 + offsetX + view.getWidth(), view.getY() + offsetY + SHADOW_OFFSET  * 2 + view.getHeight());
     }
 
     private void drawGoalView(Canvas canvas, GoalView view) {
+
+        drawShadow(canvas);
+
+        canvas.save();
+        canvas.translate(SHADOW_OFFSET, SHADOW_OFFSET);
+
+        drawCoverImage(canvas, view);
+        drawTips(canvas, view);
+        drawGradient(canvas, view);
+        drawText(canvas, view);
+
+        canvas.restore();
+    }
+
+    /** Draws shadow as a canvas background */
+    private void drawShadow(Canvas canvas) {
         shadow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         shadow.draw(canvas);
+    }
 
-        canvas.drawBitmap(view.getScaledBitmap(), SHADOW_OFFSET, SHADOW_OFFSET, paint);
+    private void drawCoverImage(Canvas canvas, GoalView view) {
+        canvas.drawBitmap(view.getScaledBitmap(), 0, 0, paint);
+    }
+
+    private void drawTips(Canvas canvas, GoalView view) {
         Long goalId = view.getGoal().getId();
-
         Bitmap leftTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getLeftTip(goalId), tipsScaleProperties);
         Bitmap rightTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getRightTip(goalId), tipsScaleProperties);
 
-        canvas.drawBitmap(leftTip, SHADOW_OFFSET - scaledLeftTipOffset, SHADOW_OFFSET + tipHeight / 3, paint);
-        canvas.drawBitmap(rightTip, canvas.getWidth() - SHADOW_OFFSET - rightTip.getWidth() + scaledRightTipOffset, SHADOW_OFFSET + tipHeight / 3, paint);
+        canvas.drawBitmap(leftTip, -scaledLeftTipOffset, tipHeight / 6, paint);
+        canvas.drawBitmap(rightTip, view.getWidth() - rightTip.getWidth() + scaledRightTipOffset, tipHeight / 6, paint);
+    }
 
-        // draw gradient
-        canvas.drawBitmap(gradientLeft, SHADOW_OFFSET, canvas.getHeight() - SHADOW_OFFSET - gradientHeight, paint);
-        canvas.drawBitmap(gradientRight, canvas.getWidth() - SHADOW_OFFSET - gradientRight.getWidth(), canvas.getHeight() - SHADOW_OFFSET - gradientHeight, paint);
+    private void drawGradient(Canvas canvas, GoalView view) {
+        canvas.drawBitmap(gradientLeft, 0, view.getHeight() - gradientHeight, paint);
+        canvas.drawBitmap(gradientRight, view.getWidth() - gradientRight.getWidth(), view.getHeight() - gradientHeight, paint);
         canvas.save();
-        canvas.clipRect(SHADOW_OFFSET + gradientLeft.getWidth(), 0, canvas.getWidth() - SHADOW_OFFSET - gradientRight.getWidth(), canvas.getHeight());
-        int left = SHADOW_OFFSET + gradientLeft.getWidth();
-        while (left <= canvas.getWidth() - SHADOW_OFFSET - gradientRight.getWidth()) {
-            canvas.drawBitmap(gradientMiddle, left, canvas.getHeight() - gradientHeight - SHADOW_OFFSET, paint);
+        canvas.clipRect(gradientLeft.getWidth(), 0, view.getWidth() - gradientRight.getWidth(), canvas.getHeight());
+        int left = gradientLeft.getWidth();
+        while (left <= view.getWidth() - gradientRight.getWidth()) {
+            canvas.drawBitmap(gradientMiddle, left, view.getHeight() - gradientHeight, paint);
             left += gradientMiddle.getWidth();
         }
         canvas.restore();
-        //
+    }
 
+    private void drawText(Canvas canvas, GoalView view) {
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(tipHeight / 2);
 
         canvas.save();
-        canvas.translate(canvas.getWidth()/2, canvas.getHeight() - paint.getTextSize() * 3);
-        StaticLayout textLayout = new StaticLayout(view.getGoal().getName(), new TextPaint(paint), view.getWidth() - 10,Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        canvas.translate(view.getWidth() / 2, view.getHeight() - paint.getTextSize() * 2);
+        StaticLayout textLayout = new StaticLayout(view.getGoal().getName(), new TextPaint(paint), view.getWidth() - 10, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
         textLayout.draw(canvas);
         canvas.restore();
     }
