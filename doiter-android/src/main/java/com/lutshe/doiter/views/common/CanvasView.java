@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -41,6 +42,10 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public Canvas getCanvas() {
+        Surface surface = surfaceHolder.getSurface();
+        if (surface == null || !surface.isValid()) {
+            return null;
+        }
         return surfaceHolder.lockCanvas();
 	}
 
