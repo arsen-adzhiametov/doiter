@@ -34,17 +34,23 @@ public class GoalsService {
         return goalsDao.getAllGoals();
     }
 
+    @GET
     @Path("/{id}")
+    @Produces("application/json; charset=UTF-8")
     public Goal getGoalById(@PathParam("id") Long id) {
         return goalsDao.getGoalById(id);
     }
 
+    @GET
     @Path("/{goalId}/messages")
+    @Produces("application/json; charset=UTF-8")
     public List<Message> getAllMessagesForGoal(@PathParam("goalId") Long id) {
         return messagesDao.getAllMessagesForGoal(id);
     }
 
+    @GET
     @Path("/{goalId}/messages/{firstMessageNum}/{numberOfMessages}")
+    @Produces("application/json; charset=UTF-8")
     public List<Message> getMessagesForGoal(
             @PathParam("goalId") Long id,
             @PathParam("firstMessageNum") Long firstMessageNum,

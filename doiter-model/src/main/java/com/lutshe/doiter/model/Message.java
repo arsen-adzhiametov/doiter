@@ -36,34 +36,48 @@ public class Message {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public long getGoalId() {
         return goalId;
     }
 
+    public void setGoalId(long goalId) {
+        this.goalId = goalId;
+    }
+
     public Long getDeliveryTime() {
         return deliveryTime;
     }
+
     public void setDeliveryTime(Long deliveryTime) {
         this.deliveryTime = deliveryTime;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-    public Type getType() {
-        return type;
     }
 
     public Long getOrderIndex() {
         return orderIndex;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOrderIndex(Long orderIndex) {
+        this.orderIndex = orderIndex;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
