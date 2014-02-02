@@ -11,8 +11,8 @@
 
     <modules>
         <module>doiter-android</module>
-        <module>doiter-server</module>
         <module>doiter-model</module>
+        <module>doiter-sever</module>
     </modules>
 
 </project>

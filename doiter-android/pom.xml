@@ -10,7 +10,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.lutshe</groupId>
     <artifactId>doiter-android</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>apk</packaging>
