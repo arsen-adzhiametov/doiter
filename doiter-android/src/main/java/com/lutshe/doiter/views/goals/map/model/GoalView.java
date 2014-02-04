@@ -12,7 +12,7 @@ import com.lutshe.doiter.data.provider.ImagesProvider;
 public class GoalView {
     private static final String TAG = GoalView.class.getName();
 
-    private static final float BORDER_SIZE = 45;
+    private static final float BORDER_SIZE = 52;
     private final Goal goal;
 
     // position of left top corner of image inside the cell
@@ -26,7 +26,7 @@ public class GoalView {
         this.goal = goal;
     }
 
-    public static GoalView create(Goal goal, float maxWidth, float maxHeight, ImagesProvider imagesProvider) {
+    public static GoalView create(Goal goal, float maxWidth, float maxHeight, float borderSize, ImagesProvider imagesProvider) {
         GoalView goalView = new GoalView(goal);
 
         Log.d(TAG, "creating view for goal " + goal + ". maxW = " + maxWidth + " maxH = " + maxHeight);
@@ -34,26 +34,7 @@ public class GoalView {
         Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         float newWidth, newHeight, ratio;
 
-        Log.d(TAG, "loaded image is " + bitmap.getWidth() + "x" + bitmap.getHeight());
-
-        if (bitmap.getWidth() >= bitmap.getHeight()) {
-            if (Math.abs(bitmap.getWidth() - bitmap.getHeight()) < 20) {
-                // square or almost square and width is bigger than height
-                ratio = (maxWidth - BORDER_SIZE * 6) / bitmap.getWidth();
-                Log.d(TAG, "almost square, little wide");
-            } else {
-                Log.d(TAG, "image is wide");
-                ratio = (maxWidth - BORDER_SIZE) / bitmap.getWidth();
-            }
-        } else {
-            if (Math.abs(bitmap.getWidth() - bitmap.getHeight()) < 20) {
-                Log.d(TAG, "almost square, little tall");
-                ratio = (maxHeight - BORDER_SIZE * 6) / bitmap.getHeight();
-            } else {
-                Log.d(TAG, "image is tall");
-                ratio = (maxHeight - BORDER_SIZE) / bitmap.getHeight();
-            }
-        }
+        ratio = (maxWidth - borderSize) / bitmap.getWidth();
 
         if (ratio == 1) {
             goalView.scaledBitmap = bitmap;

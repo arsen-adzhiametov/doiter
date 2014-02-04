@@ -91,7 +91,7 @@ public class MapController implements TouchEventsListener {
         addOffsets(dx, dy);
     }
 
-    private void addOffsets(float dx, float dy) {
+    private synchronized void addOffsets(float dx, float dy) {
         if (dx != 0) {
             currentOffsetX = trim(currentOffsetX + dx, getMapWidth());
         }

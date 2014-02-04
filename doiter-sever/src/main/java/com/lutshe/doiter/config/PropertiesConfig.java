@@ -12,7 +12,7 @@ import org.springframework.core.io.Resource;
 @Configuration
 public class PropertiesConfig {
     static @Bean public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        final String env = System.getProperty("evn", "default");
+        final String env = getEnvironment();
 
         PropertySourcesPlaceholderConfigurer p = new PropertySourcesPlaceholderConfigurer();
         Resource[] resourceLocations = new Resource[] {
@@ -21,5 +21,9 @@ public class PropertiesConfig {
         };
         p.setLocations(resourceLocations);
         return p;
+    }
+
+    static @Bean(name = "env") public String getEnvironment() {
+        return System.getProperty("evn", "default");
     }
 }

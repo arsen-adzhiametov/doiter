@@ -49,7 +49,7 @@ public class GoalsMapView extends CanvasView {
 
     public void startDrawing() {
         //        renderer = new FMCGoalsMapDrawer(this, controller, rect);
-        renderer = new SGCGoalsMapDrawer(this, controller, getViewBounds());
+        renderer = new GoalsMapDrawer(this, controller, getViewBounds());
         updater = new GoalsMapUpdater(controller);
 
         new Thread(updater).start();

@@ -18,15 +18,13 @@ import com.lutshe.doiter.views.util.BitmapUtils;
 import com.lutshe.doiter.views.util.ScaleProperties;
 
 /**
- * SGC - Single Goal Cache: goal views are cached individually bounding maximum memory usage by LruCache.
+ * Goal views are cached individually bounding maximum memory usage by LruCache.
  * Created as an alternative for FMCGoalsMapDrawer.
  *
  * User: Artur
  */
-public class SGCGoalsMapDrawer extends Drawer {
+public class GoalsMapDrawer extends Drawer {
     public static final int MAX_GOALS_IN_CACHE = 20;
-    public static final int LEFT_TIP_OFFSET = 13;
-    public static final int RIGHT_TIP_OFFSET = 11;
     public static final int SHADOW_OFFSET = 30;
 
     private final MapController controller;
@@ -35,12 +33,7 @@ public class SGCGoalsMapDrawer extends Drawer {
     private final Rect screenRect;
     private final Resources resources;
 
-    private final int tipHeight;
-    private final ScaleProperties tipsScaleProperties;
-
-    private final float scaledLeftTipOffset;
-    private final float scaledRightTipOffset;
-
+    private final int fontHeight;
     private final int gradientHeight;
 
     private Bitmap gradientLeft;
@@ -49,17 +42,11 @@ public class SGCGoalsMapDrawer extends Drawer {
 
     private final NinePatchDrawable shadow;
 
-    public SGCGoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
+    public GoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
         this.controller = controller;
         this.screenRect = rect;
         this.resources = view.getResources();
-
-        this.tipHeight = screenRect.height() / 13;
-        this.tipsScaleProperties = BitmapUtils.fillScaleProperties(resources, R.drawable.tip_blue_1, tipHeight);
-
-        scaledLeftTipOffset = LEFT_TIP_OFFSET * tipsScaleProperties.getRatio();
-        scaledRightTipOffset = RIGHT_TIP_OFFSET * tipsScaleProperties.getRatio();
 
         String fontPath = "fonts/Gabriola.ttf";
         Typeface typeface = Typeface.createFromAsset(resources.getAssets(), fontPath);
@@ -67,7 +54,11 @@ public class SGCGoalsMapDrawer extends Drawer {
 
         shadow = (NinePatchDrawable) resources.getDrawable(R.drawable.goal_shadow);
 
-        gradientHeight = screenRect.height() / 8;
+        // assuming all goals are square and equal in size now!
+        // so picking just any for calculations
+        GoalView goalView = controller.getGoalViews()[0][0];
+        gradientHeight = goalView.getHeight() / 2;
+        fontHeight = goalView.getHeight() / 8;
         ScaleProperties gradientScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.left_side_gradient, gradientHeight);
         ScaleProperties middleGradientScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.middle_of_gradient, gradientHeight);
         gradientLeft = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.left_side_gradient, gradientScaleProps);
@@ -99,20 +90,28 @@ public class SGCGoalsMapDrawer extends Drawer {
         canvas.clipRect(screenRect);
 
         canvas.save();
-        canvas.translate(controller.getCurrentOffsetX(), controller.getCurrentOffsetY());
-        drawMap(0, 0, canvas);
-        drawMap(-controller.getMapWidth(), -controller.getMapHeight(), canvas);
-        drawMap(-controller.getMapWidth(), 0, canvas);
-        drawMap(0, -controller.getMapHeight(), canvas);
+        float offsetX;
+        float offsetY;
+        synchronized (controller) {
+            offsetX = controller.getCurrentOffsetX();
+            offsetY = controller.getCurrentOffsetY();
+        }
+
+        canvas.translate(offsetX, offsetY);
+        drawMap(0, 0, offsetX, offsetY, canvas);
+        drawMap(-controller.getMapWidth(), -controller.getMapHeight(), offsetX, offsetY, canvas);
+        drawMap(-controller.getMapWidth(), 0, offsetX, offsetY, canvas);
+        drawMap(0, -controller.getMapHeight(), offsetX, offsetY, canvas);
+
         canvas.restore();
         Log.d("DRAWING TOOK", String.valueOf(System.currentTimeMillis() - start));
     }
 
-    private void drawMap(int dx, int dy, Canvas canvas) {
+    private void drawMap(int dx, int dy, float offsetX, float offsetY, Canvas canvas) {
         GoalView[][] views = controller.getGoalViews();
         for (GoalView[] row : views) {
             for (GoalView view : row) {
-                if (isVisible((int) controller.getCurrentOffsetX() + dx, (int) controller.getCurrentOffsetY() + dy, view)) {
+                if (isVisible((int) offsetX + dx, (int) offsetY + dy, view)) {
                     canvas.drawBitmap(goalsCache.get(view), view.getX() + dx, view.getY() + dy, paint);
                 }
             }
@@ -131,7 +130,6 @@ public class SGCGoalsMapDrawer extends Drawer {
         canvas.translate(SHADOW_OFFSET, SHADOW_OFFSET);
 
         drawCoverImage(canvas, view);
-        drawTips(canvas, view);
         drawGradient(canvas, view);
         drawText(canvas, view);
 
@@ -146,15 +144,6 @@ public class SGCGoalsMapDrawer extends Drawer {
 
     private void drawCoverImage(Canvas canvas, GoalView view) {
         canvas.drawBitmap(view.getScaledBitmap(), 0, 0, paint);
-    }
-
-    private void drawTips(Canvas canvas, GoalView view) {
-        Long goalId = view.getGoal().getId();
-        Bitmap leftTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getLeftTip(goalId), tipsScaleProperties);
-        Bitmap rightTip = BitmapUtils.getBitmapScaledToHeight(resources, Tip.getRightTip(goalId), tipsScaleProperties);
-
-        canvas.drawBitmap(leftTip, -scaledLeftTipOffset, tipHeight / 6, paint);
-        canvas.drawBitmap(rightTip, view.getWidth() - rightTip.getWidth() + scaledRightTipOffset, tipHeight / 6, paint);
     }
 
     private void drawGradient(Canvas canvas, GoalView view) {
@@ -173,11 +162,17 @@ public class SGCGoalsMapDrawer extends Drawer {
     private void drawText(Canvas canvas, GoalView view) {
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(tipHeight / 2);
+        paint.setTextSize(fontHeight);
+
+        StaticLayout textLayout = new StaticLayout(view.getGoal().getName(), new TextPaint(paint), view.getWidth() - 10, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
         canvas.save();
-        canvas.translate(view.getWidth() / 2, view.getHeight() - paint.getTextSize() * 2);
-        StaticLayout textLayout = new StaticLayout(view.getGoal().getName(), new TextPaint(paint), view.getWidth() - 10, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        if (textLayout.getLineCount() == 1) {
+            canvas.translate(view.getWidth() / 2, view.getHeight() - (int)(textLayout.getHeight() * 1.5));
+        } else {
+            canvas.translate(view.getWidth() / 2, view.getHeight() - (int)(textLayout.getHeight() * 1.1));
+        }
+
         textLayout.draw(canvas);
         canvas.restore();
     }

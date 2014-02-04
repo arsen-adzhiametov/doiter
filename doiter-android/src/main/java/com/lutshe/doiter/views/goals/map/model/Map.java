@@ -11,14 +11,14 @@ import com.lutshe.doiter.data.provider.ImagesProvider;
 public class Map {
     private static final String TAG = Map.class.getName();
 
-    private static final double ROWS_PER_SCREEN = 2.5;
-    private static final double COLS_PER_SCREEN = 1.5;
+    private static final double ROWS_PER_SCREEN = 3;
 
     private static final double MIN_ROWS = 3;
     private static final double MIN_COLS = 2;
 
     public int cellWidth;
     public int cellHeight;
+    public int borderSize;
 
     private final Goal[] goals;
 
@@ -32,8 +32,8 @@ public class Map {
     }
 
     public void init(float screenWidth, int screenHeight) {
-        cellWidth = (int) Math.floor(screenWidth / COLS_PER_SCREEN);
-        cellHeight = (int) Math.floor(screenHeight / ROWS_PER_SCREEN);
+        cellHeight = cellWidth = (int) Math.floor(screenHeight / ROWS_PER_SCREEN);
+        borderSize = cellWidth / 5;
 
         int availableSquareSize = (int) Math.floor(Math.sqrt(goals.length));
         if (availableSquareSize >= MIN_ROWS) {
@@ -44,6 +44,7 @@ public class Map {
     }
 
     private void generateGrid(int rows, int cols, Goal[] goals) {
+        if (rows % 2 == 1) rows *= 2;
         Log.d(TAG, "creating grid " + rows + "x" + cols);
         goalsGrid = new GoalView[rows][cols];
         for(int row = 0; row < rows; row++) {
@@ -52,13 +53,19 @@ public class Map {
                 GoalView view = createGoalView(goals[viewId % goals.length]);
                 view.setX(col * cellWidth + (cellWidth - view.getWidth()) / 2);
                 view.setY(row * cellHeight + (cellHeight - view.getHeight()) / 2);
+
+                if (row % 2 == 1) {
+                    // all odd rows are shifted to the left.
+                    view.setX(view.getX() - cellWidth / 2);
+                }
+
                 goalsGrid[row][col] = view;
             }
         }
     }
 
     private GoalView createGoalView(Goal goal) {
-        return GoalView.create(goal, cellWidth, cellHeight, imagesProvider);
+        return GoalView.create(goal, cellWidth, cellHeight, borderSize, imagesProvider);
     }
 
     public GoalView[][] getGoalsGrid() {
