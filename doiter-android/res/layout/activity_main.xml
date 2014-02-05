@@ -1,5 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/fragment_container"
+             xmlns:custom="http://schemas.android.com/apk/res-auto/com.lutshe.doiter.views"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-/>
+             android:layout_height="match_parent">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:id="@+id/fragment_container"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"/>
+
+    <com.lutshe.doiter.views.MultipleOrientationSlidingDrawer
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            custom:handle="@+id/handle_c"
+            custom:content="@+id/content_c"
+            custom:orientation="top">
+
+        <RelativeLayout
+                android:id="@+id/handle_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/orange"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentRight="true"
+                       android:src="@drawable/circle"/>
+        </RelativeLayout>
+
+        <FrameLayout
+                android:id="@+id/content_c"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/orange">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Text"
+                    android:gravity="center_horizontal|center_vertical"/>
+        </FrameLayout>
+    </com.lutshe.doiter.views.MultipleOrientationSlidingDrawer>
+
+</FrameLayout>
