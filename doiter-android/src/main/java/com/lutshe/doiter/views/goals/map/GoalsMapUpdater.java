@@ -9,7 +9,7 @@ public class GoalsMapUpdater extends Looper {
     private final MapController controller;
 
     public GoalsMapUpdater(MapController controller) {
-        super(25, "updater");
+        super(20, "updater");
         this.controller = controller;
     }
 

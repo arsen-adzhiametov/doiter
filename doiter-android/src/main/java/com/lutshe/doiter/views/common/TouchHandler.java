@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static java.lang.Math.signum;
+
 /**
  * Created by Arturro on 24.09.13.
  */
@@ -63,11 +65,7 @@ public class TouchHandler implements View.OnTouchListener {
                     float dy = event.getY() - eventPrevY;
                     long dt = eventTime - eventPrevTime;
 
-                    boolean directionChanged =
-                            (lastDx > 0 && dx < 0)
-                            || (lastDx < 0 && dx > 0)
-                            || (lastDy > 0 && dy < 0)
-                            || (lastDy < 0 && dy > 0);
+                    boolean directionChanged = signum(lastDx) != signum(dx) || signum(lastDy) != signum(dy);
 
                     if (directionChanged) {
                         eventStartTime = eventPrevTime = System.currentTimeMillis();
