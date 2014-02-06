@@ -2,6 +2,7 @@ package com.lutshe.doiter.views.goals.map;
 
 import android.content.res.Resources;
 import android.graphics.*;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.util.LruCache;
@@ -41,6 +42,7 @@ public class GoalsMapDrawer extends Drawer {
     private Bitmap gradientRight;
 
     private final NinePatchDrawable shadow;
+    private final BitmapDrawable background;
 
     public GoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
@@ -53,6 +55,8 @@ public class GoalsMapDrawer extends Drawer {
         paint.setTypeface(typeface);
 
         shadow = (NinePatchDrawable) resources.getDrawable(R.drawable.goal_shadow);
+        background = (BitmapDrawable) resources.getDrawable(R.drawable.bg_repeatable);
+        background.setBounds(screenRect);
 
         // assuming all goals are square and equal in size now!
         // so picking just any for calculations
@@ -85,7 +89,7 @@ public class GoalsMapDrawer extends Drawer {
     @Override
     protected void draw(Canvas canvas) {
         long start = System.currentTimeMillis();
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        background.draw(canvas);
 
         canvas.clipRect(screenRect);
 

@@ -26,6 +26,9 @@ public class TouchHandler implements View.OnTouchListener {
     private static float eventEndX;
     private static float eventEndY;
 
+    private static float lastDx;
+    private static float lastDy;
+
     private static boolean isLongerThanClick = false;
 
     public TouchHandler(TouchEventsListener listener) {
@@ -36,7 +39,6 @@ public class TouchHandler implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.d(TAG, "DOWN " + event.getX() + " " + event.getY());
                 eventStartTime = eventPrevTime = System.currentTimeMillis();
                 eventStartX = eventPrevX = event.getX();
                 eventStartY = eventPrevY = event.getY();
@@ -48,10 +50,8 @@ public class TouchHandler implements View.OnTouchListener {
                 eventEndY = event.getY();
                 listener.onEventFinished(eventEndX - eventStartX, eventEndY - eventStartY, eventEndTime - eventStartTime);
                 if (!isLongerThanClick) {
-                    Log.d(TAG, "onClick " + event.getX() + " " + event.getY());
                     listener.onClick(event.getX(), event.getY());
                 }
-                Log.d(TAG, "UP " + event.getX() + " " + event.getY());
                 clearState();
                 break;
 
@@ -59,9 +59,27 @@ public class TouchHandler implements View.OnTouchListener {
                 long eventTime = System.currentTimeMillis();
                 if (isLongerThanClick) {
                     Log.v(TAG, "onScroll");
-                    listener.onScroll(event.getX() - eventPrevX, event.getY() - eventPrevY, eventTime - eventPrevTime);
+                    float dx = event.getX() - eventPrevX;
+                    float dy = event.getY() - eventPrevY;
+                    long dt = eventTime - eventPrevTime;
+
+                    boolean directionChanged =
+                            (lastDx > 0 && dx < 0)
+                            || (lastDx < 0 && dx > 0)
+                            || (lastDy > 0 && dy < 0)
+                            || (lastDy < 0 && dy > 0);
+
+                    if (directionChanged) {
+                        eventStartTime = eventPrevTime = System.currentTimeMillis();
+                        eventStartX = eventPrevX = event.getX();
+                        eventStartY = eventPrevY = event.getY();
+                    }
+
+                    listener.onScroll(dx, dy, dt);
+
+                    lastDx = dx;
+                    lastDy = dy;
                 } else if (eventTime - eventStartTime > MAX_CLICK_DURATION || (Math.abs(event.getX() - eventStartX) > MAX_CLICK_MOVE || Math.abs(event.getY() - eventStartY) > MAX_CLICK_MOVE)) {
-                    Log.d(TAG, "not a click");
                     isLongerThanClick = true;
                 }
 
@@ -78,6 +96,7 @@ public class TouchHandler implements View.OnTouchListener {
 
     private void clearState() {
         eventStartX = eventStartY = eventPrevX = eventPrevY = eventEndX = eventEndY = 0;
+        lastDx = lastDy = 0;
         eventStartTime = eventPrevTime = eventEndTime = 0;
         isLongerThanClick = false;
     }
