@@ -1,4 +1,4 @@
-package com.lutshe.doiter.views;
+package com.lutshe.doiter.views.toolbarslidingdrawer;
 /*
  * Copyright (c) 2001 - 2012 Sileria, Inc.
  *

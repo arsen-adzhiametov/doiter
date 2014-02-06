@@ -10,40 +10,25 @@
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"/>
 
-    <com.lutshe.doiter.views.MultipleOrientationSlidingDrawer
+    <com.lutshe.doiter.views.toolbarslidingdrawer.MultipleOrientationSlidingDrawer
             android:id="@+id/drawer"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            custom:handle="@+id/handle_c"
-            custom:content="@+id/content_c"
+            android:layout_height="110dp"
+            custom:handle="@+id/handle"
+            custom:content="@+id/content"
             custom:orientation="top">
 
         <RelativeLayout
-                android:id="@+id/handle_c"
+                android:id="@+id/handle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/orange"/>
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_alignParentRight="true"
-                       android:src="@drawable/circle"/>
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_handle"/>
 
         <FrameLayout
-                android:id="@+id/content_c"
+                android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/orange">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Text"
-                    android:gravity="center_horizontal|center_vertical"/>
-        </FrameLayout>
-    </com.lutshe.doiter.views.MultipleOrientationSlidingDrawer>
+                android:layout_height="wrap_content"
+                android:background="@drawable/toolbar_content"/>
+    </com.lutshe.doiter.views.toolbarslidingdrawer.MultipleOrientationSlidingDrawer>
 
 </FrameLayout>
