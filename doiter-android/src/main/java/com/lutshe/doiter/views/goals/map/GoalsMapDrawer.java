@@ -44,6 +44,8 @@ public class GoalsMapDrawer extends Drawer {
     private final NinePatchDrawable shadow;
     private final BitmapDrawable background;
 
+    private boolean drawingMapNow = false;
+
     public GoalsMapDrawer(CanvasView view, MapController controller, Rect rect) {
         super(view);
         this.controller = controller;
@@ -109,6 +111,11 @@ public class GoalsMapDrawer extends Drawer {
 
         canvas.restore();
         Log.d("DRAWING TOOK", String.valueOf(System.currentTimeMillis() - start));
+
+        if (!drawingMapNow) {
+            drawingMapNow = true;
+            view.startShowingMap();
+        }
     }
 
     private void drawMap(int dx, int dy, float offsetX, float offsetY, Canvas canvas) {

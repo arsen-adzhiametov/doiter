@@ -1,5 +1,6 @@
 package com.lutshe.doiter.views.goals.map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -22,10 +23,10 @@ public class GoalsMapView extends CanvasView {
     private MapController controller;
     private GoalsMapUpdater updater;
 
-    public GoalsMapView(FragmentsSwitcher fragmentsSwitcher, ImagesProvider imagesProvider, Context context, Goal... goals) {
-        super(context);
+    public GoalsMapView(FragmentsSwitcher fragmentsSwitcher, ImagesProvider imagesProvider, Activity activity, Goal... goals) {
+        super(activity);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        controller = new MapController(fragmentsSwitcher, imagesProvider, goals);
+        controller = new MapController(fragmentsSwitcher, this, imagesProvider, goals);
         setOnTouchListener(new TouchHandler(controller));
     }
 
@@ -41,13 +42,11 @@ public class GoalsMapView extends CanvasView {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.i("DRAWING", "surface destroyed");
         super.surfaceDestroyed(holder);
         stopDrawing();
     }
 
     public void startDrawing() {
-        //        renderer = new FMCGoalsMapDrawer(this, controller, rect);
         renderer = new GoalsMapDrawer(this, controller, getViewBounds());
         updater = new GoalsMapUpdater(controller);
 

@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 public abstract class Drawer extends Looper {
     private static final long REDRAW_RATE = 20;
-	private final CanvasView view;
+	protected final CanvasView view;
 	
 	public Drawer(CanvasView view) {
         super(REDRAW_RATE, "drawer");

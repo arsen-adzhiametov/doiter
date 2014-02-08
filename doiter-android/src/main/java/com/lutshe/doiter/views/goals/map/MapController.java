@@ -7,6 +7,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
+import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.TouchEventsListener;
 import com.lutshe.doiter.views.goals.map.model.GoalView;
 import com.lutshe.doiter.views.goals.map.model.Map;
@@ -33,8 +34,11 @@ public class MapController implements TouchEventsListener {
     private float currentOffsetX;
     private float currentOffsetY;
 
-    public MapController(FragmentsSwitcher fragmentsSwitcher, ImagesProvider imagesProvider,  Goal... goals) {
+    private GoalsMapView goalsMapView;
+
+    public MapController(FragmentsSwitcher fragmentsSwitcher, GoalsMapView goalsMapView, ImagesProvider imagesProvider,  Goal... goals) {
         this.fragmentsSwitcher = fragmentsSwitcher;
+        this.goalsMapView = goalsMapView;
         this.map = new Map(imagesProvider, goals);
     }
 
@@ -118,6 +122,8 @@ public class MapController implements TouchEventsListener {
         Goal goal = map.findGoalUnder(x, y);
         if (goal == null) return;
 
+        goalsMapView.startShowingBg();
+
         Fragment detailFragment;
         if (goal.getStatus() == Goal.Status.OTHER) {
             detailFragment = GoalPreviewFragment_.builder().goalId(goal.getId()).build();
@@ -140,9 +146,6 @@ public class MapController implements TouchEventsListener {
         scrollSpeedY = (int) (dy * 1024 / time);
         scrollSpeedXDecrease = scrollSpeedX / 40;
         scrollSpeedYDecrease = scrollSpeedY / 40;
-
-        Log.d("scroll" , dx + " " + dy + " per " + time + " ms");
-        Log.d("scroll" , scrollSpeedY + " " + scrollSpeedY + " per second");
     }
 
     public void init() {

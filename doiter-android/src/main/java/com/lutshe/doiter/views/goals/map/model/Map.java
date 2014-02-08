@@ -20,26 +20,38 @@ public class Map {
     public int cellHeight;
     public int borderSize;
 
-    private final Goal[] goals;
+    // making it static to not recreate each time
+    // kind of stupid cache
+    // TODO: refactor to just reuse existing fragments
+    private static Goal[] goals;
+    private static GoalView[][] goalsGrid;
 
-    private GoalView[][] goalsGrid;
     private final ImagesProvider imagesProvider;
 
     public Map(ImagesProvider imagesProvider, Goal... goals) {
         Log.d(TAG, "have " + goals.length + " goals");
+        if (this.goals == null || goals.length != this.goals.length) {
+            // if number of goals changed since we last created views for them
+            // set goalsGrid to null to recreate everything
+            goalsGrid = null;
+        }
+
         this.goals = goals;
         this.imagesProvider = imagesProvider;
     }
 
     public void init(float screenWidth, int screenHeight) {
-        cellHeight = cellWidth = (int) Math.floor(screenHeight / ROWS_PER_SCREEN);
-        borderSize = cellWidth / 5;
+            cellHeight = cellWidth = (int) Math.floor(screenHeight / ROWS_PER_SCREEN);
+            borderSize = cellWidth / 5;
 
-        int availableSquareSize = (int) Math.floor(Math.sqrt(goals.length));
-        if (availableSquareSize >= MIN_ROWS) {
-            generateGrid(availableSquareSize, availableSquareSize, goals);
-        } else {
-            generateGrid((int) MIN_ROWS, (int) Math.max(MIN_COLS, (goals.length / MIN_ROWS) + 1), goals);
+        // create if null
+        if (goalsGrid == null) {
+            int availableSquareSize = (int) Math.floor(Math.sqrt(goals.length));
+            if (availableSquareSize >= MIN_ROWS) {
+                generateGrid(availableSquareSize, availableSquareSize, goals);
+            } else {
+                generateGrid((int) MIN_ROWS, (int) Math.max(MIN_COLS, (goals.length / MIN_ROWS) + 1), goals);
+            }
         }
     }
 

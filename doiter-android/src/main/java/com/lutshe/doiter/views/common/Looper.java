@@ -25,7 +25,7 @@ public abstract class Looper implements Runnable {
             long dt = currentTimeMillis() - lastUpdateTime;
             logIfTooSlow(dt - actionDelay);
             lastUpdateTime = currentTimeMillis();
-			doAction(dt);
+            doAction(dt);
 		}
 	}
 	
