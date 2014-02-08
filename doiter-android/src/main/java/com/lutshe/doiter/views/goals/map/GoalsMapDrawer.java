@@ -85,10 +85,11 @@ public class GoalsMapDrawer extends Drawer {
         gradientRight = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.right_side_gradient, gradientScaleProps);
 
         imageCornerSize = gradientLeft.getWidth();
-        shadowSize = (int) (imageCornerSize * 1.5);
+        shadowSize = imageCornerSize;
 
         // side shadows preparation
-        ScaleProperties shadowScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.top_side_shadow, shadowSize);
+//        ScaleProperties shadowScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.top_side_shadow, shadowSize);
+        ScaleProperties shadowScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.shadow_left_top_corner, imageCornerSize + shadowSize);
 
         Bitmap leftShadowPart = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.left_side_shadow, shadowScaleProps);
         Bitmap rightShadowPart = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.right_side_shadow, shadowScaleProps);
@@ -116,12 +117,17 @@ public class GoalsMapDrawer extends Drawer {
         rightShadowPart.recycle();
         topShadowPart.recycle();
         bottomShadowPart.recycle();
+
+        // corner shadows preparation
+        leftTopCornerShadow = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.shadow_left_top_corner, shadowScaleProps);
+        rightTopCornerShadow = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.shadow_right_top_corner, shadowScaleProps);
+        leftBottomCornerShadow = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.shadow_left_bottom_corner, shadowScaleProps);
+        rightBottomCornerShadow = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.shadow_right_bottom_corner, shadowScaleProps);
     }
 
     private final LruCache<GoalView, Bitmap> goalsCache = new LruCache<GoalView, Bitmap>(MAX_GOALS_IN_CACHE) {
         @Override
         protected Bitmap create(GoalView view) {
-            Log.d("DRAWING CACHE", "miss: creating bitmap");
             Bitmap cacheBitmap = Bitmap.createBitmap((view.getWidth() + shadowSize * 2), view.getHeight() + shadowSize * 2, Bitmap.Config.ARGB_8888);
             Canvas cacheCanvas = new Canvas(cacheBitmap);
             drawGoalView(cacheCanvas, view);
@@ -195,10 +201,15 @@ public class GoalsMapDrawer extends Drawer {
 
     /** Draws shadow as a canvas background */
     private void drawShadow(Canvas canvas) {
-        canvas.drawBitmap(leftShadow, 0, shadowSize + imageCornerSize, paint);
-        canvas.drawBitmap(rightShadow, canvas.getWidth() - shadowSize, shadowSize + imageCornerSize, paint);
+        canvas.drawBitmap(leftShadow, 0, shadowSize + imageCornerSize, null);
+        canvas.drawBitmap(rightShadow, canvas.getWidth() - shadowSize, shadowSize + imageCornerSize, null);
         canvas.drawBitmap(topShadow, shadowSize + imageCornerSize, 0, null);
-        canvas.drawBitmap(bottomShadow, shadowSize + imageCornerSize, canvas.getHeight() - shadowSize, paint);
+        canvas.drawBitmap(bottomShadow, shadowSize + imageCornerSize, canvas.getHeight() - shadowSize, null);
+
+        canvas.drawBitmap(leftTopCornerShadow, 0, 0, null);
+        canvas.drawBitmap(rightTopCornerShadow, canvas.getWidth() - rightTopCornerShadow.getWidth(), 0, null);
+        canvas.drawBitmap(leftBottomCornerShadow, 0, canvas.getHeight() - leftBottomCornerShadow.getHeight(), null);
+        canvas.drawBitmap(rightBottomCornerShadow, canvas.getWidth() - rightBottomCornerShadow.getWidth(), canvas.getHeight() - rightBottomCornerShadow.getHeight(), null);
     }
 
     private void drawCoverImage(Canvas canvas, GoalView view) {

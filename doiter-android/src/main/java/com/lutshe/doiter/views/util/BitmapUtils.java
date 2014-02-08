@@ -40,7 +40,9 @@ public final class BitmapUtils {
         options.inJustDecodeBounds = false;
 
         Bitmap bitmap = BitmapFactory.decodeResource(res, resId, options);
-        return Bitmap.createScaledBitmap(bitmap, (int) width, height, true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) width, height, true);
+        bitmap.recycle();
+        return scaledBitmap;
     }
 
     public static ScaleProperties fillScaleProperties(Resources res, int resId, int desiredHeight) {
@@ -62,7 +64,10 @@ public final class BitmapUtils {
     public static Bitmap getBitmapScaledToHeight(Resources res, int resId, ScaleProperties props) {
         int[] sizeData = getImageSize(res, resId);
         Bitmap bitmap = BitmapFactory.decodeResource(res, resId, props.options);
-        return Bitmap.createScaledBitmap(bitmap, (int) (sizeData[0] * props.ratio), (int) (sizeData[1] * props.ratio), true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (sizeData[0] * props.ratio), (int) (sizeData[1] * props.ratio), true);
+
+        bitmap.recycle();
+        return scaledBitmap;
     }
 
     public static int[] getImageSize(Resources res, int resId) {
