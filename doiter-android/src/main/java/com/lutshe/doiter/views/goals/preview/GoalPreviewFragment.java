@@ -1,7 +1,9 @@
 package com.lutshe.doiter.views.goals.preview;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -21,13 +23,10 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.joda.time.DateTime;
 
 /**
- * Created by Arsen Adzhiametov on goal6/31/13.
+ * Created by Arsen Adzhiametov on 6/31/13.
  */
 @EFragment(R.layout.goal_preview_fragment)
 public class GoalPreviewFragment extends Fragment implements BackStackable{
-
-//    @ViewById(R.id.goalCoverDetail)
-//    ImageView goalCover;
 
     @ViewById(R.id.goalNameDetail)TextView goalNameTextView;
     @ViewById(R.id.daysText)TextView daysTextTextView;
@@ -50,13 +49,10 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
 
     @AfterViews
     public void bindData() {
+        setTopMenuVisibility(View.INVISIBLE);
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
         Goal goal = goalsDao.getGoal(goalId);
         goalNameTextView.setText(goal.getName());
-
-//        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
-//        goalCover.setImageBitmap(bitmap);
-
         setTypefaceToTextViews();
     }
 
@@ -66,6 +62,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
         activateGoal();
         scheduleNextAlarm();
         showGoal();
+        setTopMenuVisibility(View.VISIBLE);
 
         EasyTracker tracker = EasyTracker.getInstance(getActivity());
         tracker.send(MapBuilder.createEvent("goal_selection", "goal_selected", goalNameTextView.getText().toString(), 1L).build());
@@ -90,6 +87,12 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
         Message message = messagesDao.getMessage(goalId, Message.Type.FIRST);
         messagesDao.updateMessageDeliveryTime(message.getId());
         goalsDao.updateGoalLastMessage(goalId, message.getOrderIndex());
+    }
+
+    private void setTopMenuVisibility(int visibility) {
+        Activity activity = fragmentsSwitcher.getActivity();
+        View topMenuSlidingDrawer = activity.findViewById(R.id.top_menu_sliding_drawer);
+        topMenuSlidingDrawer.setVisibility(visibility);
     }
 
     private void setTypefaceToTextViews() {

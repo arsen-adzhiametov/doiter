@@ -18,7 +18,6 @@ import com.lutshe.doiter.views.UpdatableView;
 public class FragmentsSwitcher {
 
     private Activity activity;
-    private int containerId = R.id.fragment_container;
     private Fragment currentFragment;
 
     public void show(Fragment fragment, boolean addToBackStack) {
@@ -33,7 +32,7 @@ public class FragmentsSwitcher {
     private void doTransaction(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = activity.getFragmentManager()
                 .beginTransaction()
-                .replace(containerId, fragment);
+                .replace(R.id.fragment_container, fragment);
 
         if (addToBackStack) {
             transaction.addToBackStack(null);

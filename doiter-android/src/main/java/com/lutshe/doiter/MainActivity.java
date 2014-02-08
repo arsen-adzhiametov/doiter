@@ -3,15 +3,10 @@ package com.lutshe.doiter;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
+import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.Fullscreen;
-import com.googlecode.androidannotations.annotations.NoTitle;
-import com.googlecode.androidannotations.annotations.SystemService;
-import com.googlecode.androidannotations.annotations.Trace;
+import com.googlecode.androidannotations.annotations.*;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
@@ -25,6 +20,8 @@ import com.newrelic.agent.android.NewRelic;
 @Fullscreen
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
+
+    @ViewById(R.id.top_menu_sliding_drawer) View topMenuSlidingDrawer;
 
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean GoalsDao goalsDao;
@@ -84,5 +81,11 @@ public class MainActivity extends Activity {
     protected void onResume() {
         fragmentsSwitcher.onResume();
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        topMenuSlidingDrawer.setVisibility(View.VISIBLE);
+        super.onBackPressed();
     }
 }
