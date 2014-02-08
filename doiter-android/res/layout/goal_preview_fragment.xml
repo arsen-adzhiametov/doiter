@@ -63,30 +63,29 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:paddingBottom="@dimen/padding_10"
-                        android:id="@+id/zabor_verh">
+                        android:id="@+id/time_setter_container">
 
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:id="@+id/zabor_verh_top"
-                    android:src="@drawable/zabor_verh_top"
+                    android:id="@+id/time_setter_header"
+                    android:src="@drawable/time_setter_header"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"/>
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/zabor_verh_top"
-                            android:id="@+id/zabor_verh_middle_with_thumb">
+                            android:layout_below="@id/time_setter_header"
+                            android:id="@+id/time_setter_middle_container">
                 <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:id="@+id/zabor_verh_middle"
+                        android:id="@+id/time_setter_seek_bar_bg"
                         android:src="@drawable/seek_bar"
-                        android:scaleType="fitXY"
-                        />
+                        android:scaleType="fitXY"/>
 
                 <SeekBar
                         android:layout_width="match_parent"
@@ -105,9 +104,9 @@
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/zabor_verh_middle_with_thumb"
-                    android:id="@+id/zabor_verh_bottom"
-                    android:src="@drawable/zabor_verh_bottom"
+                    android:layout_below="@id/time_setter_middle_container"
+                    android:id="@+id/time_setter_footer"
+                    android:src="@drawable/time_setter_footer"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"/>
 
@@ -122,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:id="@+id/iWillDoItIn"
+                    android:id="@+id/i_will_do_it_in_text_view"
                     android:text="@string/i_will_do_it_in"
                     style="@style/GabriolaGrayFontStyle"/>
 
@@ -132,7 +131,7 @@
                     android:gravity="center"
                     android:id="@+id/daysQuantity"
                     android:text="@string/starting_days"
-                    android:layout_toRightOf="@id/iWillDoItIn"
+                    android:layout_toRightOf="@id/i_will_do_it_in_text_view"
                     style="@style/GabriolaOrangeFontStyle"/>
 
             <TextView
@@ -148,54 +147,12 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/zabor_verh"
+                        android:layout_below="@id/time_setter_container"
                         android:layout_above="@id/bottom_layout">
-            <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:adjustViewBounds="true"
-                    android:id="@+id/zabor2_top"
-                    android:src="@drawable/zabor_niz_top"
-                    android:scaleType="fitXY"
-                    />
 
-            <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:adjustViewBounds="true"
-                    android:id="@+id/zabor2_bottom"
-                    android:src="@drawable/zabor_niz_bottom"
-                    android:scaleType="fitXY"/>
-
-            <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/zabor2_top"
-                    android:layout_above="@+id/zabor2_bottom"
-                    android:id="@+id/zabor2_middle"
-                    android:src="@drawable/square"
-                    android:scaleType="fitXY"
-                    android:adjustViewBounds="true"/>
+            <include layout="@layout/message_view_template"/>
 
         </RelativeLayout>
-
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    android:layout_below="@id/zabor_verh">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/goal_description"
-                    android:text="@string/goal_description"
-                    android:padding="30dp"
-                    android:gravity="center"
-                    style="@style/GabriolaGraySmallFontStyle"/>
-        </ScrollView>
 
     </RelativeLayout>
 

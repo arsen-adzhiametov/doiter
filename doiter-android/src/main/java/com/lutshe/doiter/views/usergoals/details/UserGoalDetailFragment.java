@@ -11,6 +11,7 @@ import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.details.messages.UserGoalMessagesListFragment_;
@@ -21,7 +22,7 @@ import org.joda.time.DateTime;
  * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EFragment(R.layout.user_goal_details_fragment)
-public class UserGoalDetailFragment extends Fragment implements UpdatableView {
+public class UserGoalDetailFragment extends Fragment implements UpdatableView, BackStackable {
 
     @ViewById(R.id.remaining)TextView remainingTextView;
     @ViewById(R.id.days_quantity)TextView daysQuantityTextView;

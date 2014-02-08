@@ -15,6 +15,7 @@ import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
+import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.joda.time.DateTime;
@@ -23,7 +24,7 @@ import org.joda.time.DateTime;
  * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EFragment(R.layout.goal_preview_fragment)
-public class GoalPreviewFragment extends Fragment {
+public class GoalPreviewFragment extends Fragment implements BackStackable{
 
 //    @ViewById(R.id.goalCoverDetail)
 //    ImageView goalCover;
@@ -31,7 +32,7 @@ public class GoalPreviewFragment extends Fragment {
     @ViewById(R.id.goalNameDetail)TextView goalNameTextView;
     @ViewById(R.id.daysText)TextView daysTextTextView;
     @ViewById(R.id.daysQuantity)TextView daysQuantityTextView;
-    @ViewById(R.id.iWillDoItIn)TextView iWillDoItInTextView;
+    @ViewById(R.id.i_will_do_it_in_text_view)TextView iWillDoItInTextView;
     @ViewById(R.id.goal_description)TextView goalDescriptionTextView;
     @ViewById(R.id.addGoalText)TextView addGoalTextView;
     @ViewById(R.id.seekbar)SeekBar seekBar;

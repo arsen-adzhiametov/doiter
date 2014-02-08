@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:id="@+id/msg_bg_header"
+            android:src="@drawable/msg_bg_header"
+            android:scaleType="fitXY"/>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:id="@+id/msg_bg_footer"
+            android:src="@drawable/msg_bg_footer"
+            android:scaleType="fitXY"/>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/msg_bg_header"
+            android:layout_above="@+id/msg_bg_footer"
+            android:adjustViewBounds="true"
+            android:id="@+id/msg_bg"
+            android:src="@drawable/msg_bg"
+            android:scaleType="fitXY"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_below="@id/msg_bg_header"
+                android:layout_above="@id/msg_bg_footer">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/goal_description"
+                android:text="@string/goal_description"
+                android:paddingLeft="@dimen/padding_30"
+                android:paddingRight="@dimen/padding_30"
+                android:gravity="center"
+                style="@style/GabriolaGraySmallFontStyle"/>
+    </ScrollView>
+
+</RelativeLayout>

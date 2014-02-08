@@ -191,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/zabor_top_3_screen"
                     android:layout_above="@id/zabor_bottom_3_screen"
-                    android:src="@drawable/square"
+                    android:src="@drawable/msg_bg"
                     android:scaleType="fitXY"
                     android:adjustViewBounds="true"/>
 

@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.ActivityLifecycleListener;
+import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
 
 /**
@@ -21,31 +21,13 @@ public class FragmentsSwitcher {
     private int containerId = R.id.fragment_container;
     private Fragment currentFragment;
 
-    private enum FragmentClass {
-        GoalsListFragment_,
-        GoalPreviewFragment_,
-        UserGoalsListFragment_,
-        UserGoalDetailFragment_,
-        GoalsMapFragment_,
-        UserGoalMessagesListFragment_
-    }
-
     public void show(Fragment fragment, boolean addToBackStack) {
-        FragmentClass fragmentClass = FragmentClass.valueOf(fragment.getClass().getSimpleName());
-        switch (fragmentClass) {
-            case GoalsListFragment_:
-            case GoalPreviewFragment_:
-            case UserGoalDetailFragment_:
-            case UserGoalMessagesListFragment_:
-                doTransaction(fragment, addToBackStack);
-                return;
-            case UserGoalsListFragment_:
-            case GoalsMapFragment_:
-                activity.getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                doTransaction(fragment, addToBackStack);
-                return;
+        if (fragment instanceof BackStackable) {
+            doTransaction(fragment, addToBackStack);
+        } else {
+            activity.getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            doTransaction(fragment, addToBackStack);
         }
-
     }
 
     private void doTransaction(Fragment fragment, boolean addToBackStack) {

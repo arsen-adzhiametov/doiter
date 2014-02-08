@@ -13,7 +13,7 @@
                  android:layout_height="match_parent"/>
 
     <com.lutshe.doiter.views.toolbarslidingdrawer.MultipleOrientationSlidingDrawer
-            android:id="@+id/drawer"
+            android:id="@+id/top_menu_sliding_drawer"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             custom:handle="@+id/handle"

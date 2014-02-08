@@ -10,13 +10,14 @@ import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
 
 /**
  * Created by Arsen Adzhiametov on goal6/31/13.
  */
 @EFragment(R.layout.goals_list_fragment)
-public class GoalsListFragment extends Fragment implements UpdatableView {
+public class GoalsListFragment extends Fragment implements UpdatableView, BackStackable{
 
     @ViewById(R.id.goalList)
     GridView goalsList;
