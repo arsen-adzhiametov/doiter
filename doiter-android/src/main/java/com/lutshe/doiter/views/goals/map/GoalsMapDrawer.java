@@ -26,7 +26,6 @@ import com.lutshe.doiter.views.util.ScaleProperties;
  */
 public class GoalsMapDrawer extends Drawer {
     public static final int MAX_GOALS_IN_CACHE = 20;
-    public static final int SHADOW_OFFSET = 30;
 
     private final MapController controller;
 
@@ -41,7 +40,21 @@ public class GoalsMapDrawer extends Drawer {
     private Bitmap gradientMiddle;
     private Bitmap gradientRight;
 
-    private final NinePatchDrawable shadow;
+    private int shadowSize;
+    private int imageCornerSize;
+
+    private Bitmap leftShadow;
+    private Bitmap rightShadow;
+    private Bitmap topShadow;
+    private Bitmap bottomShadow;
+
+    private Bitmap leftTopCornerShadow;
+    private Bitmap rightTopCornerShadow;
+    private Bitmap leftBottomCornerShadow;
+    private Bitmap rightBottomCornerShadow;
+
+
+
     private final BitmapDrawable background;
 
     private boolean drawingMapNow = false;
@@ -56,7 +69,6 @@ public class GoalsMapDrawer extends Drawer {
         Typeface typeface = Typeface.createFromAsset(resources.getAssets(), fontPath);
         paint.setTypeface(typeface);
 
-        shadow = (NinePatchDrawable) resources.getDrawable(R.drawable.goal_shadow);
         background = (BitmapDrawable) resources.getDrawable(R.drawable.bg_repeatable);
         background.setBounds(screenRect);
 
@@ -65,18 +77,52 @@ public class GoalsMapDrawer extends Drawer {
         GoalView goalView = controller.getGoalViews()[0][0];
         gradientHeight = goalView.getHeight() / 2;
         fontHeight = goalView.getHeight() / 8;
+
         ScaleProperties gradientScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.left_side_gradient, gradientHeight);
         ScaleProperties middleGradientScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.middle_of_gradient, gradientHeight);
         gradientLeft = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.left_side_gradient, gradientScaleProps);
         gradientMiddle = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.middle_of_gradient, middleGradientScaleProps);
         gradientRight = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.right_side_gradient, gradientScaleProps);
+
+        imageCornerSize = gradientLeft.getWidth();
+        shadowSize = (int) (imageCornerSize * 1.5);
+
+        // side shadows preparation
+        ScaleProperties shadowScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.top_side_shadow, shadowSize);
+
+        Bitmap leftShadowPart = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.left_side_shadow, shadowScaleProps);
+        Bitmap rightShadowPart = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.right_side_shadow, shadowScaleProps);
+        Bitmap topShadowPart = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.top_side_shadow, shadowScaleProps);
+        Bitmap bottomShadowPart = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.bottom_side_shadow, shadowScaleProps);
+
+        leftShadow = Bitmap.createBitmap(leftShadowPart.getWidth(), goalView.getHeight() - imageCornerSize * 2, Bitmap.Config.ARGB_8888);
+        rightShadow = Bitmap.createBitmap(rightShadowPart.getWidth(), goalView.getHeight() - imageCornerSize * 2, Bitmap.Config.ARGB_8888);
+        topShadow = Bitmap.createBitmap(goalView.getWidth() - imageCornerSize * 2, topShadowPart.getHeight(), Bitmap.Config.ARGB_8888);
+        bottomShadow = Bitmap.createBitmap(goalView.getWidth() - imageCornerSize * 2, bottomShadowPart.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas leftShadowFullCanvas = new Canvas(leftShadow);
+        Canvas rightShadowFullCanvas = new Canvas(rightShadow);
+        Canvas topShadowFullCanvas = new Canvas(topShadow);
+        Canvas bottomShadowFullCanvas = new Canvas(bottomShadow);
+        int offset = 0;
+        while (offset < leftShadow.getHeight()) {
+            leftShadowFullCanvas.drawBitmap(leftShadowPart, 0, offset, null);
+            rightShadowFullCanvas.drawBitmap(rightShadowPart, 0, offset, null);
+            topShadowFullCanvas.drawBitmap(topShadowPart, offset, 0, null);
+            bottomShadowFullCanvas.drawBitmap(bottomShadowPart, offset, 0, null);
+            offset += leftShadowPart.getHeight();
+        }
+        leftShadowPart.recycle();
+        rightShadowPart.recycle();
+        topShadowPart.recycle();
+        bottomShadowPart.recycle();
     }
 
     private final LruCache<GoalView, Bitmap> goalsCache = new LruCache<GoalView, Bitmap>(MAX_GOALS_IN_CACHE) {
         @Override
         protected Bitmap create(GoalView view) {
             Log.d("DRAWING CACHE", "miss: creating bitmap");
-            Bitmap cacheBitmap = Bitmap.createBitmap((view.getWidth() + SHADOW_OFFSET * 2), view.getHeight() + SHADOW_OFFSET * 2, Bitmap.Config.ARGB_8888);
+            Bitmap cacheBitmap = Bitmap.createBitmap((view.getWidth() + shadowSize * 2), view.getHeight() + shadowSize * 2, Bitmap.Config.ARGB_8888);
             Canvas cacheCanvas = new Canvas(cacheBitmap);
             drawGoalView(cacheCanvas, view);
             return cacheBitmap;
@@ -130,7 +176,7 @@ public class GoalsMapDrawer extends Drawer {
     }
 
     private boolean isVisible(int offsetX, int offsetY, GoalView view) {
-        return screenRect.intersects(view.getX() - SHADOW_OFFSET * 2 + offsetX, view.getY() - SHADOW_OFFSET * 2 + offsetY, view.getX() + SHADOW_OFFSET * 2 + offsetX + view.getWidth(), view.getY() + offsetY + SHADOW_OFFSET  * 2 + view.getHeight());
+        return screenRect.intersects(view.getX() - shadowSize * 2 + offsetX, view.getY() - shadowSize * 2 + offsetY, view.getX() + shadowSize * 2 + offsetX + view.getWidth(), view.getY() + offsetY + shadowSize  * 2 + view.getHeight());
     }
 
     private void drawGoalView(Canvas canvas, GoalView view) {
@@ -138,7 +184,7 @@ public class GoalsMapDrawer extends Drawer {
         drawShadow(canvas);
 
         canvas.save();
-        canvas.translate(SHADOW_OFFSET, SHADOW_OFFSET);
+        canvas.translate(shadowSize, shadowSize);
 
         drawCoverImage(canvas, view);
         drawGradient(canvas, view);
@@ -149,8 +195,10 @@ public class GoalsMapDrawer extends Drawer {
 
     /** Draws shadow as a canvas background */
     private void drawShadow(Canvas canvas) {
-        shadow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        shadow.draw(canvas);
+        canvas.drawBitmap(leftShadow, 0, shadowSize + imageCornerSize, paint);
+        canvas.drawBitmap(rightShadow, canvas.getWidth() - shadowSize, shadowSize + imageCornerSize, paint);
+        canvas.drawBitmap(topShadow, shadowSize + imageCornerSize, 0, null);
+        canvas.drawBitmap(bottomShadow, shadowSize + imageCornerSize, canvas.getHeight() - shadowSize, paint);
     }
 
     private void drawCoverImage(Canvas canvas, GoalView view) {

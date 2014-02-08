@@ -28,13 +28,13 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        bg.setBounds(getHolder().getSurfaceFrame());
         bg.draw(canvas);
     }
 
     private void prepare() {
         bg = getResources().getDrawable(R.drawable.bg_repeatable);
         surfaceHolder = getHolder();
-        bg.setBounds(surfaceHolder.getSurfaceFrame());
         surfaceHolder.addCallback(this);
     }
 
