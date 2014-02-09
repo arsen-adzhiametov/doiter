@@ -33,7 +33,6 @@ public class MainActivity extends Activity {
     @AfterViews
     void initViews() {
         Crashlytics.start(this);
-        NewRelic.withApplicationToken("AA8a51d35143bc258445a7cb114119ad09312499f1").start(this.getApplication());
 
         fragmentsSwitcher.setActivity(this);
 
