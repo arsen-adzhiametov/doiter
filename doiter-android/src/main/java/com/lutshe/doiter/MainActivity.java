@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
 import android.view.View;
+import android.view.Window;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
-import org.androidannotations.annotations.*;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
@@ -15,8 +15,9 @@ import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import com.newrelic.agent.android.NewRelic;
+import org.androidannotations.annotations.*;
 
-@NoTitle
+@WindowFeature({ Window.FEATURE_NO_TITLE})
 @Fullscreen
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {

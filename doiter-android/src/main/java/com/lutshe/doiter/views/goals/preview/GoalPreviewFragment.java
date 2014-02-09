@@ -36,7 +36,6 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     @ViewById(R.id.addGoalText)TextView addGoalTextView;
     @ViewById(R.id.seekbar)SeekBar seekBar;
 
-    @Bean SeekBarChangeListener seekBarChangeListener;
     @Bean(ImagesProviderImpl.class) ImagesProvider imagesProvider;
     @Bean GoalsDao goalsDao;
     @Bean MessagesDao messagesDao;
@@ -50,7 +49,6 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     @AfterViews
     public void bindData() {
         setTopMenuVisibility(View.INVISIBLE);
-        seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
         Goal goal = goalsDao.getGoal(goalId);
         goalNameTextView.setText(goal.getName());
         setTypefaceToTextViews();
@@ -66,6 +64,26 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
 
         EasyTracker tracker = EasyTracker.getInstance(getActivity());
         tracker.send(MapBuilder.createEvent("goal_selection", "goal_selected", goalNameTextView.getText().toString(), 1L).build());
+    }
+
+    @SeekBarProgressChange(R.id.seekbar)
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        String text = getAppropriateString(progress);
+        daysQuantityTextView.setText(" " + progress + " ");
+        daysTextTextView.setText(text);
+
+    }
+
+    //to utils
+    private String getAppropriateString(int progress) {
+        String number = String.valueOf(progress);
+        if ((number.endsWith("2") || number.endsWith("3") || number.endsWith("4")) && !number.startsWith("1")){
+            return  "дня  "; //whitespace is necessary for layout constant width
+        } else if (!String.valueOf(progress).endsWith("1") || progress == 11) {
+            return  "дней";
+        } else {
+            return  "день";
+        }
     }
 
     private void showGoal() {
