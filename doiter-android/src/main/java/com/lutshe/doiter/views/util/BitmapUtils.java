@@ -61,7 +61,7 @@ public final class BitmapUtils {
         return properties;
     }
 
-    public static Bitmap getBitmapScaledToHeight(Resources res, int resId, ScaleProperties props) {
+    public static Bitmap getScaledBitmap(Resources res, int resId, ScaleProperties props) {
         int[] sizeData = getImageSize(res, resId);
         Bitmap bitmap = BitmapFactory.decodeResource(res, resId, props.options);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) (sizeData[0] * props.ratio), (int) (sizeData[1] * props.ratio), true);

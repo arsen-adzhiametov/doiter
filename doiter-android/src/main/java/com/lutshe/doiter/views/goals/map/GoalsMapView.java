@@ -1,10 +1,8 @@
 package com.lutshe.doiter.views.goals.map;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.lutshe.doiter.model.Goal;
@@ -12,6 +10,7 @@ import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
 import com.lutshe.doiter.views.common.TouchHandler;
+import com.lutshe.doiter.views.goals.map.drawers.GoalsMapDrawer;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 
 /**
