@@ -54,7 +54,14 @@ public class GoalsMapView extends CanvasView {
     }
 
     public void stopDrawing() {
-        renderer.shutDown();
-        updater.shutDown();
+        // they can be null if shuttingDown
+        // before they were created.
+
+        if (renderer != null) {
+            renderer.shutDown();
+        }
+        if (updater != null) {
+            updater.shutDown();
+        }
     }
 }

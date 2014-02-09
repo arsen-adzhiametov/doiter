@@ -14,7 +14,6 @@ import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
-import com.newrelic.agent.android.NewRelic;
 import org.androidannotations.annotations.*;
 
 @WindowFeature({ Window.FEATURE_NO_TITLE})
