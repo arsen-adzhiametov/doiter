@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.googlecode.androidannotations.annotations.*;
+import org.androidannotations.annotations.*;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;

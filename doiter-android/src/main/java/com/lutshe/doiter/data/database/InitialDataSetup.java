@@ -2,9 +2,9 @@ package com.lutshe.doiter.data.database;
 
 import android.util.Log;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.Trace;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Trace;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;

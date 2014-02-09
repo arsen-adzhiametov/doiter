@@ -4,17 +4,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.ActivityLifecycleListener;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
+import org.androidannotations.annotations.EBean;
 
 /**
  * Created by Artur
  */
-@EBean(scope = Scope.Singleton)
+@EBean(scope = EBean.Scope.Singleton)
 public class FragmentsSwitcher {
 
     private Activity activity;

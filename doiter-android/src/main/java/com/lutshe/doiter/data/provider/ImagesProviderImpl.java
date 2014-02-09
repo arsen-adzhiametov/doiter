@@ -4,25 +4,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.os.Debug;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.view.WindowManager;
-
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.RootContext;
-import com.googlecode.androidannotations.annotations.SystemService;
-import com.googlecode.androidannotations.annotations.Trace;
-import com.googlecode.androidannotations.annotations.res.BooleanRes;
-import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.views.util.IoUtils;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.Trace;
+import org.androidannotations.annotations.res.BooleanRes;
 
 /**
  * Created by Arturro on 04.09.13.
  */
-@EBean(scope = Scope.Singleton)
+@EBean(scope = EBean.Scope.Singleton)
 public class ImagesProviderImpl implements ImagesProvider {
 
     public static final int DEFAULT_BYTES_PER_PIXEL = 3;

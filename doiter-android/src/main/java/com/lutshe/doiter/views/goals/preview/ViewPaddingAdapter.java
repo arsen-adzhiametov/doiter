@@ -4,10 +4,10 @@ import android.graphics.Point;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.SystemService;
-import com.googlecode.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 
 /**

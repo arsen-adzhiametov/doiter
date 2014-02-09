@@ -3,12 +3,10 @@ package com.lutshe.doiter.data.database.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.Trace;
-import com.googlecode.androidannotations.api.Scope;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Trace;
 
 import static com.lutshe.doiter.data.database.dao.GoalsDao.END_TIME;
 import static com.lutshe.doiter.data.database.dao.GoalsDao.GOALS_TABLE;
@@ -27,7 +25,7 @@ import static com.lutshe.doiter.data.database.dao.MessagesDao.USER_GOAL_ID;
 /**
  * Created by Arsen Adzhiametov on goal6/31/13.
  */
-@EBean(scope = Scope.Singleton)
+@EBean(scope = EBean.Scope.Singleton)
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     static final String DB_NAME = "doiterDB";

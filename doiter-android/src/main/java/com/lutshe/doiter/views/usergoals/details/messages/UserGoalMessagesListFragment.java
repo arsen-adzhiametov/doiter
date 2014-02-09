@@ -2,7 +2,7 @@ package com.lutshe.doiter.views.usergoals.details.messages;
 
 import android.app.Fragment;
 import android.widget.ListView;
-import com.googlecode.androidannotations.annotations.*;
+import org.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;

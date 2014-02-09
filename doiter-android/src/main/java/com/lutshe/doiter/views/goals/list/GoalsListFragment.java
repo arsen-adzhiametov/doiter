@@ -4,14 +4,13 @@ package com.lutshe.doiter.views.goals.list;
 import android.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 /**
  * Created by Arsen Adzhiametov on goal6/31/13.

@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.NotificationCompat;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.MainActivity_;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;

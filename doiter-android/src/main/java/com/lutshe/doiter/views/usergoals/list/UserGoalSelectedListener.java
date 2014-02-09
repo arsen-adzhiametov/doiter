@@ -2,8 +2,8 @@ package com.lutshe.doiter.views.usergoals.list;
 
 import android.view.View;
 import android.widget.AdapterView;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;

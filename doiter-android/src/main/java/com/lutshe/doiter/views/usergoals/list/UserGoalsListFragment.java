@@ -4,11 +4,11 @@ import android.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.Click;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;

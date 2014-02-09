@@ -3,9 +3,9 @@ package com.lutshe.doiter.views.goals.map;
 import android.app.Fragment;
 import android.widget.FrameLayout;
 
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EFragment;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;

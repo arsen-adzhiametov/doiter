@@ -5,11 +5,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.RootContext;
-import com.googlecode.androidannotations.annotations.SystemService;
-import com.googlecode.androidannotations.annotations.Trace;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.Trace;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 
 import org.joda.time.DateTime;

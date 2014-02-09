@@ -7,9 +7,9 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.commonsware.cwac.wakeful.WakefulIntentService;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EService;
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EService;
 
 import org.joda.time.DateTime;
 

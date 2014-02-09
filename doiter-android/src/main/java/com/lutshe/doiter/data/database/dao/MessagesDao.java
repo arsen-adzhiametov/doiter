@@ -2,12 +2,10 @@ package com.lutshe.doiter.data.database.dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-
 import com.crashlytics.android.Crashlytics;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
 import com.lutshe.doiter.model.Message;
-
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 import org.joda.time.DateTime;
 
 /**

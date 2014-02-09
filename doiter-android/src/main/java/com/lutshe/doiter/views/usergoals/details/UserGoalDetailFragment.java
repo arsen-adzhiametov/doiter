@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.googlecode.androidannotations.annotations.*;
+import org.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;

@@ -9,10 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EReceiver;
-import com.googlecode.androidannotations.annotations.SystemService;
-import com.googlecode.androidannotations.annotations.Trace;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EReceiver;
+import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.Trace;
 import com.lutshe.doiter.MainActivity_;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;

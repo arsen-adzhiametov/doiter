@@ -2,8 +2,8 @@ package com.lutshe.doiter.views.goals.preview;
 
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.ViewById;
 import com.lutshe.doiter.R;
 
 /**

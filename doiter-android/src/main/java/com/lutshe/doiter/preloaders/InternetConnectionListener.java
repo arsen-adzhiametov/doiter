@@ -7,8 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
-import com.googlecode.androidannotations.annotations.EReceiver;
-import com.googlecode.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.EReceiver;
+import org.androidannotations.annotations.SystemService;
 import org.joda.time.DateTime;
 
 import static android.content.Context.MODE_PRIVATE;

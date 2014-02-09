@@ -2,7 +2,7 @@ package com.lutshe.doiter.data.rest.clients;
 
 import android.content.Context;
 
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.EBean;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.model.Message;
 

@@ -47,9 +47,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.googlecode.androidannotations</groupId>
+            <groupId>org.androidannotations</groupId>
+            <artifactId>androidannotations-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.androidannotations</groupId>
             <artifactId>androidannotations</artifactId>
-            <version>2.7.1</version>
+            <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -62,11 +67,6 @@
             <groupId>com.squareup.retrofit</groupId>
             <artifactId>retrofit</artifactId>
             <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.androidannotations</groupId>
-            <artifactId>androidannotations-api</artifactId>
-            <version>2.7.1</version>
         </dependency>
         <dependency>
             <groupId>com.newrelic.agent.android</groupId>

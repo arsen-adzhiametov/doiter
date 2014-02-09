@@ -3,8 +3,8 @@ package com.lutshe.doiter.data.database.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 import com.lutshe.doiter.model.Goal;
 
 /**
