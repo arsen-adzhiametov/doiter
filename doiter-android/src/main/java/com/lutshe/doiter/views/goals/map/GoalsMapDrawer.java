@@ -20,7 +20,6 @@ import com.lutshe.doiter.views.util.ScaleProperties;
 
 /**
  * Goal views are cached individually bounding maximum memory usage by LruCache.
- * Created as an alternative for FMCGoalsMapDrawer.
  *
  * User: Artur
  */
@@ -88,7 +87,6 @@ public class GoalsMapDrawer extends Drawer {
         shadowSize = imageCornerSize;
 
         // side shadows preparation
-//        ScaleProperties shadowScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.top_side_shadow, shadowSize);
         ScaleProperties shadowScaleProps = BitmapUtils.fillScaleProperties(resources, R.drawable.shadow_left_top_corner, imageCornerSize + shadowSize);
 
         Bitmap leftShadowPart = BitmapUtils.getBitmapScaledToHeight(resources, R.drawable.left_side_shadow, shadowScaleProps);
@@ -199,7 +197,6 @@ public class GoalsMapDrawer extends Drawer {
         canvas.restore();
     }
 
-    /** Draws shadow as a canvas background */
     private void drawShadow(Canvas canvas) {
         canvas.drawBitmap(leftShadow, 0, shadowSize + imageCornerSize, null);
         canvas.drawBitmap(rightShadow, canvas.getWidth() - shadowSize, shadowSize + imageCornerSize, null);
@@ -251,5 +248,19 @@ public class GoalsMapDrawer extends Drawer {
     public void shutDown() {
         super.shutDown();
         goalsCache.evictAll();
+
+        gradientLeft.recycle();
+        gradientMiddle.recycle();
+        gradientRight.recycle();
+
+        leftShadow.recycle();
+        rightShadow.recycle();
+        topShadow.recycle();
+        bottomShadow.recycle();
+
+        leftTopCornerShadow.recycle();
+        leftBottomCornerShadow.recycle();
+        rightBottomCornerShadow.recycle();
+        rightTopCornerShadow.recycle();
     }
 }
