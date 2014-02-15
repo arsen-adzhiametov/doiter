@@ -1,22 +1,22 @@
 package com.lutshe.doiter.data.database;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.Trace;
+import com.crashlytics.android.Crashlytics;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.Trace;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.lutshe.doiter.model.Message.Type.FIRST;
-import static com.lutshe.doiter.model.Message.Type.LAST;
-import static com.lutshe.doiter.model.Message.Type.OTHER;
 
 /**
  * Created by Arturro on 21.08.13.
@@ -25,17 +25,19 @@ import static com.lutshe.doiter.model.Message.Type.OTHER;
 public class InitialDataSetup {
 
     public static Goal[] initialGoals = new Goal[]{
-                new Goal("Меньше сидеть в интернете", 0L),
-                new Goal("Убраться в квартире", 1L),
-                new Goal("Научиться готовить", 2L),
-                new Goal("Завести домашнее животное", 3L),
-                new Goal("Научиться отдыхать", 4L),
-                new Goal("Провести отпуск в Зимбабве", 5L),
-                new Goal("уволиться с работы", 6L),
-                new Goal("Расстаться с девушкой", 7L),
-                new Goal("Бросить курить", 8L),
-                new Goal("Выйти замуж", 9L),
-                new Goal("Научиться танцевать", 10L),
+                new Goal("Меньше Сидеть в Интернете", 0L),
+                new Goal("Убраться в Квартире", 1L),
+                new Goal("Научиться Готовить", 2L),
+                new Goal("Завести Домашнее Животное", 3L),
+                new Goal("Научиться Отдыхать", 4L),
+                new Goal("Провести Отпуск в Зимбабве", 5L),
+                new Goal("Уволиться с Работы", 6L),
+                new Goal("Расстаться с Девушкой", 7L),
+                new Goal("Бросить Курить", 8L),
+                new Goal("Выйти Замуж", 9L),
+                new Goal("Научиться Танцевать", 10L),
+                new Goal("Улучшить Карму", 11L),
+                new Goal("Разыграть Друга", 12L),
     };
 
     public static Map<String, Integer> goalsImages = new HashMap<String, Integer>() {
@@ -51,6 +53,8 @@ public class InitialDataSetup {
             put(initialGoals[8].getImageName(), R.drawable.goal8);
             put(initialGoals[9].getImageName(), R.drawable.goal9);
             put(initialGoals[10].getImageName(), R.drawable.goal10);
+            put(initialGoals[11].getImageName(), R.drawable.goal11);
+            put(initialGoals[12].getImageName(), R.drawable.goal12);
         }
     };
 
@@ -58,6 +62,8 @@ public class InitialDataSetup {
     GoalsDao goalsDao;
     @Bean
     MessagesDao messagesDao;
+    @RootContext
+    Context context;
 
     @Trace
     public void setup() {
@@ -68,20 +74,37 @@ public class InitialDataSetup {
 
     private void setupGoal(Goal goal) {
         Log.d("test data setup", "setting up goal " + goal);
-        goalsDao.addGoal(goal);
+        String[] messages = getMessagesArray(goal);
 
-        Message firstMessage = new Message("first msg for goal " + goal.getName(), goal.getId(), 0L);
-        firstMessage.setType(FIRST);
-        messagesDao.addMessage(firstMessage);
-
-        Message lastMessage = new Message("last msg for goal " + goal.getName(), goal.getId(), null);
-        lastMessage.setType(LAST);
-        messagesDao.addMessage(lastMessage);
-
-        for (int i = 1; i <= 10; i++) {
-            Message someMessage = new Message("msg #" + (i+1) + " for goal '" + goal.getName() + "'", goal.getId(), Long.valueOf(i));
-            someMessage.setType(OTHER);
-            messagesDao.addMessage(someMessage);
+        if (messages == null) {
+            return;
         }
+
+        Message first = new Message(messages[0], goal.getId(), 0L);
+        first.setType(Message.Type.FIRST);
+        messagesDao.addMessage(first);
+
+        Message last = new Message(messages[messages.length-1], goal.getId(), null);
+        last.setType(Message.Type.LAST);
+        messagesDao.addMessage(last);
+
+        for (int i = 1; i < messages.length - 1; i ++) {
+            Message other = new Message(messages[i], goal.getId(), Long.valueOf(i));
+            messagesDao.addMessage(other);
+        }
+
+        goalsDao.addGoal(goal);
+    }
+
+    private String[] getMessagesArray(Goal goal) {
+        try {
+            Resources resources = context.getResources();
+            Field field = R.array.class.getField("goal" + goal.getId());
+            int resourceId = field.getInt(null);
+            return resources.getStringArray(resourceId);
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
+        return null;
     }
 }
