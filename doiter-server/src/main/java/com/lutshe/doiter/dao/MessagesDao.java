@@ -23,4 +23,8 @@ public class MessagesDao {
     public List<Message> getMessagesForGoal(Long id, Long firstMessageNum, Long numberOfMessages) {
         return db.findAll(Message.class, "select * from messages where goal_id = ? limit ?, ?", id, firstMessageNum, numberOfMessages);
     }
+
+    public void saveMessage(Message message) {
+        db.update("insert into messages(goal_id, text, order_index) values (?, ?, ?);", message.getGoalId(), message.getText(), message.getOrderIndex());
+    }
 }
