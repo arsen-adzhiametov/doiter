@@ -1,15 +1,16 @@
 package com.lutshe.doiter.views.goals.preview;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
-import org.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;
@@ -20,6 +21,8 @@ import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
+import com.lutshe.doiter.views.util.StringUtils;
+import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
 
 /**
@@ -32,7 +35,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     @ViewById(R.id.daysText)TextView daysTextTextView;
     @ViewById(R.id.daysQuantity)TextView daysQuantityTextView;
     @ViewById(R.id.i_will_do_it_in_text_view)TextView iWillDoItInTextView;
-    @ViewById(R.id.goal_description)TextView goalDescriptionTextView;
+    @ViewById(R.id.goal_description)WebView goalDescriptionView;
     @ViewById(R.id.addGoalText)TextView addGoalTextView;
     @ViewById(R.id.seekbar)SeekBar seekBar;
 
@@ -42,6 +45,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
     @Bean ViewPaddingAdapter viewPaddingAdapter;
+    @Bean HtmlCodePreparer htmlCodePreparer;
 
     @FragmentArg
     Long goalId;
@@ -51,6 +55,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
         setTopMenuVisibility(View.INVISIBLE);
         Goal goal = goalsDao.getGoal(goalId);
         goalNameTextView.setText(goal.getName());
+        loadGoalDescriptionWebView(getResources().getString(R.string.goal_description));
         setTypefaceToTextViews();
     }
 
@@ -67,23 +72,11 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     }
 
     @SeekBarProgressChange(R.id.seekbar)
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        String text = getAppropriateString(progress);
+    public void onProgressChanged(int progress) {
+        String text = StringUtils.getDayOrDaysString(progress);
         daysQuantityTextView.setText(" " + progress + " ");
         daysTextTextView.setText(text);
 
-    }
-
-    //to utils
-    private String getAppropriateString(int progress) {
-        String number = String.valueOf(progress);
-        if ((number.endsWith("2") || number.endsWith("3") || number.endsWith("4")) && !number.startsWith("1")){
-            return  "дня  "; //whitespace is necessary for layout constant width
-        } else if (!String.valueOf(progress).endsWith("1") || progress == 11) {
-            return  "дней";
-        } else {
-            return  "день";
-        }
     }
 
     private void showGoal() {
@@ -108,9 +101,15 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     }
 
     private void setTopMenuVisibility(int visibility) {
-        Activity activity = fragmentsSwitcher.getActivity();
-        View topMenuSlidingDrawer = activity.findViewById(R.id.top_menu_sliding_drawer);
+        View topMenuSlidingDrawer = getActivity().findViewById(R.id.top_menu_sliding_drawer);
         topMenuSlidingDrawer.setVisibility(visibility);
+    }
+
+    private void loadGoalDescriptionWebView(String goalDescription) {
+        String htmlCode = htmlCodePreparer.getHtmlCode(goalDescription);
+        goalDescriptionView.loadDataWithBaseURL(null, htmlCode, "text/html", "utf-8", "about:blank");
+        goalDescriptionView.setBackgroundColor(Color.TRANSPARENT);
+        goalDescriptionView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
     }
 
     private void setTypefaceToTextViews() {
@@ -121,7 +120,6 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
         iWillDoItInTextView.setTypeface(typeface);
         daysTextTextView.setTypeface(typeface);
         addGoalTextView.setTypeface(typeface);
-        goalDescriptionTextView.setTypeface(typeface);
     }
 
 }

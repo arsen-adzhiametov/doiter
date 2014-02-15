@@ -5,6 +5,7 @@
 
     <dimen name="seek_thumb_diameter">33dp</dimen>
 
+    <dimen name="message_view_text_left_right_padding">20dp</dimen>
     <dimen name="padding_100">100dp</dimen>
     <dimen name="padding_20">20dp</dimen>
     <dimen name="padding_30">30dp</dimen>
