@@ -35,6 +35,7 @@ public class HtmlCodePreparer {
                             "font-family: 'Gabriola'; " +
                             "font-size: 1.5em; " +
                             "line-height: 95%;" +
+                            "color: #4F8890" +
                         "}" +
                     "</style>" +
                 "</head>";
