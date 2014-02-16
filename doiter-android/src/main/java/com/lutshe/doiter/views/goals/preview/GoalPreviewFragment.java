@@ -35,9 +35,10 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     @ViewById(R.id.days_text)TextView daysTextTextView;
     @ViewById(R.id.days_quantity)TextView daysQuantityTextView;
     @ViewById(R.id.i_will_do_it_in_text_view)TextView iWillDoItInTextView;
-    @ViewById(R.id.goal_description)WebView goalDescriptionView;
+    @ViewById(R.id.web_view_content)WebView goalDescriptionView;
     @ViewById(R.id.add_goal_text)TextView addGoalTextView;
     @ViewById(R.id.seekbar)SeekBar seekBar;
+    @ViewById(R.id.message_number)TextView messageNumberTextView;
 
     @Bean(ImagesProviderImpl.class) ImagesProvider imagesProvider;
     @Bean GoalsDao goalsDao;
@@ -120,6 +121,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
         iWillDoItInTextView.setTypeface(typeface);
         daysTextTextView.setTypeface(typeface);
         addGoalTextView.setTypeface(typeface);
+//        messageNumberTextView.setTypeface(typeface);
     }
 
 }

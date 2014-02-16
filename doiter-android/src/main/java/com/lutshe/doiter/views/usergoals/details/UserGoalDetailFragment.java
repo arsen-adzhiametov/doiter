@@ -2,9 +2,12 @@ package com.lutshe.doiter.views.usergoals.details;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.*;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
@@ -19,7 +22,7 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.joda.time.DateTime;
 
 /**
- * Created by Arsen Adzhiametov on goal6/31/13.
+ * Created by Arsen Adzhiametov on 7/31/13.
  */
 @EFragment(R.layout.user_goal_details_fragment)
 public class UserGoalDetailFragment extends Fragment implements UpdatableView, BackStackable {
@@ -31,12 +34,13 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
     @ViewById(R.id.back_to_all_button_text)TextView backToAllButtonTextView;
     @ViewById(R.id.goal_cover_3_screen)ImageView goalCover;
     @ViewById(R.id.message_number)TextView messageNumberTextView;
-    @ViewById(R.id.message_text)TextView messageTextTextView;
+    @ViewById(R.id.web_view_content)WebView messageTextWebView;
     @ViewById(R.id.text_time_countdown)TextView timerView;
 
     @Bean GoalsDao goalsDao;
     @Bean(ImagesProviderImpl.class)ImagesProvider imagesProvider;
     @Bean FragmentsSwitcher fragmentsSwitcher;
+    @Bean HtmlCodePreparer htmlCodePreparer;
 
     @FragmentArg Long goalId;
 
@@ -47,7 +51,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
         goalNameTextView.setText(goal.getName());
         goalCover.setImageBitmap(bitmap);
         daysQuantityTextView.setText(String.valueOf(getDaysRemaining(goal)));
-
+        loadCurrentMessageTextWebView(getResources().getString(R.string.message_stub));
         FinalCountdown.getTimer(goal, timerView).start();
         setTypefaceToTextViews();
     }
@@ -63,8 +67,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
         daysTextTextView.setTypeface(typeface);
         goalNameTextView.setTypeface(typeface);
         backToAllButtonTextView.setTypeface(typeface);
-        messageNumberTextView.setTypeface(typeface);
-        messageTextTextView.setTypeface(typeface);
+//        messageNumberTextView.setTypeface(typeface);
     }
 
     private long getDaysRemaining(Goal goal) {
@@ -76,6 +79,13 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
     @Click(R.id.more_tips_button)
     void showAllTips(){
         fragmentsSwitcher.show(UserGoalMessagesListFragment_.builder().goalId(goalId).build(), true);
+    }
+
+    private void loadCurrentMessageTextWebView(String messageText) {
+        String htmlCode = htmlCodePreparer.getHtmlCode(messageText);
+        messageTextWebView.loadDataWithBaseURL(null, htmlCode, "text/html", "utf-8", "about:blank");
+        messageTextWebView.setBackgroundColor(Color.TRANSPARENT);
+        messageTextWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
     }
 
 }

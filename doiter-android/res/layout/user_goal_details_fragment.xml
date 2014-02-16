@@ -166,76 +166,7 @@
                         android:layout_weight="0.5"
                         android:id="@+id/middle_layout_two">
 
-            <ImageView
-                    android:id="@+id/zabor_top_3_screen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/zabor_verh_3screen"
-                    android:paddingTop="@dimen/padding_15"
-                    android:scaleType="fitXY"/>
-
-            <ImageView
-                    android:id="@+id/zabor_bottom_3_screen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/zabor_niz_3screen"
-                    android:scaleType="fitXY"/>
-
-            <ImageView
-                    android:id="@+id/zabor_middle_3_screen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/zabor_top_3_screen"
-                    android:layout_above="@id/zabor_bottom_3_screen"
-                    android:src="@drawable/msg_bg"
-                    android:scaleType="fitXY"
-                    android:adjustViewBounds="true"/>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/padding_30"
-                            android:id="@+id/yellow_pick_container">
-                <ImageView
-                        android:id="@+id/yellow_pick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/nomber_yellow"
-                        android:scaleType="fitXY"
-                        android:adjustViewBounds="true"/>
-
-                <TextView
-                        android:id="@+id/message_number"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="18"
-                        style="@style/GabriolaGraySmallFontStyle"/>
-
-            </RelativeLayout>
-
-            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:overScrollMode="never"
-                        android:scrollbars="none"
-                        android:layout_below="@id/zabor_top_3_screen"
-                        android:layout_above="@id/zabor_bottom_3_screen">
-                <TextView
-                        android:id="@+id/message_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/message_stub"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="30dp"
-                        android:gravity="center"
-                        android:textAlignment="gravity"
-                        style="@style/GabriolaGraySmallFontStyle"/>
-            </ScrollView>
+            <include layout="@layout/message_view_template"/>
 
         </RelativeLayout>
 
