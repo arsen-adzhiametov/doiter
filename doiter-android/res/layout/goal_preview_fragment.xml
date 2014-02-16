@@ -3,22 +3,23 @@
                 android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/top_layout">
-        <ImageView
+                    android:paddingTop="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:paddingBottom="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:layout_alignParentTop="true">
+
+        <com.lutshe.doiter.views.ScalableImageView
+                android:id="@+id/ribbon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ribbon_goal_preview"
-                android:paddingTop="@dimen/padding_20"
-                android:paddingBottom="@dimen/padding_15"
-                android:id="@+id/ribbon"
                 android:scaleType="fitXY"/>
 
         <TextView
-                android:id="@+id/goalNameDetail"
+                android:id="@+id/goal_name"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:maxLines="2"
@@ -27,23 +28,24 @@
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/bottom_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:id="@+id/bottom_layout">
-        <ImageView
+                    android:paddingTop="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:paddingBottom="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:layout_alignParentBottom="true">
+
+        <com.lutshe.doiter.views.ScalableImageView
+                android:id="@+id/addGoalButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:paddingBottom="@dimen/padding_20"
-                android:paddingTop="@dimen/padding_15"
                 android:src="@drawable/button_set_a_goal"
-                android:id="@+id/addGoalButton"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:clickable="true"/>
 
         <TextView
-                android:id="@+id/addGoalText"
+                android:id="@+id/add_goal_text"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
@@ -52,48 +54,48 @@
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/middle_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/top_layout"
-                    android:layout_above="@id/bottom_layout"
-                    android:id="@+id/middle_layout">
+                    android:layout_above="@id/bottom_layout">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/time_setter_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:paddingBottom="@dimen/padding_10"
-                        android:id="@+id/time_setter_container">
+                        android:paddingBottom="@dimen/padding_10">
 
-            <ImageView
+            <com.lutshe.doiter.views.ScalableImageView
+                    android:id="@+id/time_setter_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:id="@+id/time_setter_header"
                     android:src="@drawable/time_setter_header"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"/>
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_below="@id/time_setter_header"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/time_setter_header"
                             android:id="@+id/time_setter_middle_container">
-                <ImageView
+                <com.lutshe.doiter.views.ScalableImageView
+                        android:id="@+id/time_setter_seek_bar_bg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:id="@+id/time_setter_seek_bar_bg"
                         android:src="@drawable/seek_bar"
                         android:scaleType="fitXY"/>
 
                 <SeekBar
+                        android:id="@+id/seekbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:paddingLeft="@dimen/padding_30"
                         android:paddingRight="@dimen/padding_30"
-                        android:id="@+id/seekbar"
                         android:max="60"
                         android:progress="17"
                         android:thumb="@drawable/seek_thumb"
@@ -101,11 +103,11 @@
 
             </RelativeLayout>
 
-            <ImageView
+            <com.lutshe.doiter.views.ScalableImageView
+                    android:id="@+id/time_setter_footer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/time_setter_middle_container"
-                    android:id="@+id/time_setter_footer"
                     android:src="@drawable/time_setter_footer"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"/>
@@ -118,29 +120,29 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true">
             <TextView
+                    android:id="@+id/i_will_do_it_in_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:id="@+id/i_will_do_it_in_text_view"
                     android:text="@string/i_will_do_it_in"
                     style="@style/GabriolaGrayFontStyle"/>
 
             <TextView
+                    android:id="@+id/days_quantity"
                     android:layout_width="@dimen/dimen_50"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:id="@+id/daysQuantity"
                     android:text="@string/starting_days"
                     android:layout_toRightOf="@id/i_will_do_it_in_text_view"
                     style="@style/GabriolaOrangeFontStyle"/>
 
             <TextView
+                    android:id="@+id/days_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:id="@+id/daysText"
                     android:text="@string/days"
-                    android:layout_toRightOf="@id/daysQuantity"
+                    android:layout_toRightOf="@id/days_quantity"
                     style="@style/GabriolaGrayFontStyle"/>
         </RelativeLayout>
 

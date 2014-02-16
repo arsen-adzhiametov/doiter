@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-    <ImageView
+    <com.lutshe.doiter.views.ScalableImageView
             android:id="@+id/msg_bg_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -12,7 +12,7 @@
             android:src="@drawable/msg_bg_header"
             android:scaleType="fitXY"/>
 
-    <ImageView
+    <com.lutshe.doiter.views.ScalableImageView
             android:id="@+id/msg_bg_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             android:src="@drawable/msg_bg_footer"
             android:scaleType="fitXY"/>
 
-    <ImageView
+    <com.lutshe.doiter.views.ScalableImageView
             android:id="@+id/msg_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,12 +34,12 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/msg_bg_header"
+                android:layout_above="@id/msg_bg_footer"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 android:paddingLeft="@dimen/message_view_text_left_right_padding"
-                android:paddingRight="@dimen/message_view_text_left_right_padding"
-                android:layout_below="@id/msg_bg_header"
-                android:layout_above="@id/msg_bg_footer">
+                android:paddingRight="@dimen/message_view_text_left_right_padding">
         <WebView
                 android:id="@+id/goal_description"
                 android:layout_width="match_parent"

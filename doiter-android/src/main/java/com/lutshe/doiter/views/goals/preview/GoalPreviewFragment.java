@@ -31,12 +31,12 @@ import org.joda.time.DateTime;
 @EFragment(R.layout.goal_preview_fragment)
 public class GoalPreviewFragment extends Fragment implements BackStackable{
 
-    @ViewById(R.id.goalNameDetail)TextView goalNameTextView;
-    @ViewById(R.id.daysText)TextView daysTextTextView;
-    @ViewById(R.id.daysQuantity)TextView daysQuantityTextView;
+    @ViewById(R.id.goal_name)TextView goalNameTextView;
+    @ViewById(R.id.days_text)TextView daysTextTextView;
+    @ViewById(R.id.days_quantity)TextView daysQuantityTextView;
     @ViewById(R.id.i_will_do_it_in_text_view)TextView iWillDoItInTextView;
     @ViewById(R.id.goal_description)WebView goalDescriptionView;
-    @ViewById(R.id.addGoalText)TextView addGoalTextView;
+    @ViewById(R.id.add_goal_text)TextView addGoalTextView;
     @ViewById(R.id.seekbar)SeekBar seekBar;
 
     @Bean(ImagesProviderImpl.class) ImagesProvider imagesProvider;
@@ -44,7 +44,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     @Bean MessagesDao messagesDao;
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
-    @Bean ViewPaddingAdapter viewPaddingAdapter;
+//    @Bean ViewPaddingAdapter viewPaddingAdapter;
     @Bean HtmlCodePreparer htmlCodePreparer;
 
     @FragmentArg

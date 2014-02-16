@@ -2,10 +2,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-
     <dimen name="seek_thumb_diameter">33dp</dimen>
-
     <dimen name="message_view_text_left_right_padding">20dp</dimen>
+    <dimen name="goal_preview_header_footer_top_bottop_padding">20dp</dimen>
+
     <dimen name="padding_100">100dp</dimen>
     <dimen name="padding_20">20dp</dimen>
     <dimen name="padding_30">30dp</dimen>
