@@ -12,7 +12,6 @@ import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.timer.FinalCountdown;
-import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
 
@@ -40,11 +39,7 @@ public class MainActivity extends Activity {
             UpdatesAlarmListener.scheduleUpdates(getApplicationContext());
         }
 
-        if (goalsDao.getUserGoalsCount() == 0) {
-            fragmentsSwitcher.show(GoalsMapFragment_.builder().build(), false);
-        } else {
-            fragmentsSwitcher.show(UserGoalsListFragment_.builder().build(), false);
-        }
+        fragmentsSwitcher.show(GoalsMapFragment_.builder().build(), false);
     }
 
     private boolean isFirstLaunch() {

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;
@@ -19,8 +18,9 @@ import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
 import com.lutshe.doiter.views.BackStackable;
-import com.lutshe.doiter.views.usergoals.list.UserGoalsListFragment_;
+import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
+import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import com.lutshe.doiter.views.util.StringUtils;
 import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
@@ -81,7 +81,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     }
 
     private void showGoal() {
-        fragmentsSwitcher.show(UserGoalsListFragment_.builder().build(), false);
+        fragmentsSwitcher.show(UserGoalDetailFragment_.builder().goalId(goalId).build(), false);
     }
 
     private void scheduleNextAlarm() {
