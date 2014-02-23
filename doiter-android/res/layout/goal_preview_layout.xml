@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/top_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:paddingBottom="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:layout_alignParentTop="true">
+
+        <com.lutshe.doiter.views.ScalableImageView
+                android:id="@+id/ribbon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ribbon_goal_preview"
+                android:scaleType="fitXY"/>
+
+        <TextView
+                android:id="@+id/goal_name"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:maxLines="2"
+                android:layout_centerInParent="true"
+                style="@style/GabriolaWhiteFontStyle"/>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/bottom_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:paddingBottom="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:layout_alignParentBottom="true">
+
+        <com.lutshe.doiter.views.ScalableImageView
+                android:id="@+id/addGoalButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/button_set_a_goal"
+                android:scaleType="fitXY"
+                android:clickable="true"/>
+
+        <TextView
+                android:id="@+id/add_goal_text"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/add_goal_button_text"
+                style="@style/GabriolaWhiteFontStyle"/>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/middle_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/top_layout"
+                    android:layout_above="@id/bottom_layout">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/time_setter_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:paddingBottom="@dimen/padding_10">
+
+            <com.lutshe.doiter.views.ScalableImageView
+                    android:id="@+id/time_setter_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/time_setter_header"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"/>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_below="@id/time_setter_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/time_setter_middle_container">
+
+                <com.lutshe.doiter.views.ScalableImageView
+                        android:id="@+id/seek_bar_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/seek_bar_new"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"/>
+
+                <SeekBar
+                        android:id="@+id/seekbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:paddingLeft="@dimen/padding_30"
+                        android:paddingRight="@dimen/padding_30"
+                        android:max="60"
+                        android:progress="17"
+
+                        android:progressDrawable="@android:color/transparent"/>
+
+            </RelativeLayout>
+
+            <com.lutshe.doiter.views.ScalableImageView
+                    android:id="@+id/time_setter_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/time_setter_middle_container"
+                    android:src="@drawable/time_setter_footer"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true">
+            <TextView
+                    android:id="@+id/i_will_do_it_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/i_will_do_it_in"
+                    style="@style/GabriolaGrayFontStyle"/>
+
+            <TextView
+                    android:id="@+id/days_quantity"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/starting_days"
+                    android:layout_toRightOf="@id/i_will_do_it_in"
+                    style="@style/GabriolaOrangeFontStyle"/>
+
+            <TextView
+                    android:id="@+id/days_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/days"
+                    android:layout_toRightOf="@id/days_quantity"
+                    style="@style/GabriolaGrayFontStyle"/>
+        </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/time_setter_container"
+                        android:layout_above="@id/bottom_layout">
+
+            <com.lutshe.doiter.views.goals.MessageViewTemplateLayout_
+                    android:id="@+id/goal_description_message_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</merge>

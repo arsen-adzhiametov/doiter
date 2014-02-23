@@ -166,7 +166,7 @@
                         android:layout_weight="0.5"
                         android:id="@+id/middle_layout_two">
 
-            <include layout="@layout/message_view_template"/>
+            <include layout="@layout/message_view_template_layout"/>
 
         </RelativeLayout>
 
