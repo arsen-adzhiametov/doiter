@@ -27,7 +27,8 @@ public class GoalNameDrawer {
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(fontHeight);
-
+        paint.setAntiAlias(true);
+        paint.setSubpixelText(true);
     }
 
     public void drawText(Canvas canvas, GoalView view) {

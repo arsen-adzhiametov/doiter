@@ -4,12 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
+import com.lutshe.doiter.data.database.dao.MessagesDao;
+import com.lutshe.doiter.model.Message;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import com.lutshe.doiter.data.database.dao.MessagesDao;
-import com.lutshe.doiter.model.Message;
 
 /**
  * Created by Arsen Adzhiametov on goal6/31/13.

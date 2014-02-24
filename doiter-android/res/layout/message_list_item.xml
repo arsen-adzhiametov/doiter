@@ -4,25 +4,12 @@
              android:orientation="vertical"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:layout_margin="0dp"
-             android:foreground="@drawable/goal_list_border">
+             >
 
-    <FrameLayout
+    <com.lutshe.doiter.views.goals.MessageViewTemplateLayout_
+            android:id="@+id/message_item"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#99695D46"
-            android:layout_margin="0dp">
-
-        <TextView
-                android:id="@+id/messageText"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="Finish this app"
-                android:layout_margin="4dp"
-                android:layout_marginTop="4dp"
-                android:textSize="16dp"
-                android:textColor="#FFFFFF"
-                />
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            />
 
 </FrameLayout>

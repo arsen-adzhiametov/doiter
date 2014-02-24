@@ -46,10 +46,10 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
         scheduleNextAlarm();
         showGoal();
         showTopMenu();
-        sendDataToBugtracker();
+        sendAnalyticsEvent();
     }
 
-    private void sendDataToBugtracker() {
+    private void sendAnalyticsEvent() {
         EasyTracker tracker = EasyTracker.getInstance(getActivity());
         String goalName = goalPreviewLayout.goalNameTextView.getText().toString();
         tracker.send(MapBuilder.createEvent("goal_selection","goal_selected", goalName, 1L).build());
