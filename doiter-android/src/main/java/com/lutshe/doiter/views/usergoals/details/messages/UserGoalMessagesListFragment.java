@@ -7,6 +7,8 @@ import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
+import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
+import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
 
 /**
@@ -19,6 +21,7 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
     @ViewById(R.id.my_goals_btn_text) TextView myMessagesBtnText;
 
     @Bean MessagesListAdapter messagesListAdapter;
+    @Bean FragmentsSwitcher fragmentsSwitcher;
 
     @FragmentArg Long goalId;
 
@@ -35,5 +38,10 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
     @Override
     public void update() {
         messagesListAdapter.notifyDataSetChanged();
+    }
+
+    @Click(R.id.my_goals_btn)
+    public void showMyGoals() {
+        fragmentsSwitcher.show(UserGoalDetailFragment_.builder().goalId(goalId).build(), false);
     }
 }

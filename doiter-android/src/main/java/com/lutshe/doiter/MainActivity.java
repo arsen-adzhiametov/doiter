@@ -12,6 +12,7 @@ import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.timer.FinalCountdown;
+import com.lutshe.doiter.views.toolbarslidingdrawer.MultipleOrientationSlidingDrawer;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
 
@@ -20,7 +21,8 @@ import org.androidannotations.annotations.*;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
 
-    @ViewById(R.id.top_menu_sliding_drawer) View topMenuSlidingDrawer;
+    @ViewById(R.id.top_menu_sliding_drawer)
+    MultipleOrientationSlidingDrawer topMenuSlidingDrawer;
 
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean GoalsDao goalsDao;
@@ -31,7 +33,6 @@ public class MainActivity extends Activity {
     @AfterViews
     void initViews() {
         Crashlytics.start(this);
-
         fragmentsSwitcher.setActivity(this);
 
         if (isFirstLaunch()) {

@@ -15,10 +15,12 @@
             android:layout_weight="0.92"
             />
 
-    <FrameLayout android:layout_height="0dp"
+    <FrameLayout android:id="@+id/my_goals_btn"
+                 android:layout_height="0dp"
                  android:layout_weight=".08"
                  android:layout_width="match_parent"
-                 android:background="@color/orange">
+                 android:background="@color/orange"
+                   android:clickable="true">
          <TextView
                   android:id="@+id/my_goals_btn_text"
                   android:layout_width="match_parent"

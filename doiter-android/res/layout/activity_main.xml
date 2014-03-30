@@ -18,24 +18,13 @@
             android:layout_height="110dp"
             custom:handle="@+id/handle"
             custom:content="@+id/content"
-            custom:orientation="top"
-            >
+            custom:orientation="top">
 
-        <FrameLayout
-                android:layout_gravity="right"
-                android:layout_width="match_parent"
-                android:background="@color/orange"
+        <RelativeLayout
+                android:id="@+id/handle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                >
-            <ImageView
-                    android:id="@+id/handle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:src="@drawable/toolbar_handle"
-                    android:scaleType="centerInside"
-                    android:paddingRight="@dimen/default_side_padding"/>
-        </FrameLayout>
+                android:background="@drawable/toolbar_handle"/>
 
         <FrameLayout
                 android:id="@+id/content"
