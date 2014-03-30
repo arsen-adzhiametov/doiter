@@ -11,6 +11,7 @@ public class MessageViewClickListener implements View.OnTouchListener {
         this.messageView = messageView;
     }
 
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
 

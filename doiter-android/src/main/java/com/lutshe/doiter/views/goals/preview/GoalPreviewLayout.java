@@ -37,6 +37,7 @@ public class GoalPreviewLayout extends RelativeLayout {
     @ViewById(R.id.goal_description_message_view) MessageViewTemplateLayout goalDescriptionMessageView;
     @ViewById(R.id.seekbar)SeekBar seekBar;
     @ViewById(R.id.seek_bar_bg)ImageView seekBarBackground;
+    @ViewById(R.id.message_number) TextView messageNumberTextView;
 
     public GoalPreviewLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -83,6 +84,7 @@ public class GoalPreviewLayout extends RelativeLayout {
         iWillDoItInTextView.setTypeface(typeface);
         daysTextTextView.setTypeface(typeface);
         addGoalTextView.setTypeface(typeface);
+        messageNumberTextView.setTypeface(typeface);
     }
 
     protected void setTopMenuVisibility(int visibility) {

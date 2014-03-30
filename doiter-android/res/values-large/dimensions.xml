@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- 7" - 8" screen dimensions -->
+
+    <dimen name="goal_preview_header_ribbon_top_margin">35dp</dimen>
+    <dimen name="goal_preview_middle_layout_top_margin">35dp</dimen>
+    <dimen name="goal_preview_footer_ribbon_top_margin">35dp</dimen>
+    <dimen name="goal_preview_footer_bottom_padding">35dp</dimen>
+    <dimen name="time_setter_container_bottom_padding">20dp</dimen>
+
+    <dimen name="seek_bar_side_padding">50dp</dimen>
+
+    <dimen name="text_size_small">45dp</dimen>
+    <dimen name="text_size_medium">55dp</dimen>
+    <dimen name="text_size_large">95dp</dimen>
+    <dimen name="web_view_text_size">25px</dimen>
+
+    <dimen name="days_quantity_width">100dp</dimen>
+
+    <dimen name="message_view_text_side_padding">25dp</dimen>
+    <dimen name="goal_preview_name_side_padding">90dp</dimen>
+    <dimen name="goal_preview_name_bottom_padding">15dp</dimen>
+    <dimen name="goal_preview_set_button_text_bottom_padding">20dp</dimen>
+
+</resources>
