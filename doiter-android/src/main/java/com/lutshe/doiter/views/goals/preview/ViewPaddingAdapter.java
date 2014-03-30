@@ -49,24 +49,9 @@ public class ViewPaddingAdapter {
 
     enum DisplayRatio {
 
-        WIDE(PADDING_MIN) {
-            @Override
-            void applyPadding(RelativeLayout ... layouts) {
-                helper(layouts);
-            }
-        },
-        NORMAL(PADDING_NORMAL) {
-            @Override
-            void applyPadding(RelativeLayout ... layouts) {
-                helper(layouts);
-            }
-        },
-        TALL(PADDING_MAX) {
-            @Override
-            void applyPadding(RelativeLayout ... layouts) {
-                helper(layouts);
-            }
-        };
+        WIDE(PADDING_MIN),
+        NORMAL(PADDING_NORMAL),
+        TALL(PADDING_MAX);
 
         private int padding;
 
@@ -74,12 +59,11 @@ public class ViewPaddingAdapter {
             this.padding = padding;
         }
 
-        abstract void applyPadding(RelativeLayout ... layouts);
-
-        protected void helper(RelativeLayout ... layouts) {
+        void applyPadding(RelativeLayout ... layouts){
             for (RelativeLayout rl : layouts) {
                 rl.setPadding(0, padding, 0, padding);
             }
         }
+
     }
 }

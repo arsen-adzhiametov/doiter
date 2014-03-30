@@ -6,8 +6,8 @@
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/goal_preview_header_footer_top_bottop_padding"
-                    android:paddingBottom="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:paddingTop="@dimen/goal_preview_header_top_padding"
+                    android:paddingBottom="@dimen/goal_preview_header_bottom_padding"
                     android:layout_alignParentTop="true">
 
         <com.lutshe.doiter.views.ScalableImageView
@@ -31,8 +31,8 @@
                     android:id="@+id/bottom_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/goal_preview_header_footer_top_bottop_padding"
-                    android:paddingBottom="@dimen/goal_preview_header_footer_top_bottop_padding"
+                    android:paddingTop="@dimen/goal_preview_footer_top_padding"
+                    android:paddingBottom="@dimen/goal_preview_footer_bottom_padding"
                     android:layout_alignParentBottom="true">
 
         <com.lutshe.doiter.views.ScalableImageView
@@ -65,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:paddingBottom="@dimen/padding_10">
+                        android:paddingBottom="@dimen/time_setter_container_bottom_padding">
 
             <com.lutshe.doiter.views.ScalableImageView
                     android:id="@+id/time_setter_header"
@@ -96,11 +96,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:paddingLeft="@dimen/padding_30"
-                        android:paddingRight="@dimen/padding_30"
+                        android:paddingLeft="@dimen/seek_bar_left_padding"
+                        android:paddingRight="@dimen/seek_bar_right_padding"
                         android:max="60"
                         android:progress="17"
-
                         android:progressDrawable="@android:color/transparent"/>
 
             </RelativeLayout>
@@ -131,7 +130,7 @@
 
             <TextView
                     android:id="@+id/days_quantity"
-                    android:layout_width="@dimen/dimen_50"
+                    android:layout_width="@dimen/days_quantity_width"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/starting_days"
