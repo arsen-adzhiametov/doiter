@@ -25,6 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="1"
+                    android:lineSpacingMultiplier="0.75"
                     style="@style/GabriolaGraySmallFontStyle"/>
         </RelativeLayout>
 
@@ -54,8 +55,8 @@
                     android:layout_above="@id/msg_bg_footer"
                     android:overScrollMode="never"
                     android:scrollbars="none"
-                    android:paddingLeft="@dimen/message_view_text_left_padding"
-                    android:paddingRight="@dimen/message_view_text_right_padding">
+                    android:paddingLeft="@dimen/message_view_text_side_padding"
+                    android:paddingRight="@dimen/message_view_text_side_padding">
             <WebView
                     android:id="@+id/web_view_content"
                     android:layout_width="match_parent"

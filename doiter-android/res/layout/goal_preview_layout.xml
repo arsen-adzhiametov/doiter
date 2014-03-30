@@ -6,14 +6,13 @@
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/goal_preview_header_top_padding"
-                    android:paddingBottom="@dimen/goal_preview_header_bottom_padding"
                     android:layout_alignParentTop="true">
 
         <com.lutshe.doiter.views.ScalableImageView
                 android:id="@+id/ribbon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/goal_preview_header_ribbon_top_margin"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ribbon_goal_preview"
                 android:scaleType="fitXY"/>
@@ -22,8 +21,13 @@
                 android:id="@+id/goal_name"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:maxLines="2"
+                android:paddingRight="@dimen/goal_preview_name_side_padding"
+                android:paddingLeft="@dimen/goal_preview_name_side_padding"
                 android:layout_centerInParent="true"
+                android:gravity="center"
+                android:ellipsize="none"
+                android:maxLines="2"
+                android:lineSpacingMultiplier="0.75"
                 style="@style/GabriolaWhiteFontStyle"/>
     </RelativeLayout>
 
@@ -31,7 +35,6 @@
                     android:id="@+id/bottom_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/goal_preview_footer_top_padding"
                     android:paddingBottom="@dimen/goal_preview_footer_bottom_padding"
                     android:layout_alignParentBottom="true">
 
@@ -39,6 +42,7 @@
                 android:id="@+id/addGoalButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/goal_preview_footer_ribbon_top_margin"
                 android:adjustViewBounds="true"
                 android:src="@drawable/button_set_a_goal"
                 android:scaleType="fitXY"
@@ -48,7 +52,9 @@
                 android:id="@+id/add_goal_text"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:paddingBottom="@dimen/goal_preview_set_button_text_bottom_padding"
                 android:layout_centerInParent="true"
+                android:lineSpacingMultiplier="0.75"
                 android:text="@string/add_goal_button_text"
                 style="@style/GabriolaWhiteFontStyle"/>
     </RelativeLayout>
@@ -57,6 +63,7 @@
                     android:id="@+id/middle_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/goal_preview_middle_layout_top_margin"
                     android:layout_below="@id/top_layout"
                     android:layout_above="@id/bottom_layout">
 
@@ -96,8 +103,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:paddingLeft="@dimen/seek_bar_left_padding"
-                        android:paddingRight="@dimen/seek_bar_right_padding"
+                        android:paddingLeft="@dimen/seek_bar_side_padding"
+                        android:paddingRight="@dimen/seek_bar_side_padding"
                         android:max="60"
                         android:progress="17"
                         android:progressDrawable="@android:color/transparent"/>
