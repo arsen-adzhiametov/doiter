@@ -12,11 +12,12 @@
                         android:layout_height="wrap_content">
 
             <com.lutshe.doiter.views.ScalableImageView
+                    android:id="@+id/divider_line"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/msg_bg_header"
+                    android:src="@drawable/message_template_divider_line_selector"
                     android:scaleType="fitXY"/>
 
             <TextView
@@ -61,6 +62,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
         </ScrollView>
+
+        <View android:id="@+id/dotted_line_footer"
+              android:layout_above="@id/msg_bg_footer"
+              android:layout_below="@id/msg_bg"
+
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+
+              android:layout_marginLeft="@dimen/message_view_text_left_right_padding"
+              android:layout_marginRight="@dimen/message_view_text_left_right_padding"
+
+              android:background="@drawable/dotted_line"
+              android:layerType="software"
+                />
 
     </RelativeLayout>
 

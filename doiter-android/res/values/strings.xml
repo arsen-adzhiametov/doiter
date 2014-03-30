@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Doiter</string>
+    <string name="app_name">Время Достижений!</string>
     <string name="action_settings">Settings</string>
     <string name="i_will_do_it_in">Я сделаю это за</string>
     <string name="add_goal_button_text">Поставить цель!</string>
@@ -17,5 +17,6 @@
     <string name="message_stub">Запомните, что мясо варится 2 часа, а курица час. Иначе вы рискуете
     впитать вампирскую страсть к полусырому мясцу, а курицу так и не увидеть в том объеме,
     который изначально положили в кастрюлю.</string>
+    <string name="my_goals">Мои Цели</string>
 
 </resources>

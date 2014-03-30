@@ -29,5 +29,6 @@ public class MessageViewClickListener implements View.OnTouchListener {
 
     public void sendClick() {
         messageView.wrapAllContent();
+        messageView.setSelected(true);
     }
 }

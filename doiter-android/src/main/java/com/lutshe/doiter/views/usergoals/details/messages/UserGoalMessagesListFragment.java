@@ -1,7 +1,9 @@
 package com.lutshe.doiter.views.usergoals.details.messages;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
@@ -14,6 +16,7 @@ import org.androidannotations.annotations.*;
 public class UserGoalMessagesListFragment extends Fragment implements UpdatableView, BackStackable {
 
     @ViewById(R.id.user_goal_messages_list) ListView userGoalMessagesList;
+    @ViewById(R.id.my_goals_btn_text) TextView myMessagesBtnText;
 
     @Bean MessagesListAdapter messagesListAdapter;
 
@@ -21,6 +24,10 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
 
     @AfterViews
     public void bindData() {
+        // TODO: copy/paste font access. need to be loaded once and used everywhere
+        String fontPath = "fonts/Gabriola.ttf";
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), fontPath);
+        myMessagesBtnText.setTypeface(typeface);
         messagesListAdapter.initAdapter(goalId);
         userGoalMessagesList.setAdapter(messagesListAdapter);
     }

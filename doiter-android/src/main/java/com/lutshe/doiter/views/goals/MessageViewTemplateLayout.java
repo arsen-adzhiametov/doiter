@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.views.ScalableImageView;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -23,8 +24,9 @@ import org.androidannotations.annotations.ViewById;
 @EViewGroup(R.layout.message_view_template_layout)
 public class MessageViewTemplateLayout extends RelativeLayout {
 
-    @ViewById(R.id.message_number)TextView messageNumberTextView;
-    @ViewById(R.id.web_view_content)WebView goalDescriptionWebView;
+    @ViewById(R.id.message_number) TextView messageNumberTextView;
+    @ViewById(R.id.web_view_content) WebView goalDescriptionWebView;
+    @ViewById(R.id.divider_line) ScalableImageView dividerLine;
 
     @Bean HtmlCodePreparer htmlCodePreparer;
 
@@ -87,7 +89,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
         });
     }
 
-    public synchronized void wrapAllContent() {
+    public void wrapAllContent() {
         ViewGroup parent = (ViewGroup) getParent();
 
         int desiredHeight = goalDescriptionWebView.getHeight();
@@ -100,5 +102,11 @@ public class MessageViewTemplateLayout extends RelativeLayout {
             rootView.getLayoutParams().height += dh;
             rootView.requestLayout();
         }
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        super.setSelected(selected);
+        dividerLine.setSelected(selected);
     }
 }
