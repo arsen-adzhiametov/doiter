@@ -27,6 +27,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
     @ViewById(R.id.message_number) TextView messageNumberTextView;
     @ViewById(R.id.web_view_content) WebView goalDescriptionWebView;
     @ViewById(R.id.divider_line) ScalableImageView dividerLine;
+    @ViewById(R.id.dotted_line_footer) View dottedLineFooter;
 
     @Bean HtmlCodePreparer htmlCodePreparer;
 
@@ -108,5 +109,6 @@ public class MessageViewTemplateLayout extends RelativeLayout {
     public void setSelected(boolean selected) {
         super.setSelected(selected);
         dividerLine.setSelected(selected);
+        dottedLineFooter.setSelected(selected);
     }
 }

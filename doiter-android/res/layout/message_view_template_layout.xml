@@ -49,6 +49,19 @@
                 android:src="@drawable/msg_bg"
                 android:scaleType="fitXY"/>
 
+        <View android:id="@+id/dotted_line_footer"
+              android:layout_alignBottom="@id/msg_bg"
+
+              android:layout_width="match_parent"
+              android:layout_height="3dp"
+
+              android:layout_marginLeft="@dimen/message_view_text_side_padding"
+              android:layout_marginRight="@dimen/message_view_text_side_padding"
+
+              android:background="@drawable/dotted_line"
+              android:layerType="software"
+                />
+
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -63,21 +76,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
         </ScrollView>
-
-        <View android:id="@+id/dotted_line_footer"
-              android:layout_alignTop="@id/msg_bg_footer"
-              android:layout_below="@id/msg_bg"
-              android:layout_alignBottom="@id/msg_bg"
-
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-
-              android:layout_marginLeft="@dimen/message_view_text_side_padding"
-              android:layout_marginRight="@dimen/message_view_text_side_padding"
-
-              android:background="@drawable/dotted_line"
-              android:layerType="software"
-                />
 
     </RelativeLayout>
 
