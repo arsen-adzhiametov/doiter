@@ -217,6 +217,11 @@ public class MultipleOrientationSlidingDrawer extends ViewGroup {
         mAllowSingleTap = a.getBoolean(R.styleable.MultipleOrientationSlidingDrawer_allowSingleTap, true);
         mAnimateOnClick = a.getBoolean(R.styleable.MultipleOrientationSlidingDrawer_animateOnClick, true);
 
+        // TEMPORARY DIRTY HACK STARTS HERE
+        mHandlePos = Side.RIGHT;
+        mHandlePad = 40;
+        // TEMPORARY DIRTY HACK ENDS HERE
+
 
         int handleId = a.getResourceId(R.styleable.MultipleOrientationSlidingDrawer_handle, 0);
         if (handleId == 0) {

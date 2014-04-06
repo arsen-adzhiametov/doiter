@@ -20,11 +20,12 @@
             custom:content="@+id/content"
             custom:orientation="top">
 
-        <RelativeLayout
-                android:id="@+id/handle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/toolbar_handle"/>
+       <RelativeLayout
+             android:id="@+id/handle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/toolbar_handle"
+                    />
 
         <FrameLayout
                 android:id="@+id/content"

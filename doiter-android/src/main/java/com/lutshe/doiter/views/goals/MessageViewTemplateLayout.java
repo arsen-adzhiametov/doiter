@@ -2,6 +2,7 @@ package com.lutshe.doiter.views.goals;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,10 @@ public class MessageViewTemplateLayout extends RelativeLayout {
 
         goalDescriptionWebView.setBackgroundColor(Color.TRANSPARENT);
         goalDescriptionWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+
+        String fontPath = "fonts/Gabriola.ttf";
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), fontPath);
+        messageNumberTextView.setTypeface(typeface);
     }
 
     public void loadMessage(String messageText) {
@@ -90,7 +95,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
         });
     }
 
-    public void wrapAllContent() {
+    public int wrapAllContent() {
         ViewGroup parent = (ViewGroup) getParent();
 
         int desiredHeight = goalDescriptionWebView.getHeight();
@@ -103,6 +108,14 @@ public class MessageViewTemplateLayout extends RelativeLayout {
             rootView.getLayoutParams().height += dh;
             rootView.requestLayout();
         }
+
+        return desiredHeight;
+    }
+
+    public void crop(int height) {
+        ViewGroup parent = (ViewGroup) getParent().getParent();
+        parent.getLayoutParams().height = height;
+        parent.requestLayout();
     }
 
     @Override

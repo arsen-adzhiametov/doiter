@@ -54,7 +54,7 @@ public class MessagesListAdapter extends BaseAdapter {
             messageItemView = MessageItemView_.build(context);
         }
         Message message = getItem(position);
-        return messageItemView.bind(message);
+        return messageItemView.bind(message, position);
     }
 
     @Override

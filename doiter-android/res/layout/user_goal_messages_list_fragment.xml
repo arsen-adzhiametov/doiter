@@ -30,6 +30,8 @@
                   android:layout_marginLeft="30dp"
                   android:layout_marginRight="30dp"
                   android:text="@string/my_goals"
+                  android:paddingBottom="@dimen/goal_preview_set_button_text_bottom_padding"
+                  android:lineSpacingMultiplier="0.75"
                   style="@style/GabriolaWhiteFontStyle"
                   android:background="@drawable/dashed_sides"
                 />
