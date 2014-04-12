@@ -35,6 +35,4 @@
                 />
     </FrameLayout>
 
-    <include layout="@layout/timer_container"/>
-
 </FrameLayout>

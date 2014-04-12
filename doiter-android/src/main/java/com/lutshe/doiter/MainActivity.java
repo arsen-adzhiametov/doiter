@@ -11,7 +11,6 @@ import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
-import com.lutshe.doiter.views.timer.FinalCountdown;
 import com.lutshe.doiter.views.toolbarslidingdrawer.MultipleOrientationSlidingDrawer;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
@@ -67,7 +66,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
-        FinalCountdown.invalidateTimers();
         fragmentsSwitcher.onPause();
         super.onPause();
     }

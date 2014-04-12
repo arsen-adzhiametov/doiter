@@ -32,7 +32,7 @@
                   android:text="@string/my_goals"
                   android:paddingBottom="@dimen/goal_preview_set_button_text_bottom_padding"
                   android:lineSpacingMultiplier="0.75"
-                  style="@style/GabriolaWhiteFontStyle"
+                  style="@style/GabriolaSlightOrangeFontStyle"
                   android:background="@drawable/dashed_sides"
                 />
     </FrameLayout>

@@ -3,22 +3,20 @@
                 android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/padding_20"
                     android:layout_alignParentTop="true"
-                    android:id="@+id/top_layout">
+                    android:paddingTop="@dimen/top_layout_top_padding">
         <ImageView
                 android:id="@+id/clock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/padding_20"
-                android:paddingRight="@dimen/padding_20"
+                android:paddingLeft="@dimen/clock_side_padding"
+                android:paddingRight="@dimen/clock_side_padding"
                 android:adjustViewBounds="true"
                 android:src="@drawable/clock"
                 android:scaleType="fitXY"/>
-
-        <include layout="@layout/timer_container"/>
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/timer_text_container"
@@ -58,28 +56,28 @@
                     android:id="@+id/bottom_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/padding_20"
-                    android:paddingRight="@dimen/padding_20"
-                    android:layout_alignParentBottom="true">
+                    android:layout_alignParentBottom="true"
+                    android:paddingBottom="@dimen/bottom_layout_bottom_padding">
 
-        <ImageView
+        <com.lutshe.doiter.views.ScalableImageView
                 android:id="@+id/more_tips_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/more_tips_button_top_margin"
                 android:adjustViewBounds="true"
-                android:paddingBottom="@dimen/padding_20"
-                android:paddingTop="@dimen/padding_15"
-                android:src="@drawable/button_more_advices_screen3"
-                android:scaleType="fitCenter"
+                android:src="@drawable/button_set_a_goal"
+                android:scaleType="fitXY"
                 android:clickable="true"/>
 
         <TextView
-                android:id="@+id/back_to_all_button_text"
+                android:id="@+id/more_tips_button_text"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:paddingBottom="@dimen/more_tips_button_text_bottom_padding"
                 android:layout_centerInParent="true"
+                android:lineSpacingMultiplier="0.75"
                 android:text="@string/more_tips"
-                style="@style/GabriolaWhiteFontStyle"/>
+                style="@style/GabriolaSlightOrangeFontStyle"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -91,82 +89,105 @@
             android:orientation="vertical">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/middle_layout_one"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5"
-                        android:id="@+id/middle_layout_one">
-
-            <ImageView
-                    android:id="@+id/goal_name_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:layout_alignParentBottom="true"
-                    android:src="@drawable/ribbon_screen3"
-                    android:paddingRight="@dimen/padding_20"
-                    android:paddingLeft="@dimen/padding_20"
-                    android:scaleType="fitCenter"/>
-
-            <TextView
-                    android:id="@+id/goal_name_3_screen"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:maxLines="2"
-                    android:gravity="center_horizontal"
-                    android:text="Название цели"
-                    style="@style/GabriolaOrangeDarkFontStyle"/>
+                        android:paddingBottom="@dimen/middle_layout_one_bottom_padding"
+                        android:layout_weight="0.5">
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/goal_cover_holder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
-                            android:layout_above="@id/goal_name_bg"
-                            android:paddingLeft="@dimen/padding_20"
-                            android:paddingRight="@dimen/padding_20"
+                            android:paddingLeft="@dimen/goal_cover_holder_side_padding"
+                            android:paddingRight="@dimen/goal_cover_holder_side_padding"
                             android:layout_centerHorizontal="true">
-                <ImageView
-                        android:id="@+id/prev_arrow_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/padding_30"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:clickable="true"
-                        android:src="@drawable/prev_arrow_button_selector"/>
 
-                <ImageView
-                        android:id="@+id/next_arrow_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_30"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:clickable="true"
-                        android:src="@drawable/next_arrow_button_selector"/>
-
-                <ImageView
-                        android:id="@+id/goal_cover_3_screen"
+                <com.lutshe.doiter.views.HorizontalScalableImageView
+                        android:id="@+id/goal_cover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_toRightOf="@id/prev_arrow_button"
-                        android:layout_toLeftOf="@id/next_arrow_button"
                         android:adjustViewBounds="true"
                         android:src="@drawable/goal2"/>
 
             </RelativeLayout>
 
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/goal_name_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true">
+
+            <com.lutshe.doiter.views.ScalableImageView
+                    android:id="@+id/goal_name_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ribbon_blue"
+                    android:paddingRight="@dimen/goal_name_bg_side_padding"
+                    android:paddingLeft="@dimen/goal_name_bg_side_padding"
+                    android:scaleType="fitXY"/>
+            <TextView
+                    android:id="@+id/goal_name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="@dimen/goal_name_side_padding"
+                    android:paddingLeft="@dimen/goal_name_side_padding"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:ellipsize="none"
+                    android:maxLines="2"
+                    android:text="Научиться готовить"
+                    android:lineSpacingMultiplier="0.75"
+                    style="@style/GabriolaWhiteFontStyle"/>
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/left_right_arrows_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/goal_name_container"
+                        android:paddingLeft="@dimen/arrows_container_side_padding"
+                        android:paddingRight="@dimen/arrows_container_side_padding"
+                        android:layout_alignParentTop="true">
+
+                <com.lutshe.doiter.views.HorizontalScalableImageView
+                        android:id="@+id/prev_arrow_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/arrow_padding_from_goal_cover"
+                        android:clickable="true"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/prev_arrow_button_selector"/>
+
+                <com.lutshe.doiter.views.HorizontalScalableImageView
+                        android:id="@+id/next_arrow_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/arrow_padding_from_goal_cover"
+                        android:clickable="true"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/next_arrow_button_selector"/>
+            </RelativeLayout>
+
         </RelativeLayout>
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
-                        android:id="@+id/middle_layout_two">
+                        android:id="@+id/middle_layout_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5">
 
-            <include layout="@layout/message_view_template_layout"/>
+            <com.lutshe.doiter.views.goals.MessageViewTemplateLayout_
+                    android:id="@+id/goal_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

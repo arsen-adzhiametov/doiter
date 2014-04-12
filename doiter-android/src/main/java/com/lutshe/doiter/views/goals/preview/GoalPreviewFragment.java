@@ -39,7 +39,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
         goalPreviewLayout.showGoalDescription(getResources().getString(R.string.goal_description));
     }
 
-    @Click(R.id.addGoalButton)
+    @Click(R.id.add_goal_button)
     void addToUserGoals() {
         addFirstMessage();
         activateGoal();

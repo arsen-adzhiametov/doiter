@@ -46,4 +46,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="GabriolaSlightOrangeFontStyle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/slight_orange</item>
+    </style>
+
 </resources>

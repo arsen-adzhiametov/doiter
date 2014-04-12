@@ -10,8 +10,6 @@
             android:layout_margin="0dp"
             android:scaleType="centerCrop"/>
 
-    <include layout="@layout/timer_container"/>
-
     <TextView
             android:id="@+id/goal_name"
             android:layout_below="@id/goalCoverDetail"

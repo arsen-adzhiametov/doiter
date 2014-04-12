@@ -5,4 +5,4 @@
         android:toDegrees="180"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:drawable="@drawable/arrow_active_right"/>
+        android:drawable="@drawable/arrow_active_left"/>

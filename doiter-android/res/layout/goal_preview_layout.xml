@@ -28,7 +28,7 @@
                 android:ellipsize="none"
                 android:maxLines="2"
                 android:lineSpacingMultiplier="0.75"
-                style="@style/GabriolaWhiteFontStyle"/>
+                style="@style/GabriolaSlightOrangeFontStyle"/>
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,7 +39,7 @@
                     android:layout_alignParentBottom="true">
 
         <com.lutshe.doiter.views.ScalableImageView
-                android:id="@+id/addGoalButton"
+                android:id="@+id/add_goal_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/goal_preview_footer_ribbon_top_margin"
@@ -56,7 +56,7 @@
                 android:layout_centerInParent="true"
                 android:lineSpacingMultiplier="0.75"
                 android:text="@string/add_goal_button_text"
-                style="@style/GabriolaWhiteFontStyle"/>
+                style="@style/GabriolaSlightOrangeFontStyle"/>
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

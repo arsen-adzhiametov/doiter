@@ -21,5 +21,16 @@
     <dimen name="goal_preview_name_side_padding">100dp</dimen>
     <dimen name="goal_preview_name_bottom_padding">40dp</dimen>
     <dimen name="goal_preview_set_button_text_bottom_padding">25dp</dimen>
+    <dimen name="arrow_padding_from_goal_cover">70dp</dimen>
+    <dimen name="goal_cover_holder_side_padding">20dp</dimen>
+    <dimen name="top_layout_top_padding">20dp</dimen>
+    <dimen name="clock_side_padding">20dp</dimen>
+    <dimen name="bottom_layout_bottom_padding">20dp</dimen>
+    <dimen name="more_tips_button_top_margin">20dp</dimen>
+    <dimen name="more_tips_button_text_bottom_padding">12dp</dimen>
+    <dimen name="middle_layout_one_bottom_padding">20dp</dimen>
+    <dimen name="goal_name_bg_side_padding">20dp</dimen>
+    <dimen name="goal_name_side_padding">50dp</dimen>
+    <dimen name="arrows_container_side_padding">20dp</dimen>
 
 </resources>
