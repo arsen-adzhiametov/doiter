@@ -11,7 +11,7 @@ import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
-import com.lutshe.doiter.views.toolbarslidingdrawer.MultipleOrientationSlidingDrawer;
+import com.lutshe.doiter.views.slidingtoolbar.SlidingToolbar;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
 
@@ -20,8 +20,8 @@ import org.androidannotations.annotations.*;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
 
-    @ViewById(R.id.top_menu_sliding_drawer)
-    MultipleOrientationSlidingDrawer topMenuSlidingDrawer;
+    @ViewById(R.id.sliding_layout)
+    SlidingToolbar topMenuSlidingDrawer;
 
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean GoalsDao goalsDao;

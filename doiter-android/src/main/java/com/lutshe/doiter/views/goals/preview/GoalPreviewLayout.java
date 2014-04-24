@@ -88,7 +88,7 @@ public class GoalPreviewLayout extends RelativeLayout {
     }
 
     protected void setTopMenuVisibility(int visibility) {
-        View topMenuSlidingDrawer = ((Activity)getContext()).findViewById(R.id.top_menu_sliding_drawer);
+        View topMenuSlidingDrawer = ((Activity)getContext()).findViewById(R.id.sliding_layout);
         topMenuSlidingDrawer.setVisibility(visibility);
     }
 

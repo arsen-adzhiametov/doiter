@@ -26,7 +26,7 @@ public class GoalsMapView extends CanvasView {
         super(activity);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
         controller = new MapController(fragmentsSwitcher, this, imagesProvider, goals);
-        setOnTouchListener(new TouchHandler(controller));
+        setOnTouchListener(new TouchHandler(getContext(), controller));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.lutshe.doiter.views.common;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,7 @@ import static java.lang.Math.signum;
 public class TouchHandler implements View.OnTouchListener {
     private static final String TAG = TouchHandler.class.getName();
     private static final long MAX_CLICK_DURATION = 200;
-    public static final int MAX_CLICK_MOVE = 5;
+    public int maxClickMove = 5;
 
     private final TouchEventsListener listener;
 
@@ -33,8 +34,9 @@ public class TouchHandler implements View.OnTouchListener {
 
     private static boolean isLongerThanClick = false;
 
-    public TouchHandler(TouchEventsListener listener) {
+    public TouchHandler(Context context, TouchEventsListener listener) {
         this.listener = listener;
+        this.maxClickMove = (int) (maxClickMove * context.getResources().getDisplayMetrics().density);
     }
 
     @Override
@@ -77,7 +79,7 @@ public class TouchHandler implements View.OnTouchListener {
 
                     lastDx = dx;
                     lastDy = dy;
-                } else if (eventTime - eventStartTime > MAX_CLICK_DURATION || (Math.abs(event.getX() - eventStartX) > MAX_CLICK_MOVE || Math.abs(event.getY() - eventStartY) > MAX_CLICK_MOVE)) {
+                } else if (eventTime - eventStartTime > MAX_CLICK_DURATION || (Math.abs(event.getX() - eventStartX) > maxClickMove || Math.abs(event.getY() - eventStartY) > maxClickMove)) {
                     isLongerThanClick = true;
                 }
 
