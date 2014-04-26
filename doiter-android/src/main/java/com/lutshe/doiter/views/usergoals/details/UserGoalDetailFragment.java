@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     @ViewById(R.id.goal_cover)ImageView goalCover;
     @ViewById(R.id.message_number)TextView messageNumberTextView;
     @ViewById(R.id.web_view_content)WebView messageTextWebView;
+    @ViewById(R.id.next_arrow_button)ImageView nextButton;
+    @ViewById(R.id.prev_arrow_button)ImageView previousButton;
 
     @Bean GoalsDao goalsDao;
     @Bean(ImagesProviderImpl.class)ImagesProvider imagesProvider;
@@ -50,6 +53,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @AfterViews
     public void bindData() {
+        userGoals = goalsDao.getAllUserGoals();
         Goal goal = goalsDao.getGoal(goalId);
         Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         goalNameTextView.setText(goal.getName());
@@ -57,11 +61,22 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
         daysQuantityTextView.setText(String.valueOf(getDaysRemaining(goal)));
         loadCurrentMessageTextWebView(getResources().getString(R.string.message_stub));
         setTypefaceToTextViews();
-        userGoals = goalsDao.getAllUserGoals();
+        disableNavigation();
+        calculateCurrentGoalIndex();
+    }
+
+    private void calculateCurrentGoalIndex() {
         for(int i = 0; i<userGoals.length; i++){
             if(userGoals[i].getId().equals(goalId)){
                 currentGoalIndex = i;
             }
+        }
+    }
+
+    private void disableNavigation() {
+        if (userGoals.length == 1){
+            nextButton.setVisibility(View.INVISIBLE);
+            previousButton.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -91,31 +106,17 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @Click(R.id.prev_arrow_button)
     void showPreviousGoal(){
-        showGoal(Direction.PREVIOUS);
+        showGoal(getPreviousUserGoalId());
     }
 
     @Click(R.id.next_arrow_button)
     void showNextGoal(){
-         showGoal(Direction.NEXT);
+        showGoal(getNextUserGoalId());
     }
 
-    private enum Direction {
-        NEXT, PREVIOUS
-    }
-
-    private void showGoal(Direction direction){
-        if(userGoals.length > 1) {
-            long goalId = this.goalId;
-            switch (direction) {
-                case NEXT:
-                    goalId = getNextUserGoalId();
-                    break;
-                case PREVIOUS:
-                    goalId = getPreviousUserGoalId();
-            }
-            Fragment detailFragment = UserGoalDetailFragment_.builder().goalId(goalId).build();
-            fragmentsSwitcher.show(detailFragment);
-        }
+    private void showGoal(long goalId){
+        Fragment detailFragment = UserGoalDetailFragment_.builder().goalId(goalId).build();
+        fragmentsSwitcher.show(detailFragment);
     }
 
     private long getNextUserGoalId(){
