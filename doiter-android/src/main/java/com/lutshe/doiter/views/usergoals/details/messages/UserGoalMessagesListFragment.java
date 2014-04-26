@@ -1,12 +1,12 @@
 package com.lutshe.doiter.views.usergoals.details.messages;
 
 import android.app.Fragment;
-import android.graphics.Typeface;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
+import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
@@ -22,15 +22,13 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
 
     @Bean MessagesListAdapter messagesListAdapter;
     @Bean FragmentsSwitcher fragmentsSwitcher;
+    @Bean OurFont font;
 
     @FragmentArg Long goalId;
 
     @AfterViews
     public void bindData() {
-        // TODO: copy/paste font access. need to be loaded once and used everywhere
-        String fontPath = "fonts/Gabriola.ttf";
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), fontPath);
-        myMessagesBtnText.setTypeface(typeface);
+        myMessagesBtnText.setTypeface(font.get());
         messagesListAdapter.initAdapter(goalId);
         userGoalMessagesList.setAdapter(messagesListAdapter);
     }

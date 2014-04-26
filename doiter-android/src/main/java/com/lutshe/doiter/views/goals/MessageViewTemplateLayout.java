@@ -2,7 +2,6 @@ package com.lutshe.doiter.views.goals;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.ScalableImageView;
+import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -31,6 +31,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
     @ViewById(R.id.dotted_line_footer) View dottedLineFooter;
 
     @Bean HtmlCodePreparer htmlCodePreparer;
+    @Bean OurFont font;
 
     public MessageViewTemplateLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -63,9 +64,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
         goalDescriptionWebView.setBackgroundColor(Color.TRANSPARENT);
         goalDescriptionWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
 
-        String fontPath = "fonts/Gabriola.ttf";
-        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), fontPath);
-        messageNumberTextView.setTypeface(typeface);
+        messageNumberTextView.setTypeface(font.get());
     }
 
     public void loadMessage(String messageText) {

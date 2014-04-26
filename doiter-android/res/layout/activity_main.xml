@@ -17,9 +17,9 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:gravity="right"
+            android:orientation="vertical"
             handle="@+id/handle"
             content="@+id/content"
-            android:orientation="vertical"
             >
 
         <LinearLayout
@@ -32,16 +32,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:scaleType="fitXY"/>
+
         </LinearLayout>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
             <ImageView android:src="@drawable/toolbar_content_bottom"
                        android:layout_width="match_parent"
                        android:layout_height="10dp"
                        android:scaleType="fitXY"/>
+
             <FrameLayout
                     android:id="@+id/handle"
                     android:layout_width="wrap_content"

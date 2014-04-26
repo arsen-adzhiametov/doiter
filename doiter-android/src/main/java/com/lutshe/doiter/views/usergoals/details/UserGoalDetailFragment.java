@@ -14,6 +14,7 @@ import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
+import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.usergoals.details.messages.UserGoalMessagesListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
@@ -41,6 +42,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
     @Bean(ImagesProviderImpl.class)ImagesProvider imagesProvider;
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean HtmlCodePreparer htmlCodePreparer;
+    @Bean OurFont font;
 
     @FragmentArg Long goalId;
 
@@ -59,8 +61,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
     public void update() {}
 
     private void setTypefaceToTextViews() {
-        String fontPath = "fonts/Gabriola.ttf";
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), fontPath);
+        Typeface typeface = font.get();
         remainingTextView.setTypeface(typeface);
         daysQuantityTextView.setTypeface(typeface);
         daysTextTextView.setTypeface(typeface);

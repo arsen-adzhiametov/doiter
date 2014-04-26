@@ -16,12 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
+import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.goals.MessageViewTemplateLayout;
 import com.lutshe.doiter.views.util.StringUtils;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.SeekBarProgressChange;
-import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.*;
 
 /**
  * Created by Arsen Adzhiametov on 2/22/14 in IntelliJ IDEA.
@@ -38,6 +36,8 @@ public class GoalPreviewLayout extends RelativeLayout {
     @ViewById(R.id.seekbar)SeekBar seekBar;
     @ViewById(R.id.seek_bar_bg)ImageView seekBarBackground;
     @ViewById(R.id.message_number) TextView messageNumberTextView;
+
+    @Bean OurFont font;
 
     public GoalPreviewLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -77,8 +77,7 @@ public class GoalPreviewLayout extends RelativeLayout {
     }
 
     private void setTypefaceToTextViews() {
-        String fontPath = "fonts/Gabriola.ttf";
-        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), fontPath);
+        Typeface typeface = font.get();
         goalNameTextView.setTypeface(typeface);
         daysQuantityTextView.setTypeface(typeface);
         iWillDoItInTextView.setTypeface(typeface);

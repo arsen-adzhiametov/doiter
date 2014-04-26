@@ -20,6 +20,8 @@ public class GoalNameDrawer {
     public GoalNameDrawer(Resources resources, int fontHeight) {
         paint = new Paint();
 
+        // TODO: make first screen work with android annotations
+        // and fix this hard-coded font to be loaded from OurFont.java
         String fontPath = "fonts/Gabriola.ttf";
         Typeface typeface = Typeface.createFromAsset(resources.getAssets(), fontPath);
 
