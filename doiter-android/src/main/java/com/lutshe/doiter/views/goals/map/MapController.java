@@ -120,9 +120,9 @@ public class MapController implements TouchEventsListener {
     public void onClick(float x, float y) {
         x = trim(x - currentOffsetX, getMapWidth());
         y = trim(y - currentOffsetY, getMapHeight());
-        Long goalId = map.findGoalUnder(x, y).getId();
-        Goal goal = goalsDao.getGoal(goalId);
-        if (goal == null) return;
+        Goal selectedGoal = map.findGoalUnder(x, y);
+        if (selectedGoal == null) return;
+        Goal goal = goalsDao.getGoal(selectedGoal.getId());
 
         goalsMapView.startShowingBg();
 

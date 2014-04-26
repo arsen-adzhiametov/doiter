@@ -45,6 +45,9 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @FragmentArg Long goalId;
 
+    private Goal[] userGoals;
+    private int currentGoalIndex;
+
     @AfterViews
     public void bindData() {
         Goal goal = goalsDao.getGoal(goalId);
@@ -54,6 +57,12 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
         daysQuantityTextView.setText(String.valueOf(getDaysRemaining(goal)));
         loadCurrentMessageTextWebView(getResources().getString(R.string.message_stub));
         setTypefaceToTextViews();
+        userGoals = goalsDao.getAllUserGoals();
+        for(int i = 0; i<userGoals.length; i++){
+            if(userGoals[i].getId().equals(goalId)){
+                currentGoalIndex = i;
+            }
+        }
     }
 
     @Override
@@ -82,31 +91,47 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @Click(R.id.prev_arrow_button)
     void showPreviousGoal(){
-        if(goalsDao.getUserGoalsCount()>1){
-
-        }
+        showGoal(Direction.PREVIOUS);
     }
 
     @Click(R.id.next_arrow_button)
     void showNextGoal(){
-        if(goalsDao.getUserGoalsCount()>1) {
-            Goal nextUserGoal = getNextUserGoal();
-            Fragment detailFragment = UserGoalDetailFragment_.builder().goalId(nextUserGoal.getId()).build();
+         showGoal(Direction.NEXT);
+    }
+
+    private enum Direction {
+        NEXT, PREVIOUS
+    }
+
+    private void showGoal(Direction direction){
+        if(userGoals.length > 1) {
+            long goalId = this.goalId;
+            switch (direction) {
+                case NEXT:
+                    goalId = getNextUserGoalId();
+                    break;
+                case PREVIOUS:
+                    goalId = getPreviousUserGoalId();
+            }
+            Fragment detailFragment = UserGoalDetailFragment_.builder().goalId(goalId).build();
             fragmentsSwitcher.show(detailFragment);
         }
     }
 
-    //TODO: should be rewritten
-    private Goal getNextUserGoal(){
-        Goal[] goals = goalsDao.getAllUserGoals();
-        for(int i = 0; i<goals.length; i++){
-            if(goals[i].getId() == goalId){
-                if(i < goals.length-1) {
-                    return goals[i + 1];
-                }
-            }
+    private long getNextUserGoalId(){
+        int nextIndex = currentGoalIndex+1;
+        if (nextIndex > userGoals.length-1){
+            nextIndex = 0;
         }
-        return goals[0];
+        return userGoals[nextIndex].getId();
+    }
+
+    private long getPreviousUserGoalId(){
+        int prevIndex = currentGoalIndex - 1;
+        if (prevIndex < 0){
+            prevIndex = userGoals.length - 1;
+        }
+        return userGoals[prevIndex].getId();
     }
 
     private void loadCurrentMessageTextWebView(String messageText) {
