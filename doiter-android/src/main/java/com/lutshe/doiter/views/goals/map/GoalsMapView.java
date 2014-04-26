@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
-
-import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
@@ -22,10 +21,10 @@ public class GoalsMapView extends CanvasView {
     private MapController controller;
     private GoalsMapUpdater updater;
 
-    public GoalsMapView(FragmentsSwitcher fragmentsSwitcher, ImagesProvider imagesProvider, Activity activity, Goal... goals) {
+    public GoalsMapView(FragmentsSwitcher fragmentsSwitcher, ImagesProvider imagesProvider, Activity activity, GoalsDao goalsDao) {
         super(activity);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        controller = new MapController(fragmentsSwitcher, this, imagesProvider, goals);
+        controller = new MapController(fragmentsSwitcher, this, imagesProvider, goalsDao);
         setOnTouchListener(new TouchHandler(getContext(), controller));
     }
 

@@ -32,7 +32,7 @@ public class GoalsMapFragment extends Fragment implements ActivityLifecycleListe
 
     @AfterViews
     public void init() {
-        view = new GoalsMapView(fragmentsSwitcher, imagesProvider, getActivity(), goalsDao.getAllGoals());
+        view = new GoalsMapView(fragmentsSwitcher, imagesProvider, getActivity(), goalsDao);
         ((FrameLayout)getView()).addView(view);
     }
 

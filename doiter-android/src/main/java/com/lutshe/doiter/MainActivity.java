@@ -10,6 +10,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
+import com.lutshe.doiter.views.goals.map.GoalsMapFragment;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.slidingtoolbar.SlidingToolbar;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
             UpdatesAlarmListener.scheduleUpdates(getApplicationContext());
         }
 
-        fragmentsSwitcher.show(GoalsMapFragment_.builder().build(), false);
+        fragmentsSwitcher.show(GoalsMapFragment_.builder().build());
     }
 
     private boolean isFirstLaunch() {
@@ -79,6 +80,10 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         topMenuSlidingDrawer.setVisibility(View.VISIBLE);
-        super.onBackPressed();
+        if (fragmentsSwitcher.getCurrentFragment() instanceof GoalsMapFragment){
+            super.onBackPressed();
+        }else{
+            fragmentsSwitcher.show(GoalsMapFragment_.builder().build());
+        }
     }
 }

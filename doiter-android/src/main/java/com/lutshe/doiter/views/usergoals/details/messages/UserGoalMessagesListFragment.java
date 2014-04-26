@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
@@ -15,7 +14,7 @@ import org.androidannotations.annotations.*;
  * Created by Arsen Adzhiametov on 12/15/13 in IntelliJ IDEA.
  */
 @EFragment(R.layout.user_goal_messages_list_fragment)
-public class UserGoalMessagesListFragment extends Fragment implements UpdatableView, BackStackable {
+public class UserGoalMessagesListFragment extends Fragment implements UpdatableView{
 
     @ViewById(R.id.user_goal_messages_list) ListView userGoalMessagesList;
     @ViewById(R.id.my_goals_btn_text) TextView myMessagesBtnText;
@@ -40,6 +39,6 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
 
     @Click(R.id.my_goals_btn)
     public void showMyGoals() {
-        fragmentsSwitcher.show(UserGoalDetailFragment_.builder().goalId(goalId).build(), false);
+        fragmentsSwitcher.show(UserGoalDetailFragment_.builder().goalId(goalId).build());
     }
 }

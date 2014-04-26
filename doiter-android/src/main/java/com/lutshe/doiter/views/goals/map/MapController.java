@@ -1,13 +1,11 @@
 package com.lutshe.doiter.views.goals.map;
 
 import android.app.Fragment;
-
-import android.util.Log;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
-import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;
-import com.lutshe.doiter.views.common.CanvasView;
+import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.views.common.TouchEventsListener;
 import com.lutshe.doiter.views.goals.map.model.GoalView;
 import com.lutshe.doiter.views.goals.map.model.Map;
@@ -35,11 +33,14 @@ public class MapController implements TouchEventsListener {
     private float currentOffsetY;
 
     private GoalsMapView goalsMapView;
+    private GoalsDao goalsDao;
 
-    public MapController(FragmentsSwitcher fragmentsSwitcher, GoalsMapView goalsMapView, ImagesProvider imagesProvider,  Goal... goals) {
+    public MapController(FragmentsSwitcher fragmentsSwitcher, GoalsMapView goalsMapView,
+                         ImagesProvider imagesProvider, GoalsDao goalsDao) {
         this.fragmentsSwitcher = fragmentsSwitcher;
         this.goalsMapView = goalsMapView;
-        this.map = new Map(imagesProvider, goals);
+        this.map = new Map(imagesProvider, goalsDao.getAllGoals());
+        this.goalsDao = goalsDao;
     }
 
     public float getCurrentOffsetX() {
@@ -119,20 +120,21 @@ public class MapController implements TouchEventsListener {
     public void onClick(float x, float y) {
         x = trim(x - currentOffsetX, getMapWidth());
         y = trim(y - currentOffsetY, getMapHeight());
-        Goal goal = map.findGoalUnder(x, y);
+        Long goalId = map.findGoalUnder(x, y).getId();
+        Goal goal = goalsDao.getGoal(goalId);
         if (goal == null) return;
 
         goalsMapView.startShowingBg();
 
-        Fragment detailFragment;
+        Fragment nextFragment;
         if (goal.getStatus() == Goal.Status.OTHER) {
-            detailFragment = GoalPreviewFragment_.builder().goalId(goal.getId()).build();
+            nextFragment = GoalPreviewFragment_.builder().goalId(goal.getId()).build();
             EasyTracker tracker = EasyTracker.getInstance(fragmentsSwitcher.getActivity());
             tracker.send(MapBuilder.createEvent("goal_selection", "goal_previewing", goal.getName().toString(), 1L).build());
         } else {
-            detailFragment = UserGoalDetailFragment_.builder().goalId(goal.getId()).build();
+            nextFragment = UserGoalDetailFragment_.builder().goalId(goal.getId()).build();
         }
-        fragmentsSwitcher.show(detailFragment, true);
+        fragmentsSwitcher.show(nextFragment);
     }
 
     @Override

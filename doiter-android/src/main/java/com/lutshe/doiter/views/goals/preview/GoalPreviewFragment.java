@@ -10,7 +10,6 @@ import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
-import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
@@ -20,7 +19,7 @@ import org.joda.time.DateTime;
  * Created by Arsen Adzhiametov on 6/31/13.
  */
 @EFragment(R.layout.goal_preview_fragment)
-public class GoalPreviewFragment extends Fragment implements BackStackable{
+public class GoalPreviewFragment extends Fragment {
 
     @ViewById(R.id.goal_preview_fragment_view) GoalPreviewLayout goalPreviewLayout;
 
@@ -60,7 +59,7 @@ public class GoalPreviewFragment extends Fragment implements BackStackable{
     }
 
     private void showGoal() {
-        fragmentsSwitcher.show(UserGoalDetailFragment_.builder().goalId(goalId).build(), false);
+        fragmentsSwitcher.show(UserGoalDetailFragment_.builder().goalId(goalId).build());
     }
 
     private void scheduleNextAlarm() {

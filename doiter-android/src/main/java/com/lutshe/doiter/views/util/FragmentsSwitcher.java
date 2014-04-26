@@ -2,11 +2,9 @@ package com.lutshe.doiter.views.util;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.ActivityLifecycleListener;
-import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
 import org.androidannotations.annotations.EBean;
 
@@ -19,24 +17,10 @@ public class FragmentsSwitcher {
     private Activity activity;
     private Fragment currentFragment;
 
-    public void show(Fragment fragment, boolean addToBackStack) {
-        if (fragment instanceof BackStackable) {
-            doTransaction(fragment, addToBackStack);
-        } else {
-            activity.getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            doTransaction(fragment, addToBackStack);
-        }
-    }
-
-    private void doTransaction(Fragment fragment, boolean addToBackStack) {
+    public void show(Fragment fragment) {
         FragmentTransaction transaction = activity.getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment);
-
-        if (addToBackStack) {
-            transaction.addToBackStack(null);
-        }
-
         currentFragment = fragment;
         transaction.commit();
     }
@@ -46,6 +30,9 @@ public class FragmentsSwitcher {
     }
     public Activity getActivity() {
         return activity;
+    }
+    public Fragment getCurrentFragment() {
+        return currentFragment;
     }
 
     public void updateCurrentFragment() {

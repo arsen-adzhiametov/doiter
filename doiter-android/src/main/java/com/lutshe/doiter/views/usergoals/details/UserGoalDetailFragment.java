@@ -12,7 +12,6 @@ import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.model.Goal;
-import com.lutshe.doiter.views.BackStackable;
 import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.usergoals.details.messages.UserGoalMessagesListFragment_;
@@ -25,7 +24,7 @@ import org.joda.time.DateTime;
  * Created by Arsen Adzhiametov on 7/31/13.
  */
 @EFragment(R.layout.user_goal_details_fragment)
-public class UserGoalDetailFragment extends Fragment implements UpdatableView, BackStackable {
+public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     public static final int MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
 
@@ -78,7 +77,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
 
     @Click(R.id.more_tips_button)
     void showAllTips(){
-        fragmentsSwitcher.show(UserGoalMessagesListFragment_.builder().goalId(goalId).build(), true);
+        fragmentsSwitcher.show(UserGoalMessagesListFragment_.builder().goalId(goalId).build());
     }
 
     @Click(R.id.prev_arrow_button)
@@ -93,7 +92,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView, B
         if(goalsDao.getUserGoalsCount()>1) {
             Goal nextUserGoal = getNextUserGoal();
             Fragment detailFragment = UserGoalDetailFragment_.builder().goalId(nextUserGoal.getId()).build();
-            fragmentsSwitcher.show(detailFragment, false);
+            fragmentsSwitcher.show(detailFragment);
         }
     }
 
