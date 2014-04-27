@@ -27,6 +27,8 @@ import org.androidannotations.annotations.*;
 @EViewGroup(R.layout.goal_preview_layout)
 public class GoalPreviewLayout extends RelativeLayout {
 
+    private static final int MIN_DAYS_AMOUNT = 1;
+
     @ViewById(R.id.goal_name)TextView goalNameTextView;
     @ViewById(R.id.days_quantity)TextView daysQuantityTextView;
     @ViewById(R.id.i_will_do_it_in)TextView iWillDoItInTextView;
@@ -52,13 +54,18 @@ public class GoalPreviewLayout extends RelativeLayout {
 
     @SeekBarProgressChange(R.id.seekbar)
     public void onProgressChanged(int progress) {
-        String text = StringUtils.getDayOrDaysString(progress);
-        daysQuantityTextView.setText(" " + progress + " ");
+        int pseudoProgress = progress + MIN_DAYS_AMOUNT;
+        String text = StringUtils.getDayOrDaysString(pseudoProgress);
+        daysQuantityTextView.setText(" " + pseudoProgress + " ");
         daysTextTextView.setText(text);
     }
 
-    public void setSeekBarMaximum(int maximum){
-        seekBar.setMax(maximum);
+    public void setSeekBarMaximum(int progressMaxValue){
+        seekBar.setMax(progressMaxValue - MIN_DAYS_AMOUNT);
+    }
+
+    public int getSeekBarCurrentValue(){
+        return seekBar.getProgress() + MIN_DAYS_AMOUNT;
     }
 
     private void scaleSeekBarThumb() {

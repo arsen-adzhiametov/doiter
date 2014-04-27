@@ -69,7 +69,7 @@ public class GoalPreviewFragment extends Fragment {
     }
 
     private void activateGoal() {
-        int days = goalPreviewLayout.seekBar.getProgress();
+        int days = goalPreviewLayout.getSeekBarCurrentValue();
         Long endTime = DateTime.now().plusDays(days).getMillis();
         goalsDao.updateGoalEndTime(goalId, endTime);
         goalsDao.updateGoalStatus(goalId, Goal.Status.ACTIVE);

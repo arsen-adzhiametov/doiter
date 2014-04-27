@@ -68,7 +68,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     private void showTextViews(Goal goal) {
         goalNameTextView.setText(goal.getName());
-        int daysRemaining = (int)getDaysRemaining(goal);
+        int daysRemaining = getDaysRemaining(goal);
         daysQuantityTextView.setText(' '+String.valueOf(daysRemaining)+' ');
         daysTextTextView.setText(StringUtils.getDayOrDaysString(daysRemaining));
     }
@@ -107,9 +107,9 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
         messageNumberTextView.setTypeface(typeface);
     }
 
-    private long getDaysRemaining(Goal goal) {
+    private int getDaysRemaining(Goal goal) {
         long timeDiff = goal.getEndTime() - DateTime.now().getMillis();
-        return timeDiff > 0 ? timeDiff / MILLISECONDS_IN_DAY : 0;
+        return timeDiff > 0 ? (int)(timeDiff / MILLISECONDS_IN_DAY) : 0;
     }
 
     @Click(R.id.more_tips_button)
