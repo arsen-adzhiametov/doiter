@@ -28,18 +28,22 @@ public class HtmlCodePreparer {
     @AfterInject
     void bind() {
         detectScreenSize();
-        copyFile(context, "GabriolaOne.ttf");
+        copyFile(context, "Gabriola.ttf");
         head = "<head>" +
                 "<style>" +
                 "@font-face {" +
-                    "font-family: 'GabriolaOne';" +
-                    "src: url('file://" + context.getFilesDir().getAbsolutePath() + "/GabriolaOne.ttf');" +
+                    "font-family: 'gabriola';" +
+                    "src: url('file://" + context.getFilesDir().getAbsolutePath() + "/Gabriola.ttf') format('truetype');" +
+                    "font-weight: normal;" +
+                    "font-style: normal;" +
                 "}" +
                 "body {" +
                     "text-align: justify;" +
-                    "font-family: 'GabriolaOne'; " +
-                    "font-size: " + fontSize + "px; " +
+                    "font-family: 'gabriola'; " +
+                    "font-size: " + fontSize/10 + "em; " +
+                    "line-height: 99%;" +
                     "color: #4F8890;" +
+//                    "background-color: #000000;" +
                 "}" +
                 "</style>" +
                 "</head>";
