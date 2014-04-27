@@ -1,4 +1,4 @@
-package com.lutshe.doiter.views.usergoals.details.messages;
+package com.lutshe.doiter.views.usergoals.messages;
 
 import android.app.Fragment;
 import android.widget.ListView;
