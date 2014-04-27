@@ -22,7 +22,7 @@ public class GoalNameDrawer {
 
         // TODO: make first screen work with android annotations
         // and fix this hard-coded font to be loaded from OurFont.java
-        String fontPath = "fonts/Gabriola.ttf";
+        String fontPath = "fonts/GabriolaOne.ttf";
         Typeface typeface = Typeface.createFromAsset(resources.getAssets(), fontPath);
 
         paint.setTypeface(typeface);

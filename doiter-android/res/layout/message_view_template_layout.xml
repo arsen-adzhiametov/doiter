@@ -62,21 +62,17 @@
               android:layerType="software"
                 />
 
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/msg_bg_header"
-                    android:layout_above="@id/msg_bg_footer"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    android:paddingLeft="@dimen/message_view_text_side_padding"
-                    android:paddingRight="@dimen/message_view_text_side_padding">
             <WebView
                     android:id="@+id/web_view_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="@dimen/message_view_text_side_padding"
+                    android:layout_marginRight="@dimen/message_view_text_side_padding"
+                    android:overScrollMode="never"
+                    android:layout_below="@id/msg_bg_header"
+                    android:layout_above="@id/msg_bg_footer"
                     />
-        </ScrollView>
 
     </RelativeLayout>
 

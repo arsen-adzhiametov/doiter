@@ -9,7 +9,6 @@ import android.view.ViewTreeObserver;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.ScalableImageView;
@@ -40,14 +39,6 @@ public class MessageViewTemplateLayout extends RelativeLayout {
 
     @AfterViews
     public void setDefaultSettings() {
-        ScrollView parent = (ScrollView) goalDescriptionWebView.getParent();
-
-        parent.setVerticalScrollBarEnabled(false);
-        parent.setClickable(false);
-        parent.setLongClickable(false);
-        parent.setFocusable(false);
-        parent.setFocusableInTouchMode(false);
-
         goalDescriptionWebView.getSettings().setBuiltInZoomControls(false);
         goalDescriptionWebView.getSettings().setDisplayZoomControls(false);
         goalDescriptionWebView.getSettings().setJavaScriptEnabled(false);
@@ -56,11 +47,11 @@ public class MessageViewTemplateLayout extends RelativeLayout {
         goalDescriptionWebView.setLongClickable(false);
         goalDescriptionWebView.setFocusable(false);
         goalDescriptionWebView.setFocusableInTouchMode(false);
-        goalDescriptionWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         goalDescriptionWebView.setVerticalScrollBarEnabled(false);
         goalDescriptionWebView.setHorizontalScrollBarEnabled(false);
 
         goalDescriptionWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        goalDescriptionWebView.getSettings().setAllowContentAccess(false);
         goalDescriptionWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         goalDescriptionWebView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
 
@@ -89,7 +80,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
         goalDescriptionWebView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                if (goalDescriptionWebView.getHeight() == 0) {
+                if (goalDescriptionWebView.getHeight() == 0 || goalDescriptionWebView.getContentHeight() == 0) {
                     return false;
                 }
                 wrapAllContent();
@@ -102,9 +93,8 @@ public class MessageViewTemplateLayout extends RelativeLayout {
 
     public int wrapAllContent() {
         ViewGroup parent = (ViewGroup) getParent();
-
-        int desiredHeight = goalDescriptionWebView.getHeight();
-        int realHeight = ((ViewGroup) goalDescriptionWebView.getParent()).getHeight();
+        int desiredHeight = goalDescriptionWebView.getContentHeight();
+        int realHeight = goalDescriptionWebView.getHeight();
 
         int dh = desiredHeight - realHeight;
 
