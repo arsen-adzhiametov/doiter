@@ -32,15 +32,16 @@ public class HtmlCodePreparer {
         head = "<head>" +
                 "<style>" +
                 "@font-face {" +
-                "font-family: 'Gabriola';" +
-                "src: url('file://" + context.getFilesDir().getAbsolutePath() + "/Gabriola.ttf');" +
+                    "font-family: 'Gabriola';" +
+                    "src: url('file://" + context.getFilesDir().getAbsolutePath() + "/Gabriola.ttf');" +
                 "}" +
                 "body {" +
-                "text-align: justify;" +
-                "font-family: 'Gabriola'; " +
-                "font-size: " + fontSize/10 + "em; " +
-                "line-height: 95%;" +
-                "color: #4F8890" +
+                    "text-align: justify;" +
+                    "font-family: 'Gabriola'; " +
+                    "font-size: " + fontSize/10 + "em; " +
+                    "line-height: 95%;" +
+                    "color: #4F8890;" +
+//                    "background-color: #000000;" +
                 "}" +
                 "</style>" +
                 "</head>";

@@ -9,32 +9,41 @@
             android:id="@+id/user_goal_messages_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_margin="0dp"
             android:dividerHeight="0dp"
             android:divider="@null"
-            android:layout_weight="0.92"
             />
 
-    <FrameLayout android:id="@+id/my_goals_btn"
-                 android:layout_height="0dp"
-                 android:layout_weight=".08"
-                 android:layout_width="match_parent"
-                 android:background="@color/orange"
-                   android:clickable="true">
-         <TextView
-                  android:id="@+id/my_goals_btn_text"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_gravity="center"
-                  android:gravity="center"
-                  android:layout_marginLeft="30dp"
-                  android:layout_marginRight="30dp"
-                  android:text="@string/my_goals"
-                  android:paddingBottom="@dimen/goal_preview_set_button_text_bottom_padding"
-                  android:lineSpacingMultiplier="0.75"
-                  style="@style/GabriolaSlightOrangeFontStyle"
-                  android:background="@drawable/dashed_sides"
-                />
-    </FrameLayout>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@color/orange"
+            >
+        <FrameLayout android:id="@+id/my_goals_btn"
+                     android:layout_height="wrap_content"
+                     android:layout_width="match_parent"
+                     android:layout_gravity="center_vertical"
+                     android:layout_marginLeft="30dp"
+                     android:layout_marginRight="30dp"
+                     android:background="@drawable/dashed_sides"
+                     android:clickable="true"
+                >
 
+             <TextView
+                      android:id="@+id/my_goals_btn_text"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center|center_vertical"
+                      android:gravity="center|center_vertical"
+                      android:text="@string/my_goals"
+                      android:padding="0dp"
+                      android:includeFontPadding="false"
+                      style="@style/GabriolaSlightOrangeFontStyle"
+                      android:layout_marginBottom="@dimen/msg_list_screen_btn_bottom_padding"
+                      android:layout_marginTop="@dimen/msg_list_screen_btn_top_padding"
+                     />
+        </FrameLayout>
+    </FrameLayout>
 </LinearLayout>

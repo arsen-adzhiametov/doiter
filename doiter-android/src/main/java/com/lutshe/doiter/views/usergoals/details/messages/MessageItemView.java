@@ -12,7 +12,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
-import static android.widget.AbsListView.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by Arsen Adzhiametov on 6/31/13.
@@ -36,29 +36,41 @@ public class MessageItemView extends RelativeLayout {
     }
 
     public MessageItemView bind(Message message, int position) {
+        positionInList = position;
+
         messageView.setOnTouchListener(clickListener);
 
-        prepareLayout();
+        prepareLayout(message.getType() == Message.Type.FIRST);
         setMessageData(message);
 
-        positionInList = position;
         return this;
     }
 
-    private void prepareLayout() {
+    private void prepareLayout(boolean isLastMessageInList) {
         int itemHeight = deviceProperties.getScreenHeight() / MESSAGES_PER_SCREEN;
-        setLayoutParams(new AbsListView.LayoutParams(MATCH_PARENT, itemHeight));
-        ((MarginLayoutParams) messageView.getLayoutParams()).topMargin = itemHeight / 8;
         croppedHeight = itemHeight;
+        setLayoutParams(new AbsListView.LayoutParams(MATCH_PARENT, itemHeight));
+
+        if (clickListener.getLastSelectedPosition() == positionInList) {
+          messageView.setSelected(true);
+          messageView.resizeWhenReady();
+        }
+        else {
+            setSelected(false);
+        }
+
+        MarginLayoutParams layoutParams = (MarginLayoutParams) messageView.getLayoutParams();
+        layoutParams.topMargin = itemHeight / 8;
+        if (isLastMessageInList) {
+            // adding small margin under the last message in list
+            layoutParams.bottomMargin = layoutParams.topMargin / 2;
+        }
     }
 
-    private void setMessageData(Message message) {
+    public void setMessageData(Message message) {
         Long orderIndex = message.getOrderIndex();
         messageView.loadMessage(message.getText());
         messageView.setMessageNumber(message.getType() == Message.Type.LAST ? ":)" : String.valueOf(orderIndex + 1));
-        if (message.getType() == Message.Type.LAST) {
-            messageView.resizeWhenReady();
-        }
     }
 
     public int getPositionInList() {

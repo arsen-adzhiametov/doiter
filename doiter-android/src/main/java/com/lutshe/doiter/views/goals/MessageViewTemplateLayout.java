@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
@@ -33,8 +34,8 @@ public class MessageViewTemplateLayout extends RelativeLayout {
     @Bean HtmlCodePreparer htmlCodePreparer;
     @Bean OurFont font;
 
-    public MessageViewTemplateLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public MessageViewTemplateLayout(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
     }
 
     @AfterViews
@@ -57,9 +58,11 @@ public class MessageViewTemplateLayout extends RelativeLayout {
         goalDescriptionWebView.setFocusableInTouchMode(false);
         goalDescriptionWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         goalDescriptionWebView.setVerticalScrollBarEnabled(false);
+        goalDescriptionWebView.setHorizontalScrollBarEnabled(false);
 
         goalDescriptionWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         goalDescriptionWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        goalDescriptionWebView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
 
         goalDescriptionWebView.setBackgroundColor(Color.TRANSPARENT);
         goalDescriptionWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
@@ -83,13 +86,16 @@ public class MessageViewTemplateLayout extends RelativeLayout {
     }
 
     public void resizeWhenReady() {
-        goalDescriptionWebView.addOnLayoutChangeListener(new OnLayoutChangeListener() {
+        goalDescriptionWebView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (v == goalDescriptionWebView && bottom != 0) {
-                    wrapAllContent();
-                    goalDescriptionWebView.removeOnLayoutChangeListener(this);
+            public boolean onPreDraw() {
+                if (goalDescriptionWebView.getHeight() == 0) {
+                    return false;
                 }
+                wrapAllContent();
+                forceLayout();
+                goalDescriptionWebView.getViewTreeObserver().removeOnPreDrawListener(this);
+                return false;
             }
         });
     }

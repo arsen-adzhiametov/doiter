@@ -3,17 +3,16 @@ package com.lutshe.doiter.views.usergoals.details.messages;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
-import com.lutshe.doiter.views.common.DeviceScalingProperties;
 import com.lutshe.doiter.views.goals.MessageViewTemplateLayout;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 @EBean(scope = EBean.Scope.Singleton)
 public class MessageViewClickListener implements View.OnTouchListener {
 
+    public static final int DEFAULT_SELECTION_POSITION = 0;
     private MessageViewTemplateLayout lastSelectedView;
-
-    @Bean DeviceScalingProperties scalingProperties;
+    private int lastSelectedPosition;
+    private ListView listView;
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -36,12 +35,19 @@ public class MessageViewClickListener implements View.OnTouchListener {
         messageView.wrapAllContent();
         messageView.setSelected(true);
 
+        boolean defaultSelection = lastSelectedPosition == DEFAULT_SELECTION_POSITION && lastSelectedView == null;
+        if (defaultSelection) {
+            lastSelectedView = ((MessageItemView) listView.getChildAt(DEFAULT_SELECTION_POSITION)).messageView;
+        }
+
         final ListView listView = findParent(ListView.class, (View) messageView.getParent());
         final int scrollTo = listView.getHeight() / 4;
 
         final MessageItemView itemView = findParent(MessageItemView.class, (View) messageView.getParent());
+        lastSelectedPosition = itemView.getPositionInList();
 
-        if (lastSelectedView != null && lastSelectedView != messageView) {
+        boolean selectionChanged = lastSelectedView != messageView;
+        if (selectionChanged) {
             final MessageItemView lastItem = findParent(MessageItemView.class, (View) lastSelectedView.getParent());
             lastSelectedView.crop(lastItem.getCroppedHeight());
             lastSelectedView.setSelected(false);
@@ -62,5 +68,14 @@ public class MessageViewClickListener implements View.OnTouchListener {
         } else {
             return findParent(parentType, (View) view.getParent());
         }
+    }
+
+    public int getLastSelectedPosition() {
+        return lastSelectedPosition;
+    }
+
+    public void prepare(ListView listView) {
+        lastSelectedPosition = 0;
+        this.listView = listView;
     }
 }

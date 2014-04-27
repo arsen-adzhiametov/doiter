@@ -33,4 +33,6 @@
     <dimen name="goal_name_side_padding">50dp</dimen>
     <dimen name="arrows_container_side_padding">20dp</dimen>
 
+
+
 </resources>

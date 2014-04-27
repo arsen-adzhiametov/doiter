@@ -19,6 +19,7 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
     @ViewById(R.id.user_goal_messages_list) ListView userGoalMessagesList;
     @ViewById(R.id.my_goals_btn_text) TextView myMessagesBtnText;
 
+    @Bean MessageViewClickListener messageViewClickListener;
     @Bean MessagesListAdapter messagesListAdapter;
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean OurFont font;
@@ -28,7 +29,7 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
     @AfterViews
     public void bindData() {
         myMessagesBtnText.setTypeface(font.get());
-        messagesListAdapter.initAdapter(goalId);
+        messagesListAdapter.initAdapter(goalId, userGoalMessagesList);
         userGoalMessagesList.setAdapter(messagesListAdapter);
     }
 
