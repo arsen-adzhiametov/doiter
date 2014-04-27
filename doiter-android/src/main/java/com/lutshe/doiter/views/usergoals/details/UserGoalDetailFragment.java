@@ -10,14 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
+import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.views.UpdatableView;
 import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.usergoals.details.messages.UserGoalMessagesListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
+import com.lutshe.doiter.views.util.StringUtils;
 import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
 
@@ -27,7 +30,7 @@ import org.joda.time.DateTime;
 @EFragment(R.layout.user_goal_details_fragment)
 public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
-    public static final int MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
+    public static final long MILLISECONDS_IN_DAY = 1000L * 60 * 60 * 24;
 
     @ViewById(R.id.remaining)TextView remainingTextView;
     @ViewById(R.id.days_quantity)TextView daysQuantityTextView;
@@ -41,6 +44,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     @ViewById(R.id.prev_arrow_button)ImageView previousButton;
 
     @Bean GoalsDao goalsDao;
+    @Bean MessagesDao messagesDao;
     @Bean(ImagesProviderImpl.class)ImagesProvider imagesProvider;
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean HtmlCodePreparer htmlCodePreparer;
@@ -53,19 +57,29 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @AfterViews
     public void bindData() {
-        userGoals = goalsDao.getAllUserGoals();
         Goal goal = goalsDao.getGoal(goalId);
-        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
-        goalNameTextView.setText(goal.getName());
-        goalCover.setImageBitmap(bitmap);
-        daysQuantityTextView.setText(String.valueOf(getDaysRemaining(goal)));
-        loadCurrentMessageTextWebView(getResources().getString(R.string.message_stub));
+        calculateCurrentGoalIndex();
+        showGoalCover(goal);
+        showTextViews(goal);
+        loadCurrentMessageTextWebView(goal);
         setTypefaceToTextViews();
         disableNavigation();
-        calculateCurrentGoalIndex();
+    }
+
+    private void showTextViews(Goal goal) {
+        goalNameTextView.setText(goal.getName());
+        int daysRemaining = (int)getDaysRemaining(goal);
+        daysQuantityTextView.setText(' '+String.valueOf(daysRemaining)+' ');
+        daysTextTextView.setText(StringUtils.getDayOrDaysString(daysRemaining));
+    }
+
+    private void showGoalCover(Goal goal) {
+        Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
+        goalCover.setImageBitmap(bitmap);
     }
 
     private void calculateCurrentGoalIndex() {
+        userGoals = goalsDao.getAllUserGoals();
         for(int i = 0; i<userGoals.length; i++){
             if(userGoals[i].getId().equals(goalId)){
                 currentGoalIndex = i;
@@ -95,8 +109,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     private long getDaysRemaining(Goal goal) {
         long timeDiff = goal.getEndTime() - DateTime.now().getMillis();
-        long daysRemaining = timeDiff/ MILLISECONDS_IN_DAY;
-        return daysRemaining;
+        return timeDiff > 0 ? timeDiff / MILLISECONDS_IN_DAY : 0;
     }
 
     @Click(R.id.more_tips_button)
@@ -135,8 +148,9 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
         return userGoals[prevIndex].getId();
     }
 
-    private void loadCurrentMessageTextWebView(String messageText) {
-        String htmlCode = htmlCodePreparer.getHtmlCode(messageText);
+    private void loadCurrentMessageTextWebView(Goal goal) {
+        Message currentMessage = messagesDao.getMessage(goal.getId(), goal.getLastMessageIndex());
+        String htmlCode = htmlCodePreparer.getHtmlCode(currentMessage.getText());
         messageTextWebView.loadDataWithBaseURL(null, htmlCode, "text/html", "utf-8", "about:blank");
         messageTextWebView.setBackgroundColor(Color.TRANSPARENT);
         messageTextWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);

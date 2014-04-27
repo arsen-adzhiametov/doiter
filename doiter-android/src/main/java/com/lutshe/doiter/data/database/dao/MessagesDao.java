@@ -23,6 +23,7 @@ public class MessagesDao {
 
     static final String SELECT_ALL_MESSAGES = "SELECT * FROM " + MESSAGES_TABLE + " WHERE " + USER_GOAL_ID;
     static final String SELECT_LAST_NOTIFICATION_TIME = "SELECT max(" + DELIVERY_TIME + ") FROM " + MESSAGES_TABLE;
+    static final String SELECT_MESSAGES_COUNT_OF_GOAL = "SELECT count(*) FROM " + MESSAGES_TABLE + " WHERE " + USER_GOAL_ID;
 
     @Bean
     DatabaseHelper db;
@@ -132,5 +133,17 @@ public class MessagesDao {
         }
 
         return -1L;
+    }
+
+    public int getGoalMessagesCount(long goalId){
+        return getCount(SELECT_MESSAGES_COUNT_OF_GOAL + " = " + goalId);
+    }
+
+    private int getCount(String query) {
+        Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count;
     }
 }

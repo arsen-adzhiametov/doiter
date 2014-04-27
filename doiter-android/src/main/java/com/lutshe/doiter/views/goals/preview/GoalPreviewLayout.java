@@ -57,6 +57,10 @@ public class GoalPreviewLayout extends RelativeLayout {
         daysTextTextView.setText(text);
     }
 
+    public void setSeekBarMaximum(int maximum){
+        seekBar.setMax(maximum);
+    }
+
     private void scaleSeekBarThumb() {
         ViewTreeObserver vto = seekBar.getViewTreeObserver();
         vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

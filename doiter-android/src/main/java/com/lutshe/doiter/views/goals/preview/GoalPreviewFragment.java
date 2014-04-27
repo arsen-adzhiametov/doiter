@@ -34,8 +34,10 @@ public class GoalPreviewFragment extends Fragment {
     @AfterViews
     public void bindData() {
         Goal goal = goalsDao.getGoal(goalId);
+        Message firstMessage = messagesDao.getMessage(goalId, Message.Type.FIRST);
         goalPreviewLayout.showGoalName(goal.getName());
-        goalPreviewLayout.showGoalDescription(getResources().getString(R.string.goal_description));
+        goalPreviewLayout.showGoalDescription(firstMessage.getText());
+        goalPreviewLayout.setSeekBarMaximum(messagesDao.getGoalMessagesCount(goalId));
     }
 
     @Click(R.id.add_goal_button)
