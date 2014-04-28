@@ -2,16 +2,20 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4"
                     android:layout_alignParentTop="true"
                     android:paddingTop="@dimen/top_layout_top_padding">
         <ImageView
                 android:id="@+id/clock"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_weight="1"
                 android:paddingLeft="@dimen/clock_side_padding"
                 android:paddingRight="@dimen/clock_side_padding"
                 android:adjustViewBounds="true"
@@ -20,17 +24,18 @@
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/timer_text_container"
-                        android:layout_toRightOf="@id/clock"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true">
+                        android:layout_weight="3">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/remaining"
                     android:layout_centerVertical="true"
                     android:text="@string/remaining"
+                    android:gravity="center"
+                    android:ellipsize="none"
+                    android:lineSpacingMultiplier="0.75"
                     style="@style/GabriolaGrayFontStyle"/>
 
             <TextView
@@ -38,6 +43,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/days_quantity"
                     android:text="@string/starting_days"
+                    android:gravity="center"
+                    android:ellipsize="none"
+                    android:lineSpacingMultiplier="0.9"
                     android:layout_toRightOf="@id/remaining"
                     style="@style/GabriolaOrangeFontStyle"/>
 
@@ -47,10 +55,13 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="@string/days"
+                    android:gravity="center"
+                    android:ellipsize="none"
+                    android:lineSpacingMultiplier="0.75"
                     android:layout_toRightOf="@id/days_quantity"
                     style="@style/GabriolaGrayFontStyle"/>
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/bottom_layout"
@@ -103,14 +114,25 @@
                             android:paddingLeft="@dimen/goal_cover_holder_side_padding"
                             android:paddingRight="@dimen/goal_cover_holder_side_padding"
                             android:layout_centerHorizontal="true">
-
-                <com.lutshe.doiter.views.HorizontalScalableImageView
-                        android:id="@+id/goal_cover"
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/goal2"/>
+                        android:weightSum="1"
+                        android:orientation="vertical">
+                    <com.lutshe.doiter.views.HorizontalScalableImageView
+                            android:id="@+id/goal_cover"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/goal2"/>
+
+                    <View android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="0.9"/>
+                </LinearLayout>
+
 
             </RelativeLayout>
 
