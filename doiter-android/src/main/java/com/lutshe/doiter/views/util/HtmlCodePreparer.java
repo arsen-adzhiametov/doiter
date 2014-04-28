@@ -21,7 +21,7 @@ public class HtmlCodePreparer {
     @RootContext Context context;
     @DimensionRes(R.dimen.web_view_text_size) float fontSize;
 
-    private final String bodyTemplate = "<body> %s </body>";
+    private final String bodyTemplate = "<body> %s <br/></body>";
 
     private String head;
 
