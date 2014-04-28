@@ -93,7 +93,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
 
     public int wrapAllContent() {
         ViewGroup parent = (ViewGroup) getParent();
-        int desiredHeight = goalDescriptionWebView.getContentHeight();
+        int desiredHeight = (int) (goalDescriptionWebView.getContentHeight() * getContext().getResources().getDisplayMetrics().density);// + layoutParams.topMargin + layoutParams.bottomMargin;
         int realHeight = goalDescriptionWebView.getHeight();
 
         int dh = desiredHeight - realHeight;

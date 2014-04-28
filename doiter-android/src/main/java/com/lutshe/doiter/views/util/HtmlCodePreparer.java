@@ -21,7 +21,7 @@ public class HtmlCodePreparer {
     @RootContext Context context;
     @DimensionRes(R.dimen.web_view_text_size) float fontSize;
 
-    private final String bodyTemplate = "<body> %s <br/></body>";
+    private final String bodyTemplate = "<body><div>%s</div></body>";
 
     private String head;
 
@@ -43,8 +43,12 @@ public class HtmlCodePreparer {
                     "font-size: " + fontSize/10 + "em; " +
                     "line-height: 99%;" +
                     "color: #4F8890;" +
-//                    "background-color: #000000;" +
+//                    "background-color: #021342;" +
+                    "position: relative;" +
+                    "bottom: " +fontSize/10 +"em;" +
+                    "overflow: hidden;" +
                 "}" +
+                "div {padding-top: "+ fontSize/40 +"em;position:absolute; top: " + fontSize/10 +"em; overflow: hidden;}" +
                 "</style>" +
                 "</head>";
     }

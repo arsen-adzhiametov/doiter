@@ -76,6 +76,7 @@ public class MessageViewClickListener implements View.OnTouchListener {
 
     public void prepare(ListView listView) {
         lastSelectedPosition = 0;
+        lastSelectedView = null;
         this.listView = listView;
     }
 }
