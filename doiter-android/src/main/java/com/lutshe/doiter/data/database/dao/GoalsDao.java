@@ -22,6 +22,7 @@ public class GoalsDao {
     static final String BUT_ONLY_ACTIVE_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE'";
     static final String BUT_ONLY_USER_GOALS = " WHERE " + GOAL_STATUS + " = 'ACTIVE' or " + GOAL_STATUS + " = 'INACTIVE'";
     static final String BUT_ONLY_GOAL_WITH_ID = " WHERE " + GOAL_ID + " = ";
+    static final String AND_SORTED_BY_STATUS_ASC = " ORDER BY " + GOAL_STATUS + " ASC";
 
     static final String SELECT_ALL_GOALS = "SELECT * FROM " + GOALS_TABLE;
     static final String SELECT_ACTIVE_GOALS = SELECT_ALL_GOALS + BUT_ONLY_ACTIVE_GOALS;
@@ -31,6 +32,7 @@ public class GoalsDao {
     static final String SELECT_USER_GOALS_COUNT = SELECT_ALL_GOALS_COUNT + BUT_ONLY_USER_GOALS;
     static final String SELECT_ACTIVE_GOALS_COUNT = SELECT_ALL_GOALS_COUNT + BUT_ONLY_ACTIVE_GOALS;
     static final String SELECT_ALL_USER_GOALS = SELECT_ALL_GOALS + BUT_ONLY_USER_GOALS;
+    static final String SELECT_ALL_USER_GOALS_SORTED_BY_STATUS = SELECT_ALL_GOALS + BUT_ONLY_USER_GOALS + AND_SORTED_BY_STATUS_ASC;
 
     @Bean
     DatabaseHelper db;
@@ -67,6 +69,10 @@ public class GoalsDao {
 
     public Goal[] getAllUserGoals() {
         return getGoals(SELECT_ALL_USER_GOALS);
+    }
+
+    public Goal[] getAllUserGoalsSortedByStatus() {
+        return getGoals(SELECT_ALL_USER_GOALS_SORTED_BY_STATUS);
     }
 
     public Goal[] getActiveUserGoals() {

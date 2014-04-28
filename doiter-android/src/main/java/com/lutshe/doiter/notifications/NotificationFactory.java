@@ -6,19 +6,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.NotificationCompat;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 import com.lutshe.doiter.MainActivity_;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
-import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 import com.lutshe.doiter.data.provider.ImagesProviderImpl;
+import com.lutshe.doiter.model.Goal;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 import java.util.Random;
+
+import static com.lutshe.doiter.AchievementTimeConstants.OPEN_USER_GOALS_INTENT_ACTION;
 
 /**
  * Created by Arsen Adzhiametov on goal6/31/13.
@@ -46,6 +47,7 @@ public class NotificationFactory {
         String title = getTitleText(quantity);
 
         Intent notificationIntent = new Intent(context, MainActivity_.class);
+        notificationIntent.setAction(OPEN_USER_GOALS_INTENT_ACTION);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
                 0,

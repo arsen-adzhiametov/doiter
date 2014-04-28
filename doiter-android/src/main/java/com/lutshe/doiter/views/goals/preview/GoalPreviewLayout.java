@@ -21,13 +21,13 @@ import com.lutshe.doiter.views.goals.MessageViewTemplateLayout;
 import com.lutshe.doiter.views.util.StringUtils;
 import org.androidannotations.annotations.*;
 
+import static com.lutshe.doiter.AchievementTimeConstants.SEEK_BAR_MIN_DAYS_AMOUNT;
+
 /**
  * Created by Arsen Adzhiametov on 2/22/14 in IntelliJ IDEA.
  */
 @EViewGroup(R.layout.goal_preview_layout)
 public class GoalPreviewLayout extends RelativeLayout {
-
-    private static final int MIN_DAYS_AMOUNT = 1;
 
     @ViewById(R.id.goal_name)TextView goalNameTextView;
     @ViewById(R.id.days_quantity)TextView daysQuantityTextView;
@@ -54,18 +54,18 @@ public class GoalPreviewLayout extends RelativeLayout {
 
     @SeekBarProgressChange(R.id.seekbar)
     public void onProgressChanged(int progress) {
-        int pseudoProgress = progress + MIN_DAYS_AMOUNT;
+        int pseudoProgress = progress + SEEK_BAR_MIN_DAYS_AMOUNT;
         String text = StringUtils.getDayOrDaysString(pseudoProgress);
         daysQuantityTextView.setText(" " + pseudoProgress + " ");
         daysTextTextView.setText(text);
     }
 
     public void setSeekBarMaximum(int progressMaxValue){
-        seekBar.setMax(progressMaxValue - MIN_DAYS_AMOUNT);
+        seekBar.setMax(progressMaxValue - SEEK_BAR_MIN_DAYS_AMOUNT);
     }
 
     public int getSeekBarCurrentValue(){
-        return seekBar.getProgress() + MIN_DAYS_AMOUNT;
+        return seekBar.getProgress() + SEEK_BAR_MIN_DAYS_AMOUNT;
     }
 
     private void scaleSeekBarThumb() {

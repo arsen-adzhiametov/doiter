@@ -13,8 +13,11 @@ import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
 import com.lutshe.doiter.views.slidingtoolbar.SlidingToolbar;
+import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
+
+import static com.lutshe.doiter.AchievementTimeConstants.OPEN_USER_GOALS_INTENT_ACTION;
 
 @WindowFeature({ Window.FEATURE_NO_TITLE})
 @Fullscreen
@@ -50,6 +53,10 @@ public class MainActivity extends Activity {
     @Trace
     @Override
     protected void onNewIntent(Intent intent) {
+        String action = intent.getAction();
+        if (OPEN_USER_GOALS_INTENT_ACTION.equals(action)){
+            fragmentsSwitcher.show(UserGoalDetailFragment_.builder().build());
+        }
         fragmentsSwitcher.updateCurrentFragment();
     }
 

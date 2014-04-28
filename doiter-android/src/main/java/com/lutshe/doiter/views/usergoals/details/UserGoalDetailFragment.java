@@ -16,13 +16,13 @@ import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
 
+import static com.lutshe.doiter.AchievementTimeConstants.MILLISECONDS_IN_DAY;
+
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
 @EFragment(R.layout.user_goal_details_fragment)
 public class UserGoalDetailFragment extends Fragment implements UpdatableView {
-
-    public static final long MILLISECONDS_IN_DAY = 1000L * 60 * 60 * 24;
 
     @ViewById(R.id.user_goal_detail_fragment_view) UserGoalDetailLayout userGoalDetailLayout;
 
@@ -39,19 +39,25 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @AfterViews
     public void bindData() {
+        userGoals = goalsDao.getAllUserGoalsSortedByStatus();
+        resolveCurrentGoalIndexAndId();
         Goal goal = goalsDao.getGoal(goalId);
-        calculateCurrentGoalIndex();
         loadGoalCoverImage(goal);
         loadTextViews(goal);
         loadCurrentMessage(goal);
         disableNavigationIfOnlyOneUserGoal();
     }
 
-    private void calculateCurrentGoalIndex() {
-        userGoals = goalsDao.getAllUserGoals();
-        for(int i = 0; i<userGoals.length; i++){
-            if(userGoals[i].getId().equals(goalId)){
-                currentGoalIndex = i;
+    private void resolveCurrentGoalIndexAndId() {
+        if (goalId == null) {
+            currentGoalIndex = 0;
+            goalId = userGoals[currentGoalIndex].getId();
+        } else {
+            for(int i = 0; i < userGoals.length; i++){
+                if(userGoals[i].getId().equals(goalId)){
+                    currentGoalIndex = i;
+                    break;
+                }
             }
         }
     }
