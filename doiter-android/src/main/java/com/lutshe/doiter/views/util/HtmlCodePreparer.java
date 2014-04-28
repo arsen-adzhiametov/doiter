@@ -2,11 +2,13 @@ package com.lutshe.doiter.views.util;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.widget.Toast;
 import com.lutshe.doiter.R;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.Trace;
 import org.androidannotations.annotations.res.DimensionRes;
 
 import java.io.FileOutputStream;
@@ -25,10 +27,19 @@ public class HtmlCodePreparer {
 
     private String head;
 
+    @Trace
     @AfterInject
     void bind() {
         detectScreenSize();
         copyFile(context, "Gabriola.ttf");
+
+        // Starting with KITKAT android's WebView is based Chromium instead of it's own implementation.
+        // We use stupid Gabriola font which becomes stupid on some phones and looks fine on other.
+        // Assumption is that it depends on WebView implementation which depends on android version.
+        // To fix that we write extra hacky ccs for KITKAT and above.
+        // Extra CSS shifts some blocks up/down with parameter overflow:hidden which cuts off everything that is out of parent's bounds (extra empty space in our case).
+        boolean isChromiumBased = Build.VERSION.SDK_INT >= 19;//Build.VERSION_CODES.KITKAT;
+
         head = "<head>" +
                 "<style>" +
                 "@font-face {" +
@@ -43,12 +54,14 @@ public class HtmlCodePreparer {
                     "font-size: " + fontSize/10 + "em; " +
                     "line-height: 99%;" +
                     "color: #4F8890;" +
-//                    "background-color: #021342;" +
-                    "position: relative;" +
-                    "bottom: " +fontSize/10 +"em;" +
-                    "overflow: hidden;" +
+
+                    // shifting body up to compensate the shift of div below
+                    (isChromiumBased ? "position: relative;" + "bottom: " +fontSize/10 +"em;" + "overflow: hidden;" : "" ) +
                 "}" +
-                "div {padding-top: "+ fontSize/40 +"em;position:absolute; top: " + fontSize/10 +"em; overflow: hidden;}" +
+
+                // shifting div with text lower
+                (isChromiumBased ? "div {padding-top: "+ fontSize/40 +"em;position:absolute; top: " + fontSize/10 +"em; overflow: hidden;}" : "") +
+
                 "</style>" +
                 "</head>";
     }
