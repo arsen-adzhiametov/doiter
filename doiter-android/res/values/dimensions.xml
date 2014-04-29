@@ -27,6 +27,8 @@
     <dimen name="days_quantity_width">50dp</dimen>
 
     <dimen name="message_view_text_side_padding">20dp</dimen>
+    <dimen name="dotted_line_side_padding">28dp</dimen>
+
     <dimen name="goal_preview_name_side_padding">70dp</dimen>
     <dimen name="goal_preview_name_bottom_padding">10dp</dimen>
     <dimen name="goal_preview_set_button_text_bottom_padding">10dp</dimen>

@@ -49,17 +49,13 @@
                 android:src="@drawable/msg_bg"
                 android:scaleType="fitXY"/>
 
-        <View android:id="@+id/dotted_line_footer"
-              android:layout_alignBottom="@id/msg_bg"
-
-              android:layout_width="match_parent"
-              android:layout_height="3dp"
-
-              android:layout_marginLeft="@dimen/message_view_text_side_padding"
-              android:layout_marginRight="@dimen/message_view_text_side_padding"
-
-              android:background="@drawable/dotted_line"
-              android:layerType="software"
+        <com.lutshe.doiter.views.usergoals.messages.DottedLine
+                android:id="@+id/dotted_line_footer"
+                android:layout_alignBottom="@id/msg_bg"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/dotted_line_side_padding"
+                android:layout_marginRight="@dimen/dotted_line_side_padding"
                 />
 
             <WebView
