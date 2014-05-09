@@ -70,7 +70,11 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     private void loadTextViews(Goal goal) {
         userGoalDetailLayout.showGoalName(goal.getName());
         int daysRemaining = getDaysRemaining(goal);
-        userGoalDetailLayout.showDaysRemaining(daysRemaining);
+        if (daysRemaining > 0){
+            userGoalDetailLayout.showDaysRemaining(daysRemaining);
+        }else {
+            userGoalDetailLayout.showFinalPhrase();
+        }
     }
 
     private void loadCurrentMessage(Goal goal) {

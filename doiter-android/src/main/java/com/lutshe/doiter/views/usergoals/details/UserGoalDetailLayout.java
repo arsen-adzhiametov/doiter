@@ -34,6 +34,7 @@ public class UserGoalDetailLayout extends RelativeLayout {
     @ViewById(R.id.web_view_content)WebView messageTextWebView;
     @ViewById(R.id.next_arrow_button)ImageView nextButton;
     @ViewById(R.id.prev_arrow_button)ImageView previousButton;
+    @ViewById(R.id.timer_text_container) RelativeLayout timerTextContainer;
 
     @Bean OurFont font;
 
@@ -53,6 +54,13 @@ public class UserGoalDetailLayout extends RelativeLayout {
     public void showDaysRemaining(int daysRemaining) {
         daysQuantityTextView.setText(' ' + String.valueOf(daysRemaining) + ' ');
         daysTextTextView.setText(StringUtils.getDayOrDaysString(daysRemaining));
+    }
+
+    public void showFinalPhrase() {
+        timerTextContainer.removeAllViews();
+        timerTextContainer.addView(inflate(getContext(), R.layout.on_goal_completion_final_phrase, null));
+        TextView finalPhraseTextView = (TextView) findViewById(R.id.final_phrase);
+        finalPhraseTextView.setTypeface(font.get());
     }
 
     public void showGoalCover(Bitmap bitmap) {
