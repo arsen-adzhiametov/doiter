@@ -19,6 +19,8 @@ public class GradientDrawer {
 
     private final int gradientHeight;
 
+    private boolean bitmapsRecycled;
+
     public GradientDrawer(Resources resources, int gradientHeight, int viewWidth) {
         this.gradientHeight = gradientHeight;
 
@@ -40,15 +42,24 @@ public class GradientDrawer {
     }
 
     public void drawGradient(Canvas canvas, GoalView view) {
-        canvas.drawBitmap(gradientLeft, 0, view.getHeight() - gradientHeight, null);
-        canvas.drawBitmap(gradientRight, view.getWidth() - gradientRight.getWidth(), view.getHeight() - gradientHeight, null);
-        canvas.drawBitmap(gradientMiddle, gradientLeft.getWidth(), view.getHeight() - gradientHeight, null);
+        if (!bitmapsRecycled) {
+            canvas.drawBitmap(gradientLeft, 0, view.getHeight() - gradientHeight, null);
+            canvas.drawBitmap(gradientRight, view.getWidth() - gradientRight.getWidth(), view.getHeight() - gradientHeight, null);
+            canvas.drawBitmap(gradientMiddle, gradientLeft.getWidth(), view.getHeight() - gradientHeight, null);
+        }
     }
 
     public void recycle() {
-        gradientMiddle.recycle();
-        gradientLeft.recycle();
-        gradientRight.recycle();
+        bitmapsRecycled = true;
+        recycleBitmap(gradientMiddle);
+        recycleBitmap(gradientLeft);
+        recycleBitmap(gradientRight);
+    }
+
+    private void recycleBitmap(Bitmap bitmap){
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+        }
     }
 
     public int getLeftCornerWidth() {

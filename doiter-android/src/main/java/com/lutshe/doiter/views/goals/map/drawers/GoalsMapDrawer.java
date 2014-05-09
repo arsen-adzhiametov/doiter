@@ -1,23 +1,17 @@
 package com.lutshe.doiter.views.goals.map.drawers;
 
 import android.content.res.Resources;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.util.LruCache;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.util.Log;
-import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
 import com.lutshe.doiter.views.goals.map.MapController;
 import com.lutshe.doiter.views.goals.map.model.GoalView;
-import com.lutshe.doiter.views.util.BitmapUtils;
-import com.lutshe.doiter.views.util.ScaleProperties;
 
 /**
  * Goal views are cached individually bounding maximum memory usage by LruCache.
@@ -72,6 +66,7 @@ public class GoalsMapDrawer extends Drawer {
             drawGoalView(cacheCanvas, view);
             return cacheBitmap;
         }
+
         @Override
         protected void entryRemoved(boolean evicted, GoalView key, Bitmap oldValue, Bitmap newValue) {
             oldValue.recycle();

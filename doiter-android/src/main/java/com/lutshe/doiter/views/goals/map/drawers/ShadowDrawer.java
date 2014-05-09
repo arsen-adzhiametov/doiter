@@ -27,6 +27,8 @@ public class ShadowDrawer {
     private final Bitmap leftBottomCornerShadow;
     private final Bitmap rightBottomCornerShadow;
 
+    private boolean bitmapsRecycled;
+
     public ShadowDrawer(Resources resources, int goalSize, int imageCornerSize, int shadowSize) {
         this.imageCornerSize = imageCornerSize;
         this.shadowSize = shadowSize;
@@ -55,10 +57,10 @@ public class ShadowDrawer {
             bottomShadowFullCanvas.drawBitmap(bottomShadowPart, offset, 0, null);
             offset += leftShadowPart.getHeight();
         }
-        leftShadowPart.recycle();
-        rightShadowPart.recycle();
-        topShadowPart.recycle();
-        bottomShadowPart.recycle();
+        recycleBitmap(leftShadowPart);
+        recycleBitmap(rightShadowPart);
+        recycleBitmap(topShadowPart);
+        recycleBitmap(bottomShadowPart);
 
         // corner shadows preparation
         leftTopCornerShadow = BitmapUtils.getScaledBitmap(resources, R.drawable.shadow_left_top_corner, shadowScaleProps);
@@ -68,26 +70,35 @@ public class ShadowDrawer {
     }
 
     public void drawShadow(Canvas canvas) {
-        canvas.drawBitmap(leftShadow, 0, shadowSize + imageCornerSize, null);
-        canvas.drawBitmap(rightShadow, canvas.getWidth() - shadowSize, shadowSize + imageCornerSize, null);
-        canvas.drawBitmap(topShadow, shadowSize + imageCornerSize, 0, null);
-        canvas.drawBitmap(bottomShadow, shadowSize + imageCornerSize, canvas.getHeight() - shadowSize, null);
+        if (!bitmapsRecycled) {
+            canvas.drawBitmap(leftShadow, 0, shadowSize + imageCornerSize, null);
+            canvas.drawBitmap(rightShadow, canvas.getWidth() - shadowSize, shadowSize + imageCornerSize, null);
+            canvas.drawBitmap(topShadow, shadowSize + imageCornerSize, 0, null);
+            canvas.drawBitmap(bottomShadow, shadowSize + imageCornerSize, canvas.getHeight() - shadowSize, null);
 
-        canvas.drawBitmap(leftTopCornerShadow, 0, 0, null);
-        canvas.drawBitmap(rightTopCornerShadow, canvas.getWidth() - rightTopCornerShadow.getWidth(), 0, null);
-        canvas.drawBitmap(leftBottomCornerShadow, 0, canvas.getHeight() - leftBottomCornerShadow.getHeight(), null);
-        canvas.drawBitmap(rightBottomCornerShadow, canvas.getWidth() - rightBottomCornerShadow.getWidth(), canvas.getHeight() - rightBottomCornerShadow.getHeight(), null);
+            canvas.drawBitmap(leftTopCornerShadow, 0, 0, null);
+            canvas.drawBitmap(rightTopCornerShadow, canvas.getWidth() - rightTopCornerShadow.getWidth(), 0, null);
+            canvas.drawBitmap(leftBottomCornerShadow, 0, canvas.getHeight() - leftBottomCornerShadow.getHeight(), null);
+            canvas.drawBitmap(rightBottomCornerShadow, canvas.getWidth() - rightBottomCornerShadow.getWidth(), canvas.getHeight() - rightBottomCornerShadow.getHeight(), null);
+        }
     }
 
     public void recycle() {
-        leftShadow.recycle();
-        rightShadow.recycle();
-        topShadow.recycle();
-        bottomShadow.recycle();
+        bitmapsRecycled = true;
+        recycleBitmap(leftShadow);
+        recycleBitmap(rightShadow);
+        recycleBitmap(topShadow);
+        recycleBitmap(bottomShadow);
 
-        leftTopCornerShadow.recycle();
-        leftBottomCornerShadow.recycle();
-        rightBottomCornerShadow.recycle();
-        rightTopCornerShadow.recycle();
+        recycleBitmap(leftTopCornerShadow);
+        recycleBitmap(leftBottomCornerShadow);
+        recycleBitmap(rightTopCornerShadow);
+        recycleBitmap(rightBottomCornerShadow);
+    }
+
+    private void recycleBitmap(Bitmap bitmap){
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+        }
     }
 }
