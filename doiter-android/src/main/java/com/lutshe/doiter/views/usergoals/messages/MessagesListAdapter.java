@@ -34,7 +34,7 @@ public class MessagesListAdapter extends BaseAdapter {
     public void initAdapter(Long goalId, ListView listView){
         this.goalId = goalId;
         loadMessages(goalId);
-        messageViewClickListener.prepare(listView);
+        messageViewClickListener.prepare();
     }
 
     @Override

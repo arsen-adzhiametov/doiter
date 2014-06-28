@@ -9,10 +9,8 @@ import org.androidannotations.annotations.EBean;
 @EBean(scope = EBean.Scope.Singleton)
 public class MessageViewClickListener implements View.OnTouchListener {
 
-    public static final int DEFAULT_SELECTION_POSITION = 0;
     private MessageViewTemplateLayout lastSelectedView;
-    private int lastSelectedPosition;
-    private ListView listView;
+    private Integer lastSelectedPosition;
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -31,14 +29,9 @@ public class MessageViewClickListener implements View.OnTouchListener {
         return true;
     }
 
-    public void sendClick(MessageViewTemplateLayout messageView) {
+    public synchronized void sendClick(MessageViewTemplateLayout messageView) {
         messageView.wrapAllContent();
         messageView.setSelected(true);
-
-        boolean defaultSelection = lastSelectedPosition == DEFAULT_SELECTION_POSITION && lastSelectedView == null;
-        if (defaultSelection) {
-            lastSelectedView = ((MessageItemView) listView.getChildAt(DEFAULT_SELECTION_POSITION)).messageView;
-        }
 
         final ListView listView = findParent(ListView.class, (View) messageView.getParent());
         final int scrollTo = listView.getHeight() / 4;
@@ -70,13 +63,19 @@ public class MessageViewClickListener implements View.OnTouchListener {
         }
     }
 
-    public int getLastSelectedPosition() {
-        return lastSelectedPosition;
+    public boolean hasSelection() {
+        return lastSelectedPosition != null;
     }
 
-    public void prepare(ListView listView) {
-        lastSelectedPosition = 0;
+    public synchronized void setDefaultSelection(MessageViewTemplateLayout messageView, int positionInList) {
+        messageView.setSelected(true);
+        messageView.resizeWhenReady();
+        lastSelectedView = messageView;
+        lastSelectedPosition = positionInList;
+    }
+
+    public void prepare() {
+        lastSelectedPosition = null;
         lastSelectedView = null;
-        this.listView = listView;
     }
 }

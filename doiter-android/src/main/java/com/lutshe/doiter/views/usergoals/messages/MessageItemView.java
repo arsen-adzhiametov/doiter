@@ -42,7 +42,6 @@ public class MessageItemView extends RelativeLayout {
 
         prepareLayout(message.getType() == Message.Type.FIRST);
         setMessageData(message);
-
         return this;
     }
 
@@ -50,13 +49,10 @@ public class MessageItemView extends RelativeLayout {
         int itemHeight = deviceProperties.getScreenHeight() / MESSAGES_PER_SCREEN;
         croppedHeight = itemHeight;
         setLayoutParams(new AbsListView.LayoutParams(MATCH_PARENT, itemHeight));
+        setSelected(false);
 
-        if (clickListener.getLastSelectedPosition() == positionInList) {
-          messageView.setSelected(true);
-          messageView.resizeWhenReady();
-        }
-        else {
-            setSelected(false);
+        if (!clickListener.hasSelection() && positionInList == 0) {
+            clickListener.setDefaultSelection(messageView, positionInList);
         }
 
         MarginLayoutParams layoutParams = (MarginLayoutParams) messageView.getLayoutParams();
