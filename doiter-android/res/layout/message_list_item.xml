@@ -6,7 +6,7 @@
              android:layout_height="match_parent"
              >
 
-    <com.lutshe.doiter.views.goals.MessageViewTemplateLayout_
+    <com.lutshe.doiter.views.usergoals.messages.MessageViewTemplateLayout_
             android:id="@+id/message_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

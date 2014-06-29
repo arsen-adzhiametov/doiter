@@ -17,7 +17,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.common.OurFont;
-import com.lutshe.doiter.views.goals.MessageViewTemplateLayout;
+import com.lutshe.doiter.views.usergoals.messages.MessageViewTemplateLayout;
 import com.lutshe.doiter.views.util.StringUtils;
 import org.androidannotations.annotations.*;
 

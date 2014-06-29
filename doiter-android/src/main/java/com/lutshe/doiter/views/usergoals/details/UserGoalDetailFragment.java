@@ -10,7 +10,7 @@ import com.lutshe.doiter.data.provider.ImagesProviderImpl;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.views.UpdatableView;
-import com.lutshe.doiter.views.usergoals.messages.UserGoalMessagesListFragment_;
+import com.lutshe.doiter.views.usergoals.messages.MessagesListFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.*;
@@ -99,7 +99,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     @Click(R.id.more_tips_button)
     void showAllTips(){
-        fragmentsSwitcher.show(UserGoalMessagesListFragment_.builder().goalId(goalId).build());
+        fragmentsSwitcher.show(MessagesListFragment_.builder().goalId(goalId).build());
     }
 
     @Click(R.id.prev_arrow_button)

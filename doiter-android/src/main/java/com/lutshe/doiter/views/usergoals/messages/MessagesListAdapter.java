@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.model.Message;
 import org.androidannotations.annotations.Bean;
@@ -31,7 +30,7 @@ public class MessagesListAdapter extends BaseAdapter {
     @RootContext
     Context context;
 
-    public void initAdapter(Long goalId, ListView listView){
+    public void initAdapter(Long goalId){
         this.goalId = goalId;
         loadMessages(goalId);
         messageViewClickListener.prepare();

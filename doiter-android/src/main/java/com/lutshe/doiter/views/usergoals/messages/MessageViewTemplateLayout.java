@@ -1,8 +1,9 @@
-package com.lutshe.doiter.views.goals;
+package com.lutshe.doiter.views.usergoals.messages;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.ScalableImageView;
+import com.lutshe.doiter.views.common.DeviceScalingProperties;
 import com.lutshe.doiter.views.common.OurFont;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.AfterViews;
@@ -32,6 +34,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
 
     @Bean HtmlCodePreparer htmlCodePreparer;
     @Bean OurFont font;
+    @Bean DeviceScalingProperties properties;
 
     public MessageViewTemplateLayout(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -71,8 +74,16 @@ public class MessageViewTemplateLayout extends RelativeLayout {
     }
 
     @Override
-    public void setOnTouchListener(OnTouchListener listener) {
+    public void setOnTouchListener(final OnTouchListener listener) {
         setClickable(true);
+        // forwarding events to webview
+        super.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                listener.onTouch(goalDescriptionWebView, event);
+                return false;
+            }
+        });
         goalDescriptionWebView.setOnTouchListener(listener);
     }
 
@@ -99,9 +110,8 @@ public class MessageViewTemplateLayout extends RelativeLayout {
         int dh = desiredHeight - realHeight;
 
         if (dh > 0) {
-            ViewGroup rootView = (ViewGroup) parent.getParent();
-            rootView.getLayoutParams().height += dh;
-            rootView.requestLayout();
+            final ViewGroup rootView = (ViewGroup) parent.getParent();
+            rootView.startAnimation(new MessageSelectionAnimation(rootView.getLayoutParams().height, dh, rootView));
         }
 
         return desiredHeight;
@@ -109,8 +119,9 @@ public class MessageViewTemplateLayout extends RelativeLayout {
 
     public void crop(int height) {
         ViewGroup parent = (ViewGroup) getParent().getParent();
-        parent.getLayoutParams().height = height;
-        parent.requestLayout();
+
+        int currentHeight = parent.getLayoutParams().height;
+        parent.startAnimation(new MessageSelectionAnimation(currentHeight, height - currentHeight, parent));
     }
 
     @Override

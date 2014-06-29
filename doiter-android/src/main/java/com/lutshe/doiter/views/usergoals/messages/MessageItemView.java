@@ -6,7 +6,6 @@ import android.widget.RelativeLayout;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.views.common.DeviceScalingProperties;
-import com.lutshe.doiter.views.goals.MessageViewTemplateLayout;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;

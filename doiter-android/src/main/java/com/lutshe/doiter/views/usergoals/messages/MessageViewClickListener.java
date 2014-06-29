@@ -2,9 +2,9 @@ package com.lutshe.doiter.views.usergoals.messages;
 
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ListView;
-import com.lutshe.doiter.views.goals.MessageViewTemplateLayout;
 import org.androidannotations.annotations.EBean;
+
+import static com.lutshe.doiter.views.util.ViewUtils.findParent;
 
 @EBean(scope = EBean.Scope.Singleton)
 public class MessageViewClickListener implements View.OnTouchListener {
@@ -33,9 +33,6 @@ public class MessageViewClickListener implements View.OnTouchListener {
         messageView.wrapAllContent();
         messageView.setSelected(true);
 
-        final ListView listView = findParent(ListView.class, (View) messageView.getParent());
-        final int scrollTo = listView.getHeight() / 4;
-
         final MessageItemView itemView = findParent(MessageItemView.class, (View) messageView.getParent());
         lastSelectedPosition = itemView.getPositionInList();
 
@@ -46,21 +43,6 @@ public class MessageViewClickListener implements View.OnTouchListener {
             lastSelectedView.setSelected(false);
         }
         lastSelectedView = messageView;
-
-        listView.post(new Runnable() {
-            @Override
-            public void run() {
-                listView.smoothScrollToPositionFromTop(itemView.getPositionInList(), scrollTo);
-            }
-        });
-    }
-
-    private <T> T findParent(Class<T> parentType, View view) {
-        if (parentType.isAssignableFrom(view.getClass()) || view == null) {
-            return (T) view;
-        } else {
-            return findParent(parentType, (View) view.getParent());
-        }
     }
 
     public boolean hasSelection() {

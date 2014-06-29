@@ -14,7 +14,7 @@ import org.androidannotations.annotations.*;
  * Created by Arsen Adzhiametov on 12/15/13 in IntelliJ IDEA.
  */
 @EFragment(R.layout.user_goal_messages_list_fragment)
-public class UserGoalMessagesListFragment extends Fragment implements UpdatableView{
+public class MessagesListFragment extends Fragment implements UpdatableView{
 
     @ViewById(R.id.user_goal_messages_list) ListView userGoalMessagesList;
     @ViewById(R.id.my_goals_btn_text) TextView myMessagesBtnText;
@@ -29,7 +29,7 @@ public class UserGoalMessagesListFragment extends Fragment implements UpdatableV
     @AfterViews
     public void bindData() {
         myMessagesBtnText.setTypeface(font.get());
-        messagesListAdapter.initAdapter(goalId, userGoalMessagesList);
+        messagesListAdapter.initAdapter(goalId);
         userGoalMessagesList.setAdapter(messagesListAdapter);
     }
 

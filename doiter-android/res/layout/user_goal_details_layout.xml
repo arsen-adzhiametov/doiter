@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5">
 
-            <com.lutshe.doiter.views.goals.MessageViewTemplateLayout_
+            <com.lutshe.doiter.views.usergoals.messages.MessageViewTemplateLayout_
                     android:id="@+id/goal_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
