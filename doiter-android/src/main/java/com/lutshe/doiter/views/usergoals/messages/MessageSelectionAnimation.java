@@ -65,8 +65,11 @@ public class MessageSelectionAnimation extends Animation implements Animation.An
             listView.post(new Runnable() {
                 @Override
                 public void run() {
-                    // scroll speed is proportional to scroll length. experimental value
-                    listView.smoothScrollBy(scrollBy, SELECTION_ANIMATION_DURATION * (targetView.getHeight() / startHeight) * (isTopInvisible? 10 : 4));
+                    // startHeight is always a size of collapsed message.
+                    // 700 ms is a time that takes animation to move (startHeight) pixels.
+                    // 650 - min animation duration so user will understand what happened.
+                    // all values should be tuned better later.
+                    listView.smoothScrollBy(scrollBy, Math.min(650, (Math.abs(scrollBy) * 700) / startHeight));
                 }
             });
         }
