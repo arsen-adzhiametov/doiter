@@ -160,7 +160,7 @@
                         android:layout_below="@id/time_setter_container"
                         android:layout_above="@id/bottom_layout">
 
-            <com.lutshe.doiter.views.goals.MessageViewTemplateLayout_
+            <com.lutshe.doiter.views.usergoals.messages.MessageViewTemplateLayout_
                     android:id="@+id/goal_description_message_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
