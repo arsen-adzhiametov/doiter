@@ -13,6 +13,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.Trace;
+import org.androidannotations.annotations.res.BooleanRes;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -65,6 +66,9 @@ public class InitialDataSetup {
     @RootContext
     Context context;
 
+    @BooleanRes(resName = "makeNotDeliveredMessagesReadableForTest")
+    boolean deliverAllMessagesOnSetup;
+
     @Trace
     public void setup() {
         for (Goal goal : initialGoals) {
@@ -88,9 +92,17 @@ public class InitialDataSetup {
         last.setType(Message.Type.LAST);
         messagesDao.addMessage(last);
 
+        if (deliverAllMessagesOnSetup) {
+            messagesDao.updateMessageDeliveryTime(messagesDao.getMessage(goal.getId(), Message.Type.LAST).getId());
+            messagesDao.updateMessageDeliveryTime(messagesDao.getMessage(goal.getId(), Message.Type.FIRST).getId());
+        }
+
         for (int i = 1; i < messages.length - 1; i ++) {
             Message other = new Message(messages[i], goal.getId(), Long.valueOf(i));
             messagesDao.addMessage(other);
+            if (deliverAllMessagesOnSetup) {
+                messagesDao.updateMessageDeliveryTime(messagesDao.getMessage(goal.getId(), Long.valueOf(i)).getId());
+            }
         }
 
         goalsDao.addGoal(goal);
