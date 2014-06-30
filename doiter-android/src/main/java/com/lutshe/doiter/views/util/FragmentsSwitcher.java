@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.ActivityLifecycleListener;
 import com.lutshe.doiter.views.UpdatableView;
+import com.lutshe.doiter.views.slidingtoolbar.SlidingToolbar;
 import org.androidannotations.annotations.EBean;
 
 /**
@@ -16,8 +17,11 @@ public class FragmentsSwitcher {
 
     private Activity activity;
     private Fragment currentFragment;
+    private SlidingToolbar toolbar;
 
     public void show(Fragment fragment) {
+        toolbar.hide();
+
         FragmentTransaction transaction = activity.getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment);
@@ -25,8 +29,9 @@ public class FragmentsSwitcher {
         transaction.commit();
     }
 
-    public void setActivity(Activity activity) {
+    public void init(Activity activity) {
         this.activity = activity;
+        this.toolbar = (SlidingToolbar) activity.findViewById(R.id.sliding_toolbar);
     }
     public Activity getActivity() {
         return activity;

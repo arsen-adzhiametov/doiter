@@ -57,7 +57,7 @@ public class TouchHandler implements View.OnTouchListener {
                     listener.onClick(event.getX(), event.getY());
                 }
                 clearState();
-                break;
+                return false;
 
             case MotionEvent.ACTION_MOVE:
                 long eventTime = System.currentTimeMillis();

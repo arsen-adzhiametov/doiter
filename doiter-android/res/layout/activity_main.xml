@@ -13,7 +13,7 @@
                  android:layout_height="match_parent"/>
 
     <com.lutshe.doiter.views.slidingtoolbar.SlidingToolbar
-            android:id="@+id/sliding_layout"
+            android:id="@+id/sliding_toolbar"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:gravity="right"

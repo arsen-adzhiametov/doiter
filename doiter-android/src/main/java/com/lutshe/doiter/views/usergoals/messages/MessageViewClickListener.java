@@ -26,7 +26,7 @@ public class MessageViewClickListener implements View.OnTouchListener {
                 break;
         }
 
-        return true;
+        return false;
     }
 
     public synchronized void sendClick(MessageViewTemplateLayout messageView) {

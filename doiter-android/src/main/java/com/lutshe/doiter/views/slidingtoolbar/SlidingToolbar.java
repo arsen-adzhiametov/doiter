@@ -105,7 +105,7 @@ public class SlidingToolbar extends LinearLayout {
                         velocityTracker.computeCurrentVelocity(1000);
                         clearAnimation();
                         if (Math.abs(startPosition - event.getRawY()) < clickThresholdPixels) {
-                            post(new StartShowHideAnimation(contentHeight * 3, Math.abs(getTopMargin()) > contentHeight / 2));
+                            post(new StartShowHideAnimation(getDefaultAnimationVelocity(), Math.abs(getTopMargin()) > contentHeight / 2));
                         }
                         else {
                             post(new StartShowHideAnimation(velocityTracker.getYVelocity(), event.getRawY() > startPosition));
@@ -185,6 +185,24 @@ public class SlidingToolbar extends LinearLayout {
             });
             valueAnimator.start();
         }
+    }
+
+    public void hide() {
+        if (!isHidden()) {
+            post(new StartShowHideAnimation(getDefaultAnimationVelocity(), false));
+        }
+    }
+
+    public void show() {
+        post(new StartShowHideAnimation(getDefaultAnimationVelocity(), true));
+    }
+
+    private boolean isHidden() {
+        return state == State.STILL && getTopMargin() < 0;
+    }
+
+    private float getDefaultAnimationVelocity() {
+        return contentHeight * 3;
     }
 
     private int getTopMargin() {

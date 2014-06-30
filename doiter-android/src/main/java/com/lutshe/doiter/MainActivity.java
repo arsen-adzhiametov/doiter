@@ -3,6 +3,7 @@ package com.lutshe.doiter;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import com.crashlytics.android.Crashlytics;
@@ -24,8 +25,8 @@ import static com.lutshe.doiter.AchievementTimeConstants.OPEN_USER_GOALS_INTENT_
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
 
-    @ViewById(R.id.sliding_layout)
-    SlidingToolbar topMenuSlidingDrawer;
+    @ViewById(R.id.sliding_toolbar)
+    SlidingToolbar toolbar;
 
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean GoalsDao goalsDao;
@@ -36,7 +37,7 @@ public class MainActivity extends Activity {
     @AfterViews
     void initViews() {
         Crashlytics.start(this);
-        fragmentsSwitcher.setActivity(this);
+        fragmentsSwitcher.init(this);
 
         if (isFirstLaunch()) {
             testDataSetup.setup();
@@ -85,8 +86,16 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // hide top toolbar on any click.
+        // this will not work if any touch listener consumes touch event (returns true)
+        toolbar.hide();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     public void onBackPressed() {
-        topMenuSlidingDrawer.setVisibility(View.VISIBLE);
+        toolbar.setVisibility(View.VISIBLE);
         if (fragmentsSwitcher.getCurrentFragment() instanceof GoalsMapFragment){
             super.onBackPressed();
         }else{
