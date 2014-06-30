@@ -17,4 +17,8 @@ public class GoalsMapUpdater extends Looper {
     protected void doAction(long dt) {
         controller.updateState(dt);
     }
+
+    @Override
+    protected void cleanup() {
+    }
 }

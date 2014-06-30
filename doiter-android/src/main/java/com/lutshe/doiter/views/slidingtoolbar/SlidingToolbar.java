@@ -96,7 +96,7 @@ public class SlidingToolbar extends LinearLayout {
                         addMargin(distanceY);
                         prevPosition = event.getRawY();
                         requestLayout();
-                        return state != State.STILL;
+                        return true;
                     }
                     else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                         velocityTracker.addMovement(event);

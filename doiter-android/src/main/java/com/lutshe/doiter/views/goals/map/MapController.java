@@ -34,6 +34,7 @@ public class MapController implements TouchEventsListener {
 
     private GoalsMapView goalsMapView;
     private GoalsDao goalsDao;
+    private boolean receiveEvents;
 
     public MapController(FragmentsSwitcher fragmentsSwitcher, GoalsMapView goalsMapView,
                          ImagesProvider imagesProvider, GoalsDao goalsDao) {
@@ -93,7 +94,9 @@ public class MapController implements TouchEventsListener {
 
     @Override
     public void onScroll(float dx, float dy, long dt) {
-        addOffsets(dx, dy);
+        if (receiveEvents) {
+            addOffsets(dx, dy);
+        }
     }
 
     private synchronized void addOffsets(float dx, float dy) {
@@ -118,6 +121,10 @@ public class MapController implements TouchEventsListener {
 
     @Override
     public void onClick(float x, float y) {
+        if (!receiveEvents) {
+            return;
+        }
+
         x = trim(x - currentOffsetX, getMapWidth());
         y = trim(y - currentOffsetY, getMapHeight());
         Goal selectedGoal = map.findGoalUnder(x, y);
@@ -139,11 +146,17 @@ public class MapController implements TouchEventsListener {
 
     @Override
     public void onEventStarted() {
-        scrollSpeedX = scrollSpeedY = 0;
+        if (receiveEvents) {
+            scrollSpeedX = scrollSpeedY = 0;
+        }
     }
 
     @Override
     public void onEventFinished(float dx, float dy, long time) {
+        if (!receiveEvents) {
+             return;
+        }
+
         scrollSpeedX = (int) (dx * 1024 / time);
         scrollSpeedY = (int) (dy * 1024 / time);
         scrollSpeedXDecrease = scrollSpeedX / 40;
@@ -152,5 +165,9 @@ public class MapController implements TouchEventsListener {
 
     public void init() {
         map.init(screenWidth, screenHeight);
+    }
+
+    public void startReceivingEvents() {
+        this.receiveEvents = true;
     }
 }

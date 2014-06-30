@@ -27,9 +27,11 @@ public abstract class Looper implements Runnable {
             lastUpdateTime = currentTimeMillis();
             doAction(dt);
 		}
+        cleanup();
 	}
 	
 	protected abstract void doAction(long dt);
+    protected abstract void cleanup();
 	
 	private void waitForAction() {
 		long timeSinceLastUpdate = currentTimeMillis() - lastUpdateTime;

@@ -101,6 +101,7 @@ public class GoalsMapDrawer extends Drawer {
         if (!drawingMapNow) {
             drawingMapNow = true;
             view.startShowingMap();
+            controller.startReceivingEvents();
         }
     }
 
@@ -133,8 +134,7 @@ public class GoalsMapDrawer extends Drawer {
     }
 
     @Override
-    public void shutDown() {
-        super.shutDown();
+    public void cleanup() {
         goalsCache.evictAll();
 
         gradientDrawer.recycle();
