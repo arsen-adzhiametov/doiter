@@ -57,6 +57,7 @@ public class MessagesDao {
         Long result = null;
         Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_LAST_NOTIFICATION_TIME, null);
         try {
+            cursor.moveToFirst();
             result = cursor.getLong(0);
         } finally {
             cursor.close();
