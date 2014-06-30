@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import android.util.Log;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EReceiver;
 import org.androidannotations.annotations.Trace;
@@ -20,6 +21,7 @@ public class BootListener extends BroadcastReceiver {
     @Override
     @Trace
     public void onReceive(Context context, Intent intent) {
-        messagesUpdateAlarmScheduler.scheduleNextAlarm();
+        Log.d("lutshe.alarm", "boot_completed received. Rescheduling alarm");
+        messagesUpdateAlarmScheduler.scheduleAlarmIfNotSet();
     }
 }

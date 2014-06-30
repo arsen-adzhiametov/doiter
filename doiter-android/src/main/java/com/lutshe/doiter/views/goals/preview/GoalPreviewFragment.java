@@ -44,7 +44,7 @@ public class GoalPreviewFragment extends Fragment {
     void addToUserGoals() {
         addFirstMessage();
         activateGoal();
-        scheduleNextAlarm();
+        scheduleMessageSending();
         showGoal();
         showTopMenu();
         sendAnalyticsEvent();
@@ -64,8 +64,8 @@ public class GoalPreviewFragment extends Fragment {
         fragmentsSwitcher.show(UserGoalDetailFragment_.builder().goalId(goalId).build());
     }
 
-    private void scheduleNextAlarm() {
-        messagesUpdateAlarmScheduler.scheduleNextAlarm();
+    private void scheduleMessageSending() {
+        messagesUpdateAlarmScheduler.scheduleAlarmIfNotSet();
     }
 
     private void activateGoal() {
