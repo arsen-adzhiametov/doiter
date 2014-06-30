@@ -8,17 +8,15 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EReceiver;
-import org.androidannotations.annotations.SystemService;
-import org.androidannotations.annotations.Trace;
 import com.lutshe.doiter.MainActivity_;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
-
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EReceiver;
+import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.Trace;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -49,14 +47,11 @@ public class AlarmListener extends BroadcastReceiver {
     @Override
     @Trace
     public void onReceive(Context context, Intent intent) {
-        try {
-            int quantity = deliverMessages();
-            if (quantity > 0) {
-                sendNotifications(context, quantity);
-            }
-        } finally {
-            scheduleNext();
+        int quantity = deliverMessages();
+        if (quantity > 0) {
+            sendNotifications(context, quantity);
         }
+        Log.d("lutshe.alarm", "alarm fired. Sending " + quantity + " notifications to user");
     }
 
     private void sendNotifications(Context context, int quantity) {
@@ -121,9 +116,5 @@ public class AlarmListener extends BroadcastReceiver {
         Notification notification = notificationFactory.createNotification(quantity);
         int notificationId = 0;
         notificationManager.notify(notificationId, notification);
-    }
-
-    private void scheduleNext() {
-        messagesUpdateAlarmScheduler.scheduleNextAlarm();
     }
 }

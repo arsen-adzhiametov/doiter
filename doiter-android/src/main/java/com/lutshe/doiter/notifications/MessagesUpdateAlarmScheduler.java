@@ -4,14 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
-import org.androidannotations.annotations.SystemService;
-import org.androidannotations.annotations.Trace;
+import android.util.Log;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
-
+import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
 
 /**
@@ -20,7 +15,8 @@ import org.joda.time.DateTime;
 @EBean
 public class MessagesUpdateAlarmScheduler {
 
-    private static final long TIME_GAP = 10 * 1000 * 100;
+//    private static final long TIME_INTERVAL = 24L * 60 * 60 * 1000;  //one day in millis
+    private static final long TIME_INTERVAL = 5L * 60 * 1000;  //5 minutes in millis
 
     @RootContext
     Context context;
@@ -32,31 +28,44 @@ public class MessagesUpdateAlarmScheduler {
     MessagesDao messagesDao;
 
     @Trace
-    public void scheduleNextAlarm() {
-        DateTime nextNotificationTime = getNextNotificationTime();
-        PendingIntent pendingIntent = getPendingIntent();
-        alarmManager.set(AlarmManager.RTC_WAKEUP, nextNotificationTime.getMillis(), pendingIntent);
+    public void scheduleAlarmIfNotSet() {
+        if (!isAlarmAlreadySet()) {
+            DateTime nextNotificationTime = getNextNotificationTime();
+            PendingIntent pendingIntent = getPendingIntent(PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    nextNotificationTime.getMillis(),
+                    TIME_INTERVAL,
+                    pendingIntent);
+            Log.d("lutshe.alarm", "Alarm scheduled on " + nextNotificationTime + " with interval " +
+                    TIME_INTERVAL + "ms");
+        }
     }
 
-    private PendingIntent getPendingIntent() {
+    private boolean isAlarmAlreadySet(){
+        boolean alarmUp = getPendingIntent(PendingIntent.FLAG_NO_CREATE) != null;
+        if (alarmUp) {
+            Log.d("lutshe.alarm", "Alarm is already active");
+        }
+        return alarmUp;
+    }
+
+    private PendingIntent getPendingIntent(int flag) {
         Intent intent = new Intent(context, AlarmListener_.class);
-        return PendingIntent.getBroadcast(
-                context,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, 0, intent, flag);
     }
 
     private DateTime getNextNotificationTime() {
-        long lastNotificationTime = getLastNotificationTime();
-        DateTime now = DateTime.now();
-        DateTime last = now.withMillis(lastNotificationTime);
-        DateTime next = last.plus(TIME_GAP);
+        DateTime last = new DateTime(getLastNotificationTime());
+//        DateTime next =  last.withHourOfDay(14).plusDays(1);       //for every day
+        DateTime next =  last.plusMinutes(5);                        //for 5 min interval
+        Log.d("lutshe.alarm", "next notification time is " + next);
         return next;
     }
 
     private long getLastNotificationTime() {
         Long lastNotificationTime = messagesDao.getLastNotificationTime();
+        Log.d("lutshe.alarm", "last notification time is " + new DateTime(lastNotificationTime));
         return lastNotificationTime != null ? lastNotificationTime : DateTime.now().getMillis();
     }
 }
