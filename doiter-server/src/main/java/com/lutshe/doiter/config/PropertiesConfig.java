@@ -17,13 +17,14 @@ public class PropertiesConfig {
         PropertySourcesPlaceholderConfigurer p = new PropertySourcesPlaceholderConfigurer();
         Resource[] resourceLocations = new Resource[] {
                 new ClassPathResource(env + ".db.properties"),
-                new ClassPathResource(env + ".server.properties"),
+                new ClassPathResource(env + ".server.properties")
         };
+
         p.setLocations(resourceLocations);
         return p;
     }
 
     static @Bean(name = "env") public String getEnvironment() {
-        return System.getProperty("evn", "default");
+        return System.getProperty("env", "default");
     }
 }

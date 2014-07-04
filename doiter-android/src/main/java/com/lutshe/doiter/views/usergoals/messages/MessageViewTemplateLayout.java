@@ -76,7 +76,7 @@ public class MessageViewTemplateLayout extends RelativeLayout {
     @Override
     public void setOnTouchListener(final OnTouchListener listener) {
         setClickable(true);
-        // forwarding events to webview
+        // forwarding events to WebView
         super.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

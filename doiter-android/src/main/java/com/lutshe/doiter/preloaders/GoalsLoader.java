@@ -63,7 +63,7 @@ class GoalsLoader implements Loader {
     }
 
     private void loadMessagesForGoal(Goal goal) {
-        Message[] messages = messagesRestClient.getMessagesForGoal(goal.getId(), 0L, 10L);
+        Message[] messages = messagesRestClient.getAllMessagesForGoal(goal.getId());
         Log.d(GoalsLoader.class.getName(), "number of messages: " + messages.length);
         for (Message message : messages) {
             message.setId(null);

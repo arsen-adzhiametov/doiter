@@ -5,14 +5,11 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
-
 import org.joda.time.DateTime;
-
 import retrofit.RetrofitError;
 
 /**
@@ -66,7 +63,7 @@ public class LoaderService extends WakefulIntentService {
             updateLastCallTime(loader);
         }
         catch (RetrofitError re) {
-            Log.w(TAG, "error calling service: " + re.getCause().getMessage());
+            Log.e(TAG, "error calling service", re);
         }
         catch (Throwable e) {
             Log.e(TAG, "failed to execute loader", e);

@@ -9,7 +9,7 @@ public abstract class AbstractRestClient<T> {
     protected T service;
 
     protected AbstractRestClient(Class<T> c, String serviceUrl) {
-        RestAdapter adapter = new RestAdapter.Builder().setServer(serviceUrl + "/api").setDebug(true).build();
+        RestAdapter adapter = new RestAdapter.Builder().setServer(serviceUrl).setDebug(true).build();
         service = adapter.create(c);
     }
 }

@@ -10,6 +10,8 @@ import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.core.spi.component.ioc.IoCComponentProviderFactory;
 import com.sun.jersey.spi.spring.container.SpringComponentProviderFactory;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ import java.io.IOException;
  * @Author: Art
  */
 public class Server {
-
+    private static final Logger logger = LoggerFactory.getLogger(Server.class);
 
     public static void main(String[] args) throws IOException {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
@@ -48,10 +50,26 @@ public class Server {
         IoCComponentProviderFactory factory = new SpringComponentProviderFactory(rc, context);
 
         // creating server from all the above. ^ can be moved to spring also.
-        HttpServer server = GrizzlyServerFactory.createHttpServer("http://localhost:9999", rc, factory);
+        final HttpServer server = GrizzlyServerFactory.createHttpServer("http://0.0.0.0:9889", rc, factory);
 
         server.start();
-        System.in.read();
-        server.stop();
+
+        waitForTermination(server);
+    }
+
+    private static void waitForTermination(final HttpServer server) {
+        try {
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    logger.info("stopping server");
+                    server.stop();
+                }
+            }));
+
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        }
     }
 }

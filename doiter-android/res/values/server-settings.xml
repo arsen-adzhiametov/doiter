@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--string name="serverUrl">http://192.168.1.124:8844</string-->
-    <string name="serverUrl">http://localhost:9999</string>
+    <string name="serverUrl">http://46.8.27.147:9889</string>
+    <!--<string name="serverUrl">http://localhost:9999</string>-->
 </resources>

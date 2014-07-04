@@ -45,12 +45,12 @@ public class MessagesLoader implements Loader {
             }
 
             long loadFromIndex = Math.max(maxAvailable, lastReceived) + 1;
-            loadMessagesForGoal(userGoal, loadFromIndex, lastReceived);
+            loadMessagesForGoal(userGoal, loadFromIndex);
         }
     }
 
-    private void loadMessagesForGoal(Goal userGoal, long loadFromIndex, Long lastReceived) {
-        Message[] messages = messagesRestClient.getMessagesForGoal(userGoal.getId(), loadFromIndex, 10L - (loadFromIndex - lastReceived));
+    private void loadMessagesForGoal(Goal userGoal, long loadFromIndex) {
+        Message[] messages = messagesRestClient.getMessagesForGoal(userGoal.getId(), loadFromIndex, 1000L);
         for (Message message : messages) {
             message.setId(null);
             messagesDao.addMessage(message);
