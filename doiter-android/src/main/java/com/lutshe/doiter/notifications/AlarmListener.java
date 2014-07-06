@@ -18,6 +18,7 @@ import org.androidannotations.annotations.EReceiver;
 import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.Trace;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.util.List;
 
@@ -27,31 +28,20 @@ import java.util.List;
 @EReceiver
 public class AlarmListener extends BroadcastReceiver {
 
-    @SystemService
-    NotificationManager notificationManager;
-    @SystemService
-    ActivityManager activityManager;
-
-    @Bean
-    NotificationFactory notificationFactory;
-
-    @Bean
-    MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
-
-    @Bean
-    MessagesDao messagesDao;
-
-    @Bean
-    GoalsDao goalsDao;
+    @SystemService NotificationManager notificationManager;
+    @SystemService ActivityManager activityManager;
+    @Bean NotificationFactory notificationFactory;
+    @Bean MessagesDao messagesDao;
+    @Bean GoalsDao goalsDao;
 
     @Override
     @Trace
     public void onReceive(Context context, Intent intent) {
-        int quantity = deliverMessages();
-        if (quantity > 0) {
-            sendNotifications(context, quantity);
+        int deliveredMessagesCount = deliverMessages();
+        if (deliveredMessagesCount > 0) {
+            sendNotifications(context, deliveredMessagesCount);
         }
-        Log.d("lutshe.alarm", "alarm fired. Sending " + quantity + " notifications to user");
+        Log.d("lutshe.alarm", "alarm fired. Sending " + deliveredMessagesCount + " notifications to user");
     }
 
     private void sendNotifications(Context context, int quantity) {
@@ -76,39 +66,67 @@ public class AlarmListener extends BroadcastReceiver {
     }
 
     private int deliverMessages() {
+        int messagesSent = 0;
         Goal[] userGoals = goalsDao.getActiveUserGoals();
-        if (userGoals == null) return 0;
+        if (userGoals == null) return messagesSent;
         for (Goal goal : userGoals) {
-            Log.d("notification alarm", "delivering messages for goal " + goal);
-            DateTime goalEndTime = new DateTime(goal.getEndTime());
-            if (isToday(goalEndTime)) {
-                deliverLastMessage(goal);
-            } else {
-                deliverOtherMessage(goal);
-            }
+            messagesSent += ensureMessagesDeliveredOrDeliver(goal);
         }
-        return userGoals.length;
+        return messagesSent;
     }
 
-    private void deliverOtherMessage(Goal goal) {
+    private int ensureMessagesDeliveredOrDeliver(Goal goal) {
+        int messagesSent = 0;
+        DateTime goalEndTime = getGoalEndTime(goal);
+        DateTime goalStartTime = getGoalStartTime(goal);
+        Days goalDistance = Days.daysBetween(goalStartTime, goalEndTime);
+
+        DateTime nextMessageTime = goalStartTime.plusDays(getDaysCountWithDeliveredMessages(goal.getId()));
+        while (nextMessageTime.isBeforeNow() &&
+                getDaysCountWithDeliveredMessages(goal.getId()) < goalDistance.getDays()) {
+            deliverOtherMessage(goal.getId());
+            messagesSent++;
+            nextMessageTime = nextMessageTime.plusDays(1);
+        }
+        if (goalEndTime.isBeforeNow()) {
+            deliverLastMessage(goal.getId());
+            messagesSent++;
+        }
+        return messagesSent;
+    }
+
+    private DateTime getGoalEndTime(Goal goal) {
+        return new DateTime(goal.getEndTime()).withTimeAtStartOfDay();
+    }
+
+    private DateTime getGoalStartTime(Goal goal) {
+        Message firstDeliveredMessage = messagesDao.getMessage(goal.getId(), Message.Type.FIRST);
+        return new DateTime(firstDeliveredMessage.getDeliveryTime()).withTimeAtStartOfDay();
+    }
+
+    private int getDaysCountWithDeliveredMessages(Long goalId) {
+        Goal goal = goalsDao.getGoal(goalId);
+        long lastMessageIndex = goal.getLastMessageIndex();
+        return (int)lastMessageIndex + 1;
+    }
+
+    private void deliverOtherMessage(Long goalId) {
+        Goal goal = goalsDao.getGoal(goalId);
         long nextMessageIndex = goal.getLastMessageIndex() + 1;
         Message message = messagesDao.getMessage(goal.getId(), nextMessageIndex);
         if (message == null) {
-            deliverLastMessage(goal);
+            deliverLastMessage(goal.getId());
             return;
         }
         messagesDao.updateMessageDeliveryTime(message.getId());
         goalsDao.updateGoalLastMessage(goal.getId(), nextMessageIndex);
     }
 
-    private void deliverLastMessage(Goal goal) {
+    private void deliverLastMessage(Long goalId) {
+        Goal goal = goalsDao.getGoal(goalId);
         Message message = messagesDao.getMessage(goal.getId(), Message.Type.LAST);
         messagesDao.updateMessageDeliveryTime(message.getId());
         goalsDao.updateGoalStatus(goal.getId(), Goal.Status.INACTIVE);
-    }
-
-    private boolean isToday(DateTime goalEndTime) {
-        return goalEndTime.getDayOfYear() == DateTime.now().getDayOfYear();
     }
 
     private void sendNotification(int quantity) {

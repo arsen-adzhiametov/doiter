@@ -15,8 +15,7 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import com.lutshe.doiter.views.util.HtmlCodePreparer;
 import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
-
-import static com.lutshe.doiter.AchievementTimeConstants.MILLISECONDS_IN_DAY;
+import org.joda.time.Days;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -78,9 +77,13 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     }
 
     private void loadCurrentMessage(Goal goal) {
-        Message currentMessage = messagesDao.getMessage(goal.getId(), goal.getLastMessageIndex());
-        String htmlCode = htmlCodePreparer.getHtmlCode(currentMessage.getText());
+        String htmlCode = htmlCodePreparer.getHtmlCode(getCurrentMessage(goal).getText());
         userGoalDetailLayout.showCurrentMessageOnWebView(htmlCode);
+    }
+
+    private Message getCurrentMessage(Goal goal) {
+        return goal.getStatus().equals(Goal.Status.ACTIVE) ? messagesDao.getMessage(goal.getId(),
+                goal.getLastMessageIndex()) : messagesDao.getMessage(goal.getId(), Message.Type.LAST);
     }
 
     private void disableNavigationIfOnlyOneUserGoal() {
@@ -93,8 +96,8 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
     public void update() {}
 
     private int getDaysRemaining(Goal goal) {
-        long timeDiff = goal.getEndTime() - DateTime.now().getMillis();
-        return timeDiff > 0 ? (int)(timeDiff / MILLISECONDS_IN_DAY) : 0;
+        return Days.daysBetween(DateTime.now().withTimeAtStartOfDay(),
+                new DateTime(goal.getEndTime()).withTimeAtStartOfDay()).getDays();
     }
 
     @Click(R.id.more_tips_button)

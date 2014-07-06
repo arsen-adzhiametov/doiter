@@ -15,8 +15,8 @@ import org.joda.time.DateTime;
 @EBean
 public class MessagesUpdateAlarmScheduler {
 
-//    private static final long TIME_INTERVAL = 24L * 60 * 60 * 1000;  //one day in millis
-    private static final long TIME_INTERVAL = 5L * 60 * 1000;  //5 minutes in millis
+    private static final long TIME_INTERVAL = 24L * 60 * 60 * 1000;  //one day in millis
+//    private static final long TIME_INTERVAL = 5L * 60 * 1000;  //5 minutes in millis
 
     @RootContext
     Context context;
@@ -57,8 +57,8 @@ public class MessagesUpdateAlarmScheduler {
 
     private DateTime getNextNotificationTime() {
         DateTime last = new DateTime(getLastNotificationTime());
-//        DateTime next =  last.withHourOfDay(14).plusDays(1);       //for every day
-        DateTime next =  last.plusMinutes(5);                        //for 5 min interval
+        DateTime next =  last.withHourOfDay(14).plusDays(1);       //for every day
+//        DateTime next =  last.plusMinutes(5);                        //for 5 min interval
         Log.d("lutshe.alarm", "next notification time is " + next);
         return next;
     }
