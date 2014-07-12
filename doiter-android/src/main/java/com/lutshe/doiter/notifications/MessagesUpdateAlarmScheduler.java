@@ -51,7 +51,7 @@ public class MessagesUpdateAlarmScheduler {
     }
 
     private PendingIntent getPendingIntent(int flag) {
-        Intent intent = new Intent(context, AlarmListener_.class);
+        Intent intent = new Intent(context, MessagesUpdateAlarmListener_.class);
         return PendingIntent.getBroadcast(context, 0, intent, flag);
     }
 
