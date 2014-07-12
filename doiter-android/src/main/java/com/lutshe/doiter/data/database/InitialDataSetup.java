@@ -19,6 +19,8 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.lutshe.doiter.AchievementTimeConstants.DB_RELATED_TAG;
+
 /**
  * Created by Arturro on 21.08.13.
  */
@@ -69,7 +71,7 @@ public class InitialDataSetup {
     @BooleanRes(resName = "makeNotDeliveredMessagesReadableForTest")
     boolean deliverAllMessagesOnSetup;
 
-    @Trace
+    @Trace(tag = DB_RELATED_TAG, level = Log.INFO)
     public void setup() {
         for (Goal goal : initialGoals) {
             setupGoal(goal);

@@ -11,5 +11,7 @@ public final class AchievementTimeConstants {
 
     public static final int SEEK_BAR_MIN_DAYS_AMOUNT = 1;
 
+    public static final String DB_RELATED_TAG = "doiter.database";
+
     private AchievementTimeConstants() {}
 }

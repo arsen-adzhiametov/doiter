@@ -3,38 +3,33 @@ package com.lutshe.doiter.data.database.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.Trace;
 
-import static com.lutshe.doiter.data.database.dao.GoalsDao.END_TIME;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.GOALS_TABLE;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_ID;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_NAME;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.GOAL_STATUS;
-import static com.lutshe.doiter.data.database.dao.GoalsDao.LAST_MESSAGE_INDEX;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.DELIVERY_TIME;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.MESSAGES_TABLE;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.MESSAGE_ID;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.ORDER_INDEX;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.TEXT;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.TYPE;
-import static com.lutshe.doiter.data.database.dao.MessagesDao.USER_GOAL_ID;
+import static com.lutshe.doiter.AchievementTimeConstants.DB_RELATED_TAG;
+import static com.lutshe.doiter.data.database.dao.GoalsDao.*;
+import static com.lutshe.doiter.data.database.dao.MessagesDao.*;
 
 /**
- * Created by Arsen Adzhiametov on goal6/31/13.
+ * Created by Arsen Adzhiametov on 7/31/13.
  */
 @EBean(scope = EBean.Scope.Singleton)
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    static String DB_PATH = "/data/data/com.lutshe.doiter/databases/";
     static final String DB_NAME = "doiterDB";
+
+    @Bean DatabaseCopier databaseCopier;
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
     }
 
-    @Trace
+    @Trace(tag = DB_RELATED_TAG, level = Log.INFO)
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + GOALS_TABLE + " (" +
@@ -57,10 +52,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ");");
     }
 
+    @Trace(tag = DB_RELATED_TAG, level = Log.INFO)
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + GOALS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + MESSAGES_TABLE);
         onCreate(db);
+    }
+
+    @Trace(tag = DB_RELATED_TAG, level = Log.INFO)
+    public void copyDatabaseFromFile() {
+        this.getReadableDatabase();
+        databaseCopier.copy();
     }
 }

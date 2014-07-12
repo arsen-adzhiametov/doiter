@@ -9,6 +9,7 @@ import android.view.Window;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.lutshe.doiter.data.database.InitialDataSetup;
+import com.lutshe.doiter.data.database.dao.DatabaseHelper;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment;
@@ -17,6 +18,7 @@ import com.lutshe.doiter.views.slidingtoolbar.SlidingToolbar;
 import com.lutshe.doiter.views.usergoals.details.UserGoalDetailFragment_;
 import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
+import org.androidannotations.annotations.res.BooleanRes;
 
 import static com.lutshe.doiter.AchievementTimeConstants.OPEN_USER_GOALS_INTENT_ACTION;
 
@@ -28,9 +30,11 @@ public class MainActivity extends Activity {
     @ViewById(R.id.sliding_toolbar)
     SlidingToolbar toolbar;
 
+    @BooleanRes boolean copyDatabaseFromFile;
     @Bean FragmentsSwitcher fragmentsSwitcher;
     @Bean GoalsDao goalsDao;
     @Bean InitialDataSetup testDataSetup;
+    @Bean DatabaseHelper databaseHelper;
 
     @SystemService AlarmManager alarmManager;
 
@@ -40,7 +44,11 @@ public class MainActivity extends Activity {
         fragmentsSwitcher.init(this);
 
         if (isFirstLaunch()) {
-            testDataSetup.setup();
+            if (copyDatabaseFromFile) {
+                databaseHelper.copyDatabaseFromFile();
+            } else {
+                testDataSetup.setup();
+            }
             UpdatesAlarmListener.scheduleUpdates(getApplicationContext());
         }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="debug">true</bool>
-    <bool name="makeNotDeliveredMessagesReadableForTest">true</bool>
+    <bool name="makeNotDeliveredMessagesReadableForTest">false</bool>
+    <bool name="copyDatabaseFromFile">true</bool>
 </resources>
