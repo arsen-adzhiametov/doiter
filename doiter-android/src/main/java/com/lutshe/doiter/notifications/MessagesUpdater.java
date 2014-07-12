@@ -1,71 +1,24 @@
 package com.lutshe.doiter.notifications;
 
-import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import com.lutshe.doiter.MainActivity_;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
 import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EReceiver;
-import org.androidannotations.annotations.SystemService;
-import org.androidannotations.annotations.Trace;
+import org.androidannotations.annotations.EBean;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import java.util.List;
-
 /**
- * Created by Arsen Adzhiametov on goal6/31/13.
+ * Created by Arsen Adzhiametov on 12-Jul-14 in IntelliJ IDEA.
  */
-@EReceiver
-public class AlarmListener extends BroadcastReceiver {
+@EBean
+public class MessagesUpdater {
 
-    @SystemService NotificationManager notificationManager;
-    @SystemService ActivityManager activityManager;
-    @Bean NotificationFactory notificationFactory;
     @Bean MessagesDao messagesDao;
     @Bean GoalsDao goalsDao;
 
-    @Override
-    @Trace
-    public void onReceive(Context context, Intent intent) {
-        int deliveredMessagesCount = deliverMessages();
-        if (deliveredMessagesCount > 0) {
-            sendNotifications(context, deliveredMessagesCount);
-        }
-        Log.d("lutshe.alarm", "alarm fired. Sending " + deliveredMessagesCount + " notifications to user");
-    }
-
-    private void sendNotifications(Context context, int quantity) {
-        if (isActivityRunning()) {
-            notifyActivity(context);
-        } else {
-            sendNotification(quantity);
-        }
-    }
-
-    private boolean isActivityRunning() {
-        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(1);
-        ComponentName runningActivity = tasks.get(0).topActivity;
-        return runningActivity.getPackageName().startsWith("com.lutshe.doiter");
-    }
-
-    private void notifyActivity(Context context) {
-        Log.d("AL", "notifying activity about new messages");
-        Intent intent = new Intent(context, MainActivity_.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
-    private int deliverMessages() {
+    public int deliverMessages() {
         int messagesSent = 0;
         Goal[] userGoals = goalsDao.getActiveUserGoals();
         if (userGoals == null) return messagesSent;
@@ -126,12 +79,5 @@ public class AlarmListener extends BroadcastReceiver {
         Message message = messagesDao.getMessage(goalId, Message.Type.LAST);
         messagesDao.updateMessageDeliveryTime(message.getId());
         goalsDao.updateGoalStatus(goalId, Goal.Status.INACTIVE);
-    }
-
-    private void sendNotification(int quantity) {
-        Log.d("AL", "sending notifications");
-        Notification notification = notificationFactory.createNotification(quantity);
-        int notificationId = 0;
-        notificationManager.notify(notificationId, notification);
     }
 }

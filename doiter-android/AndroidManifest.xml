@@ -36,7 +36,7 @@
         </activity>
 
         <!-- Our notifications -->
-        <receiver android:name=".notifications.AlarmListener_"/>
+        <receiver android:name=".notifications.MessagesUpdateAlarmListener_"/>
         <receiver android:name=".notifications.BootListener_">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
