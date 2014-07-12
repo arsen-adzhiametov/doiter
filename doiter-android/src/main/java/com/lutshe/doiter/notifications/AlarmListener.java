@@ -84,7 +84,7 @@ public class AlarmListener extends BroadcastReceiver {
         DateTime nextMessageTime = goalStartTime.plusDays(getDaysCountWithDeliveredMessages(goal.getId()));
         while (nextMessageTime.isBeforeNow() &&
                 getDaysCountWithDeliveredMessages(goal.getId()) < goalDistance.getDays()) {
-            deliverOtherMessage(goal.getId());
+            deliverNextMessage(goal.getId());
             messagesSent++;
             nextMessageTime = nextMessageTime.plusDays(1);
         }
@@ -110,7 +110,7 @@ public class AlarmListener extends BroadcastReceiver {
         return (int)lastMessageIndex + 1;
     }
 
-    private void deliverOtherMessage(Long goalId) {
+    private void deliverNextMessage(Long goalId) {
         Goal goal = goalsDao.getGoal(goalId);
         long nextMessageIndex = goal.getLastMessageIndex() + 1;
         Message message = messagesDao.getMessage(goal.getId(), nextMessageIndex);
@@ -123,10 +123,9 @@ public class AlarmListener extends BroadcastReceiver {
     }
 
     private void deliverLastMessage(Long goalId) {
-        Goal goal = goalsDao.getGoal(goalId);
-        Message message = messagesDao.getMessage(goal.getId(), Message.Type.LAST);
+        Message message = messagesDao.getMessage(goalId, Message.Type.LAST);
         messagesDao.updateMessageDeliveryTime(message.getId());
-        goalsDao.updateGoalStatus(goal.getId(), Goal.Status.INACTIVE);
+        goalsDao.updateGoalStatus(goalId, Goal.Status.INACTIVE);
     }
 
     private void sendNotification(int quantity) {
