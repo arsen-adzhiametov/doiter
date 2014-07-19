@@ -1,7 +1,6 @@
 package com.lutshe.doiter;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,6 +10,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.lutshe.doiter.data.database.InitialDataSetup;
 import com.lutshe.doiter.data.database.dao.DatabaseHelper;
 import com.lutshe.doiter.data.database.dao.GoalsDao;
+import com.lutshe.doiter.notifications.MessagesUpdateAlarmScheduler;
 import com.lutshe.doiter.preloaders.UpdatesAlarmListener;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment;
 import com.lutshe.doiter.views.goals.map.GoalsMapFragment_;
@@ -35,8 +35,7 @@ public class MainActivity extends Activity {
     @Bean GoalsDao goalsDao;
     @Bean InitialDataSetup testDataSetup;
     @Bean DatabaseHelper databaseHelper;
-
-    @SystemService AlarmManager alarmManager;
+    @Bean MessagesUpdateAlarmScheduler messagesUpdateAlarmScheduler;
 
     @AfterViews
     void initViews() {
@@ -53,6 +52,7 @@ public class MainActivity extends Activity {
         }
 
         fragmentsSwitcher.show(GoalsMapFragment_.builder().build());
+        messagesUpdateAlarmScheduler.scheduleAlarmIfNotSet();
     }
 
     private boolean isFirstLaunch() {
