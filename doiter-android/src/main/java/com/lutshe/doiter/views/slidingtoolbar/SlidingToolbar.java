@@ -161,7 +161,7 @@ public class SlidingToolbar extends LinearLayout {
                 .addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
-                        ((MarginLayoutParams) getLayoutParams()).topMargin = (int) animation.getAnimatedValue();
+                        ((MarginLayoutParams) getLayoutParams()).topMargin = (Integer) animation.getAnimatedValue();
                         SlidingToolbar.this.requestLayout();
                     }
                 });

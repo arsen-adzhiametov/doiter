@@ -1,25 +1,22 @@
 package com.lutshe.doiter.views.goals.map.model;
 
-import android.graphics.*;
-import android.util.Log;
-
-import com.lutshe.doiter.model.Goal;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import com.lutshe.doiter.data.provider.ImagesProvider;
+import com.lutshe.doiter.model.Goal;
 
 /**
  * Created by Arturro on 22.09.13.
  */
 public class GoalView {
-    private static final String TAG = GoalView.class.getName();
-
-    private static final float BORDER_SIZE = 52;
     private final Goal goal;
 
     // position of left top corner of image inside the cell
     private int x;
     private int y;
 
-    // TODO: save ratio to scale all other stuff (tips, shadows, font) to the same ratio?
     private Bitmap scaledBitmap;
 
     public GoalView(Goal goal) {
@@ -29,8 +26,6 @@ public class GoalView {
     public static GoalView create(Goal goal, float maxWidth, float maxHeight, float borderSize, ImagesProvider imagesProvider) {
         GoalView goalView = new GoalView(goal);
 
-        Log.d(TAG, "creating view for goal " + goal + ". maxW = " + maxWidth + " maxH = " + maxHeight);
-
         Bitmap bitmap = imagesProvider.getImage(goal.getImageName());
         float newWidth, newHeight, ratio;
 
@@ -39,7 +34,6 @@ public class GoalView {
         if (ratio == 1) {
             goalView.scaledBitmap = bitmap;
         } else {
-            Log.d(TAG, "scaling with ratio = " + ratio);
             newWidth = bitmap.getWidth() * ratio;
             newHeight = bitmap.getHeight() * ratio;
             goalView.scaledBitmap = Bitmap.createBitmap((int) newWidth, (int) newHeight, Bitmap.Config.ARGB_8888);
@@ -105,5 +99,9 @@ public class GoalView {
 
     public Bitmap getScaledBitmap() {
         return scaledBitmap;
+    }
+
+    public void setGoalStatus(Goal.Status status) {
+        goal.setStatus(status);
     }
 }

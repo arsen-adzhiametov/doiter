@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v4.util.LruCache;
 import android.util.Log;
+import android.util.LruCache;
 import com.lutshe.doiter.R;
 import com.lutshe.doiter.views.common.CanvasView;
 import com.lutshe.doiter.views.common.Drawer;
@@ -29,6 +29,7 @@ public class GoalsMapDrawer extends Drawer {
     private final GoalNameDrawer goalNameDrawer;
     private final ShadowDrawer shadowDrawer;
     private final GradientDrawer gradientDrawer;
+    private final StateIconDrawer stateIconDrawer;
 
     private final int shadowSize;
 
@@ -56,6 +57,7 @@ public class GoalsMapDrawer extends Drawer {
         shadowSize = imageCornerSize;
 
         shadowDrawer = new ShadowDrawer(resources, goalView.getHeight(), imageCornerSize, shadowSize);
+        stateIconDrawer = new StateIconDrawer(resources, goalView.getHeight());
     }
 
     private final LruCache<GoalView, Bitmap> goalsCache = new LruCache<GoalView, Bitmap>(MAX_GOALS_IN_CACHE) {
@@ -130,6 +132,8 @@ public class GoalsMapDrawer extends Drawer {
         gradientDrawer.drawGradient(canvas, view);
         goalNameDrawer.drawText(canvas, view);
 
+        stateIconDrawer.drawIcon(canvas, view.getGoal().getStatus());
+
         canvas.restore();
     }
 
@@ -139,5 +143,6 @@ public class GoalsMapDrawer extends Drawer {
 
         gradientDrawer.recycle();
         shadowDrawer.recycle();
+        stateIconDrawer.recycle();
     }
 }

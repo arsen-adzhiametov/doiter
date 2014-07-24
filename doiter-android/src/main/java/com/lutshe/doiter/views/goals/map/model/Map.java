@@ -5,6 +5,8 @@ import android.util.Log;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.data.provider.ImagesProvider;
 
+import java.util.HashMap;
+
 /**
  * Created by Arturro on 22.09.13.
  */
@@ -51,6 +53,21 @@ public class Map {
                 generateGrid(availableSquareSize, availableSquareSize, goals);
             } else {
                 generateGrid((int) MIN_ROWS, (int) Math.max(MIN_COLS, (goals.length / MIN_ROWS) + 1), goals);
+            }
+        }
+
+        updateGoalsState();
+    }
+
+    private void updateGoalsState() {
+        java.util.Map<Long, Goal> goalsMap = new HashMap<>();
+        for (Goal goal : goals) {
+            goalsMap.put(goal.getId(), goal);
+        }
+
+        for (GoalView[] goalViews : goalsGrid) {
+            for (GoalView goalView : goalViews) {
+                goalView.setGoalStatus(goalsMap.get(goalView.getGoal().getId()).getStatus());
             }
         }
     }
