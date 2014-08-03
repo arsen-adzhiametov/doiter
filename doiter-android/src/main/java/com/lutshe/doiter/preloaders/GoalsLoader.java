@@ -4,23 +4,27 @@ import android.app.AlarmManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import com.lutshe.doiter.data.database.dao.GoalsDao;
+import com.lutshe.doiter.data.database.dao.MessagesDao;
+import com.lutshe.doiter.data.rest.clients.GoalsRestClient;
+import com.lutshe.doiter.data.rest.clients.ImageRestClient;
+import com.lutshe.doiter.data.rest.clients.MessagesRestClient;
+import com.lutshe.doiter.dto.GoalDTO;
+import com.lutshe.doiter.dto.MessageDTO;
+import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.model.Message;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.Trace;
-import com.lutshe.doiter.data.database.dao.GoalsDao;
-import com.lutshe.doiter.data.database.dao.MessagesDao;
-import com.lutshe.doiter.model.Goal;
-import com.lutshe.doiter.model.Message;
-import com.lutshe.doiter.data.rest.clients.GoalsRestClient;
-import com.lutshe.doiter.data.rest.clients.ImageRestClient;
-import com.lutshe.doiter.data.rest.clients.MessagesRestClient;
 import org.apache.http.HttpStatus;
 import retrofit.client.Response;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.lutshe.doiter.data.converter.DtoToModelConverter.convertToGoalModel;
+import static com.lutshe.doiter.data.converter.DtoToModelConverter.convertToMessageModel;
 import static com.lutshe.doiter.views.util.IoUtils.getBitmap;
 import static com.lutshe.doiter.views.util.IoUtils.writeBitmapToFile;
 
@@ -47,9 +51,9 @@ class GoalsLoader implements Loader {
     @Trace
     @Override
     public void load() {
-        Goal[] allGoals = goalsRestClient.getAllGoals();
-        for (Goal goal : allGoals) {
-            storeGoal(goal);
+        GoalDTO[] allGoals = goalsRestClient.getAllGoals();
+        for (GoalDTO goalDTO : allGoals) {
+            storeGoal(convertToGoalModel(goalDTO));
         }
     }
 
@@ -63,9 +67,10 @@ class GoalsLoader implements Loader {
     }
 
     private void loadMessagesForGoal(Goal goal) {
-        Message[] messages = messagesRestClient.getAllMessagesForGoal(goal.getId());
-        Log.d(GoalsLoader.class.getName(), "number of messages: " + messages.length);
-        for (Message message : messages) {
+        MessageDTO[] messageDTOs = messagesRestClient.getAllMessagesForGoal(goal.getId());
+        Log.d(GoalsLoader.class.getName(), "number of messages: " + messageDTOs.length);
+        for (MessageDTO messageDTO : messageDTOs) {
+            Message message = convertToMessageModel(messageDTO);
             message.setId(null);
             messagesDao.addMessage(message);
         }

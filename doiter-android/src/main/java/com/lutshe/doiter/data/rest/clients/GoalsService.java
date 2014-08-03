@@ -1,6 +1,6 @@
 package com.lutshe.doiter.data.rest.clients;
 
-import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.dto.GoalDTO;
 
 import retrofit.http.GET;
 
@@ -10,8 +10,8 @@ import retrofit.http.GET;
 public interface GoalsService {
 
     @GET("/json.v1.goals/all")
-    Goal[] getAllGoals();
+    GoalDTO[] getAllGoals();
 
     @GET("/json.v1.goals/{goalId}")
-    Goal getGoal(Long goalId);
+    GoalDTO getGoal(Long goalId);
 }

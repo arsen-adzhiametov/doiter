@@ -1,10 +1,9 @@
 package com.lutshe.doiter.data.rest.clients;
 
 import android.content.Context;
-
-import org.androidannotations.annotations.EBean;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.model.Message;
+import com.lutshe.doiter.dto.MessageDTO;
+import org.androidannotations.annotations.EBean;
 
 /**
  * Created by Arturro on 26.08.13.
@@ -17,12 +16,12 @@ public class MessagesRestClient extends AbstractRestClient<MessagesService> impl
     }
 
     @Override
-    public Message[] getAllMessagesForGoal(Long id) {
+    public MessageDTO[] getAllMessagesForGoal(Long id) {
         return service.getAllMessagesForGoal(id);
     }
 
     @Override
-    public Message[] getMessagesForGoal(Long id, Long firstMessageNum, Long numberOfMessages) {
+    public MessageDTO[] getMessagesForGoal(Long id, Long firstMessageNum, Long numberOfMessages) {
         return service.getMessagesForGoal(id, firstMessageNum, numberOfMessages);
     }
 }

@@ -1,7 +1,6 @@
 package com.lutshe.doiter.data.rest.clients;
 
-import com.lutshe.doiter.model.Message;
-
+import com.lutshe.doiter.dto.MessageDTO;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -10,8 +9,9 @@ import retrofit.http.Path;
  */
 public interface MessagesService {
     @GET("/json.v1.goals/{goalId}/messages")
-    Message[] getAllMessagesForGoal(Long goalId);
+    MessageDTO[] getAllMessagesForGoal(Long goalId);
 
     @GET("/json.v1.goals/{goalId}/messages/{firstMessageNum}/{numberOfMessages}")
-    Message[] getMessagesForGoal(@Path("goalId") Long goalId, @Path("firstMessageNum") Long firstMessageNum, @Path("numberOfMessages") Long numberOfMessages);
+    MessageDTO[] getMessagesForGoal(@Path("goalId") Long goalId, @Path("firstMessageNum") Long firstMessageNum,
+                                  @Path("numberOfMessages") Long numberOfMessages);
 }

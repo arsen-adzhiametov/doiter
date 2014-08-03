@@ -2,6 +2,7 @@ package com.lutshe.doiter.preloaders;
 
 import android.app.AlarmManager;
 
+import com.lutshe.doiter.dto.MessageDTO;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.Trace;
@@ -10,6 +11,8 @@ import com.lutshe.doiter.data.database.dao.MessagesDao;
 import com.lutshe.doiter.model.Goal;
 import com.lutshe.doiter.model.Message;
 import com.lutshe.doiter.data.rest.clients.MessagesRestClient;
+
+import static com.lutshe.doiter.data.converter.DtoToModelConverter.convertToMessageModel;
 
 /**
  * Created by Arturro on 24.08.13.
@@ -20,7 +23,6 @@ public class MessagesLoader implements Loader {
 
     @Bean MessagesDao messagesDao;
     @Bean GoalsDao goalsDao;
-
     @Bean MessagesRestClient messagesRestClient;
 
     @Override
@@ -50,8 +52,10 @@ public class MessagesLoader implements Loader {
     }
 
     private void loadMessagesForGoal(Goal userGoal, long loadFromIndex) {
-        Message[] messages = messagesRestClient.getMessagesForGoal(userGoal.getId(), loadFromIndex, 1000L);
-        for (Message message : messages) {
+        MessageDTO[] messageDTOs = messagesRestClient.getMessagesForGoal(userGoal.getId(), loadFromIndex,
+                1000L);
+        for (MessageDTO messageDTO : messageDTOs) {
+            Message message = convertToMessageModel(messageDTO);
             message.setId(null);
             messagesDao.addMessage(message);
         }

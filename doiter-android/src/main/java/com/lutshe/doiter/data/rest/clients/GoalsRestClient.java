@@ -1,10 +1,9 @@
 package com.lutshe.doiter.data.rest.clients;
 
 import android.content.Context;
-
-import org.androidannotations.annotations.EBean;
 import com.lutshe.doiter.R;
-import com.lutshe.doiter.model.Goal;
+import com.lutshe.doiter.dto.GoalDTO;
+import org.androidannotations.annotations.EBean;
 
 /**
  * Created by Arturro on 26.08.13.
@@ -17,12 +16,12 @@ public class GoalsRestClient extends AbstractRestClient<GoalsService> implements
     }
 
     @Override
-    public Goal[] getAllGoals() {
+    public GoalDTO[] getAllGoals() {
         return service.getAllGoals();
     }
 
     @Override
-    public Goal getGoal(Long goalId) {
+    public GoalDTO getGoal(Long goalId) {
         return service.getGoal(goalId);
     }
 }

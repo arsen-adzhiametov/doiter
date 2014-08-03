@@ -1,5 +1,7 @@
 package com.lutshe.doiter.model;
 
+import com.lutshe.doiter.dto.MessageDTO.Type;
+
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
@@ -12,12 +14,6 @@ public class Message {
     private Long deliveryTime;
     private Long orderIndex;
     private Type type = Type.OTHER;
-
-    public enum Type {
-        FIRST,
-        LAST,
-        OTHER
-    }
 
     public Message() {}
 
