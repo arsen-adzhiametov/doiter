@@ -3,6 +3,7 @@ package com.lutshe.doiter.data.database.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import com.crashlytics.android.Crashlytics;
+import com.lutshe.doiter.dto.MessageDTO.Type;
 import com.lutshe.doiter.model.Message;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -65,7 +66,7 @@ public class MessagesDao {
         }
     }
 
-    public Message getMessage(Long goalId, Message.Type type) {
+    public Message getMessage(Long goalId, Type type) {
         Cursor cursor = db.getReadableDatabase().rawQuery(SELECT_ALL_MESSAGES + " = " + goalId + " and " + TYPE + " = '" + type.name() + "'", null);
         try {
             if (cursor == null || cursor.getCount() == 0) {
@@ -101,7 +102,7 @@ public class MessagesDao {
             String text = cursor.getString(cursor.getColumnIndex(TEXT));
             Long deliveryTime = cursor.getLong(cursor.getColumnIndex(DELIVERY_TIME));
             Long orderIndex = cursor.getLong(cursor.getColumnIndex(ORDER_INDEX));
-            Message.Type type = Message.Type.valueOf(cursor.getString(cursor.getColumnIndex(TYPE)));
+            Type type = Type.valueOf(cursor.getString(cursor.getColumnIndex(TYPE)));
 
             message = new Message(id, text, goalId, orderIndex);
             message.setDeliveryTime(deliveryTime);

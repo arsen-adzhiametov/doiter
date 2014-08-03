@@ -15,6 +15,8 @@ import com.lutshe.doiter.views.util.FragmentsSwitcher;
 import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
 
+import static com.lutshe.doiter.dto.MessageDTO.Type;
+
 /**
  * Created by Arsen Adzhiametov on 6/31/13.
  */
@@ -34,7 +36,7 @@ public class GoalPreviewFragment extends Fragment {
     @AfterViews
     public void bindData() {
         Goal goal = goalsDao.getGoal(goalId);
-        Message firstMessage = messagesDao.getMessage(goalId, Message.Type.FIRST);
+        Message firstMessage = messagesDao.getMessage(goalId, Type.FIRST);
         goalPreviewLayout.showGoalName(goal.getName());
         goalPreviewLayout.showGoalDescription(firstMessage.getText());
         goalPreviewLayout.setSeekBarMaximum(messagesDao.getGoalMessagesCount(goalId));
@@ -76,7 +78,7 @@ public class GoalPreviewFragment extends Fragment {
     }
 
     private void addFirstMessage() {
-        Message message = messagesDao.getMessage(goalId, Message.Type.FIRST);
+        Message message = messagesDao.getMessage(goalId, Type.FIRST);
         messagesDao.updateMessageDeliveryTime(message.getId());
         goalsDao.updateGoalLastMessage(goalId, message.getOrderIndex());
     }
