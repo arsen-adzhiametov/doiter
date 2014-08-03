@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>doiter-model</artifactId>
+    <artifactId>doiter-dto</artifactId>
     <version>1.0</version>
 
 </project>
