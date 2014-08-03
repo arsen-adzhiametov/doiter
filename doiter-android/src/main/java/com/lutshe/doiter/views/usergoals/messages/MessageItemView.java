@@ -12,6 +12,7 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.lutshe.doiter.dto.MessageDTO.Type;
 
 /**
  * Created by Arsen Adzhiametov on 6/31/13.
@@ -39,7 +40,7 @@ public class MessageItemView extends RelativeLayout {
 
         messageView.setOnTouchListener(clickListener);
 
-        prepareLayout(message.getType() == Message.Type.FIRST);
+        prepareLayout(message.getType() == Type.FIRST);
         setMessageData(message);
         return this;
     }
@@ -65,7 +66,7 @@ public class MessageItemView extends RelativeLayout {
     public void setMessageData(Message message) {
         Long orderIndex = message.getOrderIndex();
         messageView.loadMessage(message.getText());
-        messageView.setMessageNumber(message.getType() == Message.Type.LAST ? ":)" : String.valueOf(orderIndex + 1));
+        messageView.setMessageNumber(message.getType() == Type.LAST ? ":)" : String.valueOf(orderIndex + 1));
     }
 
     public int getPositionInList() {

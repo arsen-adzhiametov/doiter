@@ -17,12 +17,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <artifactId>doiter-model</artifactId>
-            <groupId>com.lutshe</groupId>
-            <version>1.0</version>
-        </dependency>
-
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>

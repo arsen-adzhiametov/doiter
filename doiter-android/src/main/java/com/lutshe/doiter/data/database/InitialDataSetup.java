@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.lutshe.doiter.AchievementTimeConstants.DB_RELATED_TAG;
+import static com.lutshe.doiter.dto.MessageDTO.Type;
 
 /**
  * Created by Arturro on 21.08.13.
@@ -87,16 +88,16 @@ public class InitialDataSetup {
         }
 
         Message first = new Message(messages[0], goal.getId(), 0L);
-        first.setType(Message.Type.FIRST);
+        first.setType(Type.FIRST);
         messagesDao.addMessage(first);
 
         Message last = new Message(messages[messages.length-1], goal.getId(), null);
-        last.setType(Message.Type.LAST);
+        last.setType(Type.LAST);
         messagesDao.addMessage(last);
 
         if (deliverAllMessagesOnSetup) {
-            messagesDao.updateMessageDeliveryTime(messagesDao.getMessage(goal.getId(), Message.Type.LAST).getId());
-            messagesDao.updateMessageDeliveryTime(messagesDao.getMessage(goal.getId(), Message.Type.FIRST).getId());
+            messagesDao.updateMessageDeliveryTime(messagesDao.getMessage(goal.getId(), Type.LAST).getId());
+            messagesDao.updateMessageDeliveryTime(messagesDao.getMessage(goal.getId(), Type.FIRST).getId());
         }
 
         for (int i = 1; i < messages.length - 1; i ++) {

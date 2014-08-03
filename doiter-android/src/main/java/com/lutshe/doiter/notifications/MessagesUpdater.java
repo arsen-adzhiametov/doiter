@@ -9,6 +9,8 @@ import org.androidannotations.annotations.EBean;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import static com.lutshe.doiter.dto.MessageDTO.Type;
+
 /**
  * Created by Arsen Adzhiametov on 12-Jul-14 in IntelliJ IDEA.
  */
@@ -53,7 +55,7 @@ public class MessagesUpdater {
     }
 
     private DateTime getGoalStartTime(Goal goal) {
-        Message firstDeliveredMessage = messagesDao.getMessage(goal.getId(), Message.Type.FIRST);
+        Message firstDeliveredMessage = messagesDao.getMessage(goal.getId(), Type.FIRST);
         return new DateTime(firstDeliveredMessage.getDeliveryTime()).withTimeAtStartOfDay();
     }
 
@@ -76,7 +78,7 @@ public class MessagesUpdater {
     }
 
     private void deliverLastMessage(Long goalId) {
-        Message message = messagesDao.getMessage(goalId, Message.Type.LAST);
+        Message message = messagesDao.getMessage(goalId, Type.LAST);
         messagesDao.updateMessageDeliveryTime(message.getId());
         goalsDao.updateGoalStatus(goalId, Goal.Status.INACTIVE);
     }

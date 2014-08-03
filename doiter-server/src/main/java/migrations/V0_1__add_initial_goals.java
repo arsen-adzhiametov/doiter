@@ -15,6 +15,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.sql.Connection;
 import java.util.List;
 
+import static com.lutshe.doiter.dto.MessageDTO.Type;
+
 /**
  * @Author: Art
  */
@@ -74,9 +76,9 @@ public class V0_1__add_initial_goals implements JdbcMigration {
         Message message = new Message(text, goal.getId(), orderIndex);
 
         if (orderIndex == 0) {
-            message.setType(Message.Type.FIRST);
+            message.setType(Type.FIRST);
         } else if (orderIndex == messages.length - 1) {
-            message.setType(Message.Type.LAST);
+            message.setType(Type.LAST);
             message.setOrderIndex(null);
         }
         return message;

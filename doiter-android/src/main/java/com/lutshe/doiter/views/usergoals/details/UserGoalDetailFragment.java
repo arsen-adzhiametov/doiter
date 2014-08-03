@@ -17,6 +17,8 @@ import org.androidannotations.annotations.*;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import static com.lutshe.doiter.dto.MessageDTO.Type;
+
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
  */
@@ -83,7 +85,7 @@ public class UserGoalDetailFragment extends Fragment implements UpdatableView {
 
     private Message getCurrentMessage(Goal goal) {
         return goal.getStatus().equals(Goal.Status.ACTIVE) ? messagesDao.getMessage(goal.getId(),
-                goal.getLastMessageIndex()) : messagesDao.getMessage(goal.getId(), Message.Type.LAST);
+                goal.getLastMessageIndex()) : messagesDao.getMessage(goal.getId(), Type.LAST);
     }
 
     private void disableNavigationIfOnlyOneUserGoal() {

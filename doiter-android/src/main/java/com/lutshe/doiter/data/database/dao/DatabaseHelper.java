@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.lutshe.doiter.model.Goal;
-import com.lutshe.doiter.model.Message;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.Trace;
@@ -13,6 +12,7 @@ import org.androidannotations.annotations.Trace;
 import static com.lutshe.doiter.AchievementTimeConstants.DB_RELATED_TAG;
 import static com.lutshe.doiter.data.database.dao.GoalsDao.*;
 import static com.lutshe.doiter.data.database.dao.MessagesDao.*;
+import static com.lutshe.doiter.dto.MessageDTO.Type;
 
 /**
  * Created by Arsen Adzhiametov on 7/31/13.
@@ -45,7 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TEXT + " TEXT NOT NULL, " +
                 DELIVERY_TIME + " LONG, " +
                 USER_GOAL_ID + " INTEGER NOT NULL, " +
-                TYPE + " TEXT NOT NULL DEFAULT " + Message.Type.OTHER.name() + "," +
+                TYPE + " TEXT NOT NULL DEFAULT " + Type.OTHER.name() + "," +
                 ORDER_INDEX + " LONG," +
 
                 "FOREIGN KEY (" + USER_GOAL_ID + ") REFERENCES " + GOALS_TABLE + " (" + GOAL_ID + ")" +
